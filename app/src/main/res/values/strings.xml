@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">LifestyleApp-Spring2023</string>
+    <string name="activity_level">Activity Level</string>
+    <string name="workoutsPerWeek">Workouts per week:</string>
+    <string name="averageWorkoutLength">Average workout length:</string>
+    <string name="workoutIntensity">Workout intensity:</string>
+    <string name="calPerHour">cal/hr</string>
+    <string name="calBurnedPerWorkout">Calories burned per workout:</string>
+    <string name="workoutCalsPerDay">Workout calories per week:</string>
+    <string name="basicMetabolicRate">Basic Metabolic Rate</string>
+
 </resources>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5B5B5B"
+    tools:context=".BMRActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bmrDataCard"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="#9B9B9B"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bmrCard" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activityLevelCard"
+        android:layout_width="409dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="#9B9B9B"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" >
+
+        <TextView
+            android:id="@+id/activityLevelText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_vertical"
+            android:text="@string/activity_level"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activityLevelDataCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="#9B9B9B"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityLevelCard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/workoutIntensityTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/workoutIntensity"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    tools:ignore="TextContrastCheck" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/caloriesPerHourValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="325"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:text="450"
+                        android:textAlignment="textEnd"
+                        android:textColor="#0019FF"
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                    <TextView
+                        android:id="@+id/caloriesPerHourTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:text="@string/calPerHour"
+                        android:textSize="16sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <Spinner
+                        android:id="@+id/intensitySpinner"
+                        style="@style/mySpinnerItemStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:entries="@array/spinnerItems"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/workoutsPerWeekTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="@string/workoutsPerWeek"
+                        android:textSize="16sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <EditText
+                        android:id="@+id/workoutsPerWeekValue"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="7"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:text="5"
+                        android:textAlignment="textStart"
+                        android:textColor="#0019FF"
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+                        tools:textAlignment="textStart" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/averageWorkoutLengthTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="@string/averageWorkoutLength"
+                        android:textSize="16sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/workoutLengthValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:hint="2.25"
+                            android:inputType="numberDecimal"
+                            android:maxLength="5"
+                            android:text="1.5"
+                            android:textAlignment="textStart"
+                            android:textColor="#0019FF"
+                            android:textSize="16sp"
+                            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                        <TextView
+                            android:id="@+id/workoutLengthTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:layout_weight="1"
+                            android:text="hours"
+                            android:textSize="16sp"
+                            tools:ignore="TextContrastCheck" />
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/caloriesBurnedPerWorkoutTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="@string/calBurnedPerWorkout"
+                        android:textSize="16sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <TextView
+                        android:id="@+id/caloriesBurnedPerWorkoutValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:text="675"
+                        android:textSize="16sp"
+                        tools:ignore="TextContrastCheck" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/workoutCaloriesPerWeekTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="@string/workoutCalsPerDay"
+                        android:textSize="16sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <TextView
+                        android:id="@+id/workoutCaloriesPerWeekValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:text="482"
+                        android:textSize="16sp"
+                        tools:ignore="TextContrastCheck" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#9C9C9C"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bmrCard"
+        android:layout_width="409dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="#9B9B9B"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityLevelDataCard" >
+
+        <TextView
+            android:id="@+id/activityLevelText2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_vertical"
+            android:text="@string/basicMetabolicRate"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
