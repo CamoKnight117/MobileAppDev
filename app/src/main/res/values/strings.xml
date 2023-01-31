@@ -8,5 +8,14 @@
     <string name="calBurnedPerWorkout">Calories burned per workout:</string>
     <string name="workoutCalsPerDay">Workout calories per week:</string>
     <string name="basicMetabolicRate">Basic Metabolic Rate</string>
-
+    <string name="calPerDay">Calories/day</string>
+    <string name="bmr">BMR = </string>
+    <string name="dailyCalorieNeeds">Daily Calorie Needs: </string>
+    <string name="dailyCalorieNeedsMessage">Daily calorie needs by activity level: </string>
+    <string name="activityLevelHeader">Activity Level</string>
+    <string name="calorieHeader">Calories</string>
+    <string name="sedentaryRowLabel">Sedentary</string>
+    <string name="lightlyActiviteRowLabel">Lightly Active</string>
+    <string name="activeRowLabel">Active</string>
+    <string name="veryActiveRowLabel">Very Active</string>
 </resources>
