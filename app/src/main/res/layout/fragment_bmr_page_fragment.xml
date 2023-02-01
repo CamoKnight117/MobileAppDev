@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#5B5B5B"
-    tools:context=".BMRActivity">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/NavBarCardCard"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="#9B9B9B"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bmrDataCard"
@@ -78,7 +68,7 @@
                             android:maxLength="4"
                             android:text="3300"
                             android:textAlignment="textStart"
-                            android:textColor="#1B9145"
+                            android:textColor="#06421B"
                             android:textSize="20sp"
                             tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                             tools:textAlignment="textStart" />
@@ -124,7 +114,7 @@
                             android:maxLength="4"
                             android:text="2076"
                             android:textAlignment="textStart"
-                            android:textColor="#1B9145"
+                            android:textColor="#06421B"
                             android:textSize="20sp"
                             tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                             tools:textAlignment="textStart" />
@@ -256,7 +246,7 @@
                                     android:maxLength="4"
                                     android:text="2492"
                                     android:textAlignment="textStart"
-                                    android:textColor="#1B9145"
+                                    android:textColor="#06421B"
                                     android:textSize="20sp"
                                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                                     tools:textAlignment="textStart" />
@@ -306,7 +296,7 @@
                                     android:maxLength="4"
                                     android:text="2855"
                                     android:textAlignment="textStart"
-                                    android:textColor="#1B9145"
+                                    android:textColor="#06421B"
                                     android:textSize="20sp"
                                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                                     tools:textAlignment="textStart" />
@@ -355,7 +345,7 @@
                                     android:maxLength="4"
                                     android:text="3042"
                                     android:textAlignment="textStart"
-                                    android:textColor="#1B9145"
+                                    android:textColor="#06421B"
                                     android:textSize="20sp"
                                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                                     tools:textAlignment="textStart" />
@@ -405,7 +395,7 @@
                                     android:maxLength="4"
                                     android:text="3582"
                                     android:textAlignment="textStart"
-                                    android:textColor="#1B9145"
+                                    android:textColor="#06421B"
                                     android:textSize="20sp"
                                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                                     tools:textAlignment="textStart" />
@@ -424,12 +414,12 @@
         android:id="@+id/activityLevelCard"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         app:cardBackgroundColor="#9B9B9B"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NavBarCardCard">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/activityLevelText"
