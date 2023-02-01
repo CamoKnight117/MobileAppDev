@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">LifestyleApp-Spring2023</string>
-    <string name="activity_level">Activity Level</string>
+    <string name="activity_level">Activity Level: </string>
     <string name="workoutsPerWeek">Workouts per week:</string>
     <string name="averageWorkoutLength">Average workout length:</string>
     <string name="workoutIntensity">Workout intensity:</string>
@@ -13,6 +13,7 @@
     <string name="dailyCalorieNeeds">Daily Calorie Needs: </string>
     <string name="dailyCalorieNeedsMessage">Daily calorie needs by activity level: </string>
     <string name="activityLevelHeader">Activity Level</string>
+    <string name="recommendedCalorieIntake">Recommended Calorie Intake: </string>
     <string name="calorieHeader">Calories</string>
     <string name="sedentaryRowLabel">Sedentary</string>
     <string name="lightlyActiviteRowLabel">Lightly Active</string>
@@ -20,4 +21,5 @@
     <string name="veryActiveRowLabel">Very Active</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hints">---</string>
 </resources>

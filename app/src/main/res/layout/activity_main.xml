@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5B5B5B"
+    android:background="@color/grey"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -18,17 +18,19 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/NavBarCardCard"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="75dp"
             android:layout_marginTop="8dp"
-            app:cardBackgroundColor="#9B9B9B"
+            app:cardBackgroundColor="@color/light_gray"
             app:cardCornerRadius="5dp">
 
             <FrameLayout
                 android:id="@+id/fragmentFrame2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
 
             </FrameLayout>
+
         </androidx.cardview.widget.CardView>
 
         <FrameLayout

@@ -11,9 +11,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Find each frame layout, replace with corresponding fragment
-        //Find each frame layout, replace with corresponding fragment
         val fTrans: FragmentTransaction = supportFragmentManager.beginTransaction()
-        fTrans.replace(R.id.fragmentFrame1, bmr_page_fragment(), "Frag_1")
+        fTrans.replace(R.id.fragmentFrame1, BMRPage(), "Frag_1")
+        fTrans.replace(R.id.fragmentFrame2, NavBar(), "Frag_2")
         fTrans.commit()
     }
 }
