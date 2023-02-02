@@ -1,4 +1,4 @@
-package com.lifestyle.activity
+package com.lifestyle.main
 
 class User {
     var name = "Name";
