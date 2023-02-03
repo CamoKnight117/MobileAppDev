@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity() {
         greenButton.setBackgroundColor(Color.GREEN)
 
         //Find each frame layout, replace with corresponding fragment
-//        val fTrans: FragmentTransaction = supportFragmentManager.beginTransaction()
-//        fTrans.replace(R.id.fragmentFrame1, BMRPage(), "Frag_1")
-//        fTrans.replace(R.id.fragmentFrame2, NavBar(), "Frag_2")
-//        fTrans.commit()
+        val fTrans: FragmentTransaction = supportFragmentManager.beginTransaction()
+        fTrans.replace(R.id.bmrCard, BMRPage(), "Frag_1")
+        fTrans.replace(R.id.bmrDataCard, NavBar(), "Frag_2")
+        fTrans.commit()
     }
 }
