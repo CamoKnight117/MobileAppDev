@@ -3,4 +3,9 @@
     <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
         <item name="android:textColor">@color/spinnerTextColor</item>
     </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/light_gray</item>
+        <item name="colorPrimaryDark">@color/grey</item>
+    </style>
 </resources>

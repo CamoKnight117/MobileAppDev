@@ -16,6 +16,7 @@
     <string name="dailyCalorieNeeds">Daily Calorie Needs: </string>
     <string name="dailyCalorieNeedsMessage">Daily calorie needs by activity level: </string>
     <string name="heightLabel">Height:</string>
+    <string name="recommendedCalorieIntake">Recommended Calorie Intake  </string>
     <string name="lightlyActiviteRowLabel">Lightly Active</string>
     <string name="location">Location</string>
     <string name="name">Name</string>
@@ -26,4 +27,5 @@
     <string name="workoutIntensity">Workout intensity:</string>
     <string name="workoutCalsPerDay">Workout calories per week:</string>
     <string name="veryActiveRowLabel">Very Active</string>
+    <string name="hints">---</string>
 </resources>

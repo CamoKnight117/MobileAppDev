@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5B5B5B"
-    tools:context=".BMRActivity">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/NavBarCardCard"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="#9B9B9B"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:background="@color/grey"
+    tools:context="com.lifestyle.bmr.BMRPage">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bmrDataCard"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="#9B9B9B"
+        app:cardBackgroundColor="@color/light_gray"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +36,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <TextView
+                    android:id="@+id/dailyCalorieNeedsTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_marginBottom="0dp"
+                    android:layout_weight="0"
+                    android:text="@string/sedentaryRowLabel"
+                    android:textColor="@color/green"
+                    android:textSize="24sp"
+                    tools:ignore="TextContrastCheck" />
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -66,19 +68,16 @@
                             android:textSize="20sp"
                             tools:ignore="TextContrastCheck" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/dailyCalorieNeedsValue"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
-                            android:enabled="false"
-                            android:hint="3300"
-                            android:inputType="number"
                             android:maxLength="4"
                             android:text="3300"
                             android:textAlignment="textStart"
-                            android:textColor="#1B9145"
+                            android:textColor="@color/green"
                             android:textSize="20sp"
                             tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                             tools:textAlignment="textStart" />
@@ -112,19 +111,17 @@
                             android:textSize="20sp"
                             tools:ignore="TextContrastCheck" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/bmrValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
                             android:enabled="false"
-                            android:hint="2076"
-                            android:inputType="number"
                             android:maxLength="4"
                             android:text="2076"
                             android:textAlignment="textStart"
-                            android:textColor="#1B9145"
+                            android:textColor="@color/green"
                             android:textSize="20sp"
                             tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                             tools:textAlignment="textStart" />
@@ -243,7 +240,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/cell">
 
-                                <EditText
+                                <TextView
                                     android:id="@+id/sedentaryRowValue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -251,12 +248,10 @@
                                     android:layout_weight="1"
                                     android:background="@android:color/transparent"
                                     android:enabled="false"
-                                    android:hint="2492"
-                                    android:inputType="number"
                                     android:maxLength="4"
                                     android:text="2492"
                                     android:textAlignment="textStart"
-                                    android:textColor="#1B9145"
+                                    android:textColor="@color/green"
                                     android:textSize="20sp"
                                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                                     tools:textAlignment="textStart" />
@@ -293,7 +288,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/cell">
 
-                                <EditText
+                                <TextView
                                     android:id="@+id/lightlyActiveRowValue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -301,12 +296,10 @@
                                     android:layout_weight="1"
                                     android:background="@android:color/transparent"
                                     android:enabled="false"
-                                    android:hint="2855"
-                                    android:inputType="number"
                                     android:maxLength="4"
                                     android:text="2855"
                                     android:textAlignment="textStart"
-                                    android:textColor="#1B9145"
+                                    android:textColor="@color/green"
                                     android:textSize="20sp"
                                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                                     tools:textAlignment="textStart" />
@@ -342,7 +335,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/cell">
 
-                                <EditText
+                                <TextView
                                     android:id="@+id/activeRowValue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -350,12 +343,10 @@
                                     android:layout_weight="1"
                                     android:background="@android:color/transparent"
                                     android:enabled="false"
-                                    android:hint="3042"
-                                    android:inputType="number"
                                     android:maxLength="4"
                                     android:text="3042"
                                     android:textAlignment="textStart"
-                                    android:textColor="#1B9145"
+                                    android:textColor="@color/green"
                                     android:textSize="20sp"
                                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                                     tools:textAlignment="textStart" />
@@ -392,7 +383,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/cell">
 
-                                <EditText
+                                <TextView
                                     android:id="@+id/veryActiveRowValue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -400,12 +391,10 @@
                                     android:layout_weight="1"
                                     android:background="@android:color/transparent"
                                     android:enabled="false"
-                                    android:hint="3582"
-                                    android:inputType="number"
                                     android:maxLength="4"
                                     android:text="3582"
                                     android:textAlignment="textStart"
-                                    android:textColor="#1B9145"
+                                    android:textColor="@color/green"
                                     android:textSize="20sp"
                                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                                     tools:textAlignment="textStart" />
@@ -424,12 +413,12 @@
         android:id="@+id/activityLevelCard"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        app:cardBackgroundColor="#9B9B9B"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/light_gray"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NavBarCardCard">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/activityLevelText"
@@ -438,7 +427,7 @@
             android:gravity="center|center_vertical"
             android:text="@string/activity_level"
             android:textAlignment="center"
-            android:textColor="#FF0000"
+            android:textColor="@color/red"
             android:textSize="24sp"
             android:textStyle="bold"
             tools:ignore="TextContrastCheck" />
@@ -450,7 +439,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="#9B9B9B"
+        app:cardBackgroundColor="@color/light_gray"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -504,12 +493,12 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
-                            android:hint="325"
+                            android:hint="@string/hints"
                             android:inputType="number"
                             android:maxLength="4"
                             android:text="450"
                             android:textAlignment="textEnd"
-                            android:textColor="#0019FF"
+                            android:textColor="@color/blue"
                             android:textSize="16sp"
                             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
@@ -561,12 +550,12 @@
                             android:layout_marginLeft="4dp"
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
-                            android:hint="7"
+                            android:hint="@string/hints"
                             android:inputType="number"
                             android:maxLength="2"
                             android:text="5"
                             android:textAlignment="textStart"
-                            android:textColor="#0019FF"
+                            android:textColor="@color/blue"
                             android:textSize="16sp"
                             tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                             tools:textAlignment="textStart" />
@@ -599,12 +588,12 @@
                                 android:layout_marginLeft="4dp"
                                 android:layout_weight="1"
                                 android:background="@android:color/transparent"
-                                android:hint="2.25"
+                                android:hint="@string/hints"
                                 android:inputType="numberDecimal"
                                 android:maxLength="5"
                                 android:text="1.5"
                                 android:textAlignment="textStart"
-                                android:textColor="#0019FF"
+                                android:textColor="@color/blue"
                                 android:textSize="16sp"
                                 tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
@@ -646,6 +635,7 @@
                             android:layout_marginBottom="4dp"
                             android:layout_weight="1"
                             android:text="675"
+                            android:textColor="@color/green"
                             android:textSize="16sp"
                             tools:ignore="TextContrastCheck" />
                     </TableRow>
@@ -674,6 +664,7 @@
                             android:layout_marginBottom="4dp"
                             android:layout_weight="1"
                             android:text="482"
+                            android:textColor="@color/green"
                             android:textSize="16sp"
                             tools:ignore="TextContrastCheck" />
                     </TableRow>
@@ -688,7 +679,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        app:cardBackgroundColor="#9B9B9B"
+        app:cardBackgroundColor="@color/light_gray"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -701,7 +692,7 @@
             android:gravity="center|center_vertical"
             android:text="@string/basicMetabolicRate"
             android:textAlignment="center"
-            android:textColor="#FF0000"
+            android:textColor="@color/red"
             android:textSize="24sp"
             android:textStyle="bold"
             tools:ignore="TextContrastCheck" />
