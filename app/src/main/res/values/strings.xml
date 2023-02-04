@@ -28,4 +28,5 @@
     <string name="workoutCalsPerDay">Workout calories per week:</string>
     <string name="veryActiveRowLabel">Very Active</string>
     <string name="hints">---</string>
+    <string name="yourName">Your Name</string>
 </resources>

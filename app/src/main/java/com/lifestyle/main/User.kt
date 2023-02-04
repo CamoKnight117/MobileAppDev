@@ -3,7 +3,7 @@ package com.lifestyle.main
 import com.lifestyle.bmr.ActivityLevel
 
 class User() {
-    var name = "Name";
+    var name: String? = null;
     var age = 0;
     var location = "TODO";
     var height = 0;

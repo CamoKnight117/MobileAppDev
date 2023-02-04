@@ -13,15 +13,15 @@
         android:theme="@style/Theme.LifestyleAppSpring2023"
         tools:targetApi="31">
         <activity
-            android:name=".ProfileActivity"
+            android:name=".BMRActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".BMRActivity"
-            android:exported="false">
+            android:name="com.lifestyle.profile.ProfileActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
