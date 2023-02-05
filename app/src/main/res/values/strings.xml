@@ -16,7 +16,7 @@
     <string name="recommendedCalorieIntake">Recommended Calorie Intake: </string>
     <string name="calorieHeader">Calories</string>
     <string name="sedentaryRowLabel">Sedentary</string>
-    <string name="lightlyActiviteRowLabel">Lightly Active</string>
+    <string name="lightlyActiveRowLabel">Lightly Active</string>
     <string name="activeRowLabel">Active</string>
     <string name="veryActiveRowLabel">Very Active</string>
     <!-- TODO: Remove or change this placeholder text -->
