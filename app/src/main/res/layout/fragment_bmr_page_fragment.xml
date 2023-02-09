@@ -500,6 +500,7 @@
                             android:textAlignment="textEnd"
                             android:textColor="@color/blue"
                             android:textSize="16sp"
+                            android:onFocusChange="updateApp"
                             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
                         <TextView
