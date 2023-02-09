@@ -1,4 +1,4 @@
-package com.example.lifestyleapp_spring2023
+package com.lifestyle.main
 
 import android.graphics.Color
 import android.os.Bundle
@@ -6,6 +6,9 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.lifestyleapp_spring2023.R
+import com.lifestyle.bmr.BMRPage
+import com.lifestyle.fragment.NavBar
 
 /*
     This is the heart of our mobile application

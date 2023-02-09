@@ -6,49 +6,60 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:id="@+id/main_frame">
+    tools:context="com.lifestyle.main.MainActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/button_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="8dp"
+        android:layout_weight="1"
         android:padding="16dp"
-        app:layout_constraintTop_toTopOf="@id/advertiseSpace">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
-        <!-- Four square buttons -->
-
-        <Button
-            android:id="@+id/prof_button"
-            android:layout_width="64dp"
-            android:background="@color/red"
-            android:layout_marginTop="16dp"
-            android:layout_height="64dp"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:orientation="horizontal">
+            <!-- Four square buttons -->
 
             <Button
                 android:id="@+id/bmr_button"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginTop="16dp"
+                android:layout_weight="1"
                 android:background="@color/orange"
                 android:contentDescription="@string/bmr_button" />
+
+            <Button
+                android:id="@+id/prof_button"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="@id/prof_button"
+                android:layout_weight="1"
+                android:background="@color/red"
+                android:contentDescription="@string/prof_button" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:orientation="horizontal">
+            <!-- Four square buttons -->
 
             <Button
                 android:id="@+id/weather_button"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@+id/prof_button"
+                android:layout_weight="1"
                 android:background="@color/yellow"
                 android:contentDescription="@string/weather_button" />
 
@@ -57,16 +68,18 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginTop="16dp"
+                android:layout_weight="1"
                 android:background="@color/green"
                 android:contentDescription="@string/hikes_button" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/advertiseSpace"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_weight="1"
         android:layout_marginTop="8dp"
         app:cardBackgroundColor="@color/light_gray"
         app:cardCornerRadius="5dp"

@@ -37,6 +37,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <TextView
+                    android:id="@+id/dailyCalorieNeedsTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_marginBottom="0dp"
+                    android:layout_weight="0"
+                    android:text="@string/sedentaryRowLabel"
+                    android:textColor="@color/green"
+                    android:textSize="24sp"
+                    tools:ignore="TextContrastCheck" />
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -624,6 +636,7 @@
                             android:layout_marginBottom="4dp"
                             android:layout_weight="1"
                             android:text="675"
+                            android:textColor="@color/green"
                             android:textSize="16sp"
                             tools:ignore="TextContrastCheck" />
                     </TableRow>
@@ -652,6 +665,7 @@
                             android:layout_marginBottom="4dp"
                             android:layout_weight="1"
                             android:text="482"
+                            android:textColor="@color/green"
                             android:textSize="16sp"
                             tools:ignore="TextContrastCheck" />
                     </TableRow>
