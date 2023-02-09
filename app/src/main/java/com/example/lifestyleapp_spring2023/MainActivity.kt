@@ -14,6 +14,10 @@ import androidx.fragment.app.FragmentTransaction
     consideration of multiple users and traffic
     . This involves computer security on three
     layers, a transport,
+
+
+
+    This activity could be stored in a single table database design
  */
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +25,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        prof_button.setOnClickListener {
+        fun onButtonClicked(buttonId: Int) {
+            // Handle button click here
+        }
+
+        butt.setOnClickListener {
             startFragment(NavBar())
         }
 

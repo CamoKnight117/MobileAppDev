@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:elevation="8dp"
         android:padding="16dp"
-        app:layout_constraintTop_toTopOf="@id/advertiseSpace">
+        app:layout_constraintTop_toTopOf="@id/navBar">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,46 +25,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center">
         <!-- Four square buttons -->
 
-        <Button
-            android:id="@+id/prof_button"
-            android:layout_width="64dp"
-            android:background="@color/red"
-            android:layout_marginTop="16dp"
-            android:layout_height="64dp"/>
 
             <Button
-                android:id="@+id/bmr_button"
+                android:id="@+id/button_nav"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/red"
+                android:contentDescription="@string/nav_button"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/button_bmr"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/orange"
-                android:contentDescription="@string/bmr_button" />
+                android:contentDescription="@string/bmr_button"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/weather_button"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@id/button_nav"
                 android:background="@color/yellow"
-                android:contentDescription="@string/weather_button" />
+                android:contentDescription="@string/weather_button"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/hikes_button"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@id/button_bmr"
                 android:background="@color/green"
-                android:contentDescription="@string/hikes_button" />
+                android:contentDescription="@string/hikes_button"
+                tools:ignore="ButtonStyle" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/advertiseSpace"
+        android:id="@+id/navBar"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
@@ -73,10 +78,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
     </androidx.cardview.widget.CardView>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
