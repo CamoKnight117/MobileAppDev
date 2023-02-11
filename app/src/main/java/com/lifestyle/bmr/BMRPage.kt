@@ -3,21 +3,27 @@ package com.lifestyle.bmr
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import com.example.lifestyleapp_spring2023.R
 import com.example.lifestyleapp_spring2023.databinding.FragmentBmrPageFragmentBinding
 import com.lifestyle.main.User
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private val BMRUser = User()
+
 
 /**
  * A simple [Fragment] subclass.
@@ -34,11 +40,6 @@ class BMRPage : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        val binding = FragmentBmrPageFragmentBinding.inflate(layoutInflater)
-        binding.caloriesPerHourValue.addTextChangedListener(textWatcher)
-        binding.workoutsPerWeekValue.addTextChangedListener(textWatcher)
-        binding.workoutLengthValue.addTextChangedListener(textWatcher)
-        binding.intensitySpinner.onItemSelectedListener = itemSelectListener
         updateBMRpage()
     }
 
@@ -91,19 +92,19 @@ class BMRPage : Fragment() {
     {
         val binding = FragmentBmrPageFragmentBinding.inflate(layoutInflater)
         val calPerHour = if(binding.caloriesPerHourValue.length() > 0) {
-            binding.caloriesBurnedPerWorkoutValue.toString().toInt()
+            binding.caloriesBurnedPerWorkoutValue.text.toString().toInt()
         } else {
             0
         }
 
         val workoutsPerWeek = if(binding.workoutsPerWeekValue.length() > 0) {
-            binding.caloriesBurnedPerWorkoutValue.toString().toInt()
+            binding.caloriesBurnedPerWorkoutValue.text.toString().toInt()
         } else {
             0
         }
 
         val workoutLength = if(binding.workoutLengthValue.length() > 0) {
-            binding.caloriesBurnedPerWorkoutValue.toString().toFloat()
+            binding.caloriesBurnedPerWorkoutValue.text.toString().toFloat()
         } else {
             0
         }
@@ -147,8 +148,17 @@ class BMRPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bmr_page_fragment, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_bmr_page_fragment, container, false)
+
+        val caloriesPerHourValue = view.findViewById<View>(R.id.caloriesPerHourValue) as EditText
+        val workoutsPerWeekValue = view.findViewById<View>(R.id.workoutsPerWeekValue) as EditText
+        val workoutLengthValue = view.findViewById<View>(R.id.workoutLengthValue) as EditText
+        val intensitySpinner = view.findViewById<View>(R.id.intensitySpinner) as Spinner
+        caloriesPerHourValue.addTextChangedListener(textWatcher)
+        workoutLengthValue.addTextChangedListener(textWatcher)
+        workoutLengthValue.addTextChangedListener(textWatcher)
+        //intensitySpinner.onItemSelectedListener(itemSelectListener)
+        return view
     }
 
 

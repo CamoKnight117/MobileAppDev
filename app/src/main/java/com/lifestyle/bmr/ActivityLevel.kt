@@ -14,15 +14,6 @@ class ActivityLevel() {
                 Intensity.INTENSE;
         }
     var intensity: Intensity = Intensity.NONE
-        set(value) {
-            field = value;
-            caloriesPerHour = when(value) {
-                Intensity.MILD -> 150
-                Intensity.MODERATE -> 450
-                Intensity.INTENSE -> 750
-                Intensity.NONE -> 0
-            }
-        }
 
     fun getCaloriesBurnedPerWorkout(): Float {
         return averageWorkoutLength * caloriesPerHour;
