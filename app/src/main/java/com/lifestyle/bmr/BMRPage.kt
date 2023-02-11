@@ -24,6 +24,8 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private val BMRUser = User()
 
+var isUpdatingPage = true
+
 
 /**
  * A simple [Fragment] subclass.
@@ -44,43 +46,28 @@ class BMRPage : Fragment() {
         BMRUser.height = 180
         BMRUser.weight = 70
         BMRUser.sex = User.Sex.MALE
-        BMRUser.activityLevel.caloriesPerHour = 200
+        BMRUser.activityLevel.caloriesPerHour = 210
         BMRUser.activityLevel.workoutsPerWeek = 3
         BMRUser.activityLevel.averageWorkoutLength = 0.5f
     }
 
-
-    private val itemSelectListener = object : OnItemSelectedListener
+    private fun spinnerUpdate(view: View)
     {
-        override fun onItemSelected(
-            parent: AdapterView<*>?,
-            view: View?,
-            position: Int,
-            id: Long
-        ) {
-            spinnerUpdate()
-            //updateBMRValues()
-        }
+        val intensitySpinner = view.findViewById<Spinner>(R.id.intensitySpinner)
 
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-        }
-    }
-
-    private fun spinnerUpdate()
-    {
-        val binding = FragmentBmrPageFragmentBinding.inflate(layoutInflater)
-        binding.caloriesPerHourValue.setText(if(binding.intensitySpinner.selectedItem == 0)
+        BMRUser.activityLevel.caloriesPerHour = (if(intensitySpinner.selectedItemPosition == 0)
         {
-            "150"
+            150
         }
-        else if(binding.intensitySpinner.selectedItem == 1)
+        else if(intensitySpinner.selectedItemPosition == 1)
         {
-            "450"
+            450
         }
         else
         {
-            "750"
+            750
         })
+        updateBMRpage(view)
     }
     private fun updateBMRValues(view: View)
     {
@@ -126,7 +113,6 @@ class BMRPage : Fragment() {
                 } else {
                     BMRUser.activityLevel.caloriesPerHour.toString()
                 })
-            return
         }
         val workoutsPerWeekText = workoutsPerWeekEditText.text.toString()
         if (workoutsPerWeekText == "" || workoutsPerWeekText.toInt() != BMRUser.activityLevel.workoutsPerWeek) {
@@ -136,10 +122,8 @@ class BMRPage : Fragment() {
                 } else {
                     BMRUser.activityLevel.workoutsPerWeek.toString()
                 })
-            return
         }
         val workoutLengthText = workoutLengthEditText.text.toString()
-        println(workoutLengthText.length)
         if (workoutLengthText == "" || workoutLengthText.toFloat() != BMRUser.activityLevel.averageWorkoutLength) {
             workoutLengthEditText.setText(
                 if (workoutLengthText == "") {
@@ -147,7 +131,6 @@ class BMRPage : Fragment() {
                 } else {
                     BMRUser.activityLevel.averageWorkoutLength.toString()
                 })
-            return
         }
 
         val caloriesBurnedPerWorkoutText = view.findViewById<TextView>(R.id.caloriesBurnedPerWorkoutValue)
@@ -156,15 +139,14 @@ class BMRPage : Fragment() {
 
         caloriesBurnedPerWorkoutText.text = BMRUser.activityLevel.getCaloriesBurnedPerWorkout().toString()
         workoutCaloriesPerWeekText.text = BMRUser.activityLevel.workoutCaloriesPerWeek().toString()
-        if(BMRUser.activityLevel.caloriesPerHour < 300) {
-            intensitySpinner.setSelection(0)
-        }
-        else if(BMRUser.activityLevel.caloriesPerHour < 600) {
-            intensitySpinner.setSelection(1)
-        }
-        else{
-            intensitySpinner.setSelection(2)
-        }
+        println(isUpdatingPage)
+            if (BMRUser.activityLevel.caloriesPerHour < 300) {
+                intensitySpinner.setSelection(0)
+            } else if (BMRUser.activityLevel.caloriesPerHour < 600) {
+                intensitySpinner.setSelection(1)
+            } else {
+                intensitySpinner.setSelection(2)
+            }
 
         val activityLevelText = view.findViewById<TextView>(R.id.ActivityLevelTextView)
         val dailyCalorieNeedsText = view.findViewById<TextView>(R.id.dailyCalorieNeedsValue)
@@ -195,10 +177,33 @@ class BMRPage : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                updateBMRValues(view)
+                if(!isUpdatingPage) {
+                    isUpdatingPage = true
+                    updateBMRValues(view)
+                    isUpdatingPage = false
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+        }
+
+        val itemSelectListener = object : OnItemSelectedListener
+        {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                spinnerView: View?,
+                position: Int,
+                id: Long
+            ) {
+                if(!isUpdatingPage) {
+                    isUpdatingPage = true
+                    spinnerUpdate(view)
+                    isUpdatingPage = false
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
 
@@ -211,6 +216,7 @@ class BMRPage : Fragment() {
         workoutsPerWeekValue.addTextChangedListener(textWatcher)
         intensitySpinner.onItemSelectedListener = itemSelectListener
         updateBMRpage(view)
+        isUpdatingPage = false;
         return view
     }
 
