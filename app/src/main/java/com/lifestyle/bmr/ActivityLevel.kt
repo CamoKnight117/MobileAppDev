@@ -1,5 +1,8 @@
 package com.lifestyle.bmr
 
+import android.content.Context
+import com.example.lifestyleapp_spring2023.R
+
 class ActivityLevel() {
     var workoutsPerWeek: Int = 0
     var averageWorkoutLength: Float = 0f
@@ -51,7 +54,11 @@ class ActivityLevel() {
     }
 
     enum class Level {
-        SEDENTARY, LIGHTLY_ACTIVE, ACTIVE, VERY_ACTIVE
+        SEDENTARY, LIGHTLY_ACTIVE, ACTIVE, VERY_ACTIVE;
+
+        public fun name(context: Context): String {
+            return context.resources.getStringArray(R.array.activityLevel)[ordinal]
+        }
     }
 
 

@@ -3,5 +3,12 @@
     <string-array name="sex">
         <item>M</item>
         <item>F</item>
+        <item>-</item>
+    </string-array>
+    <string-array name="activityLevel">
+        <item>Sedentary</item>
+        <item>Lightly Active</item>
+        <item>Active</item>
+        <item>Very Active</item>
     </string-array>
 </resources>
