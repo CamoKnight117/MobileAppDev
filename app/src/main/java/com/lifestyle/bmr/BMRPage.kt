@@ -102,12 +102,12 @@ class BMRPage : Fragment() {
         val workoutLength = if(workoutLengthEditText.length() > 0) {
             workoutLengthEditText.text.toString().toFloat()
         } else {
-            0
+            0f
         }
 
         BMRUser.activityLevel.caloriesPerHour = calPerHour
         BMRUser.activityLevel.workoutsPerWeek = workoutsPerWeek
-        BMRUser.activityLevel.averageWorkoutLength = workoutLength as Float
+        BMRUser.activityLevel.averageWorkoutLength = workoutLength
 
         updateBMRpage(view)
     }
@@ -139,6 +139,7 @@ class BMRPage : Fragment() {
             return
         }
         val workoutLengthText = workoutLengthEditText.text.toString()
+        println(workoutLengthText.length)
         if (workoutLengthText == "" || workoutLengthText.toFloat() != BMRUser.activityLevel.averageWorkoutLength) {
             workoutLengthEditText.setText(
                 if (workoutLengthText == "") {
