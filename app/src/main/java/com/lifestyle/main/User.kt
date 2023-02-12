@@ -39,22 +39,22 @@ class User() {
     }
 
     fun calculateSedentaryCalNeed() : Float {
-        val averageSedentaryCalBurn = 150/7
+        val averageSedentaryCalBurn = 250/7
         return calculateBMR() + averageSedentaryCalBurn
     }
 
     fun calculateLightlyActiveCalNeed() : Float {
-        val averageSedentaryCalBurn = 600/7
+        val averageSedentaryCalBurn = 1000/7
         return calculateBMR() + averageSedentaryCalBurn
     }
 
     fun calculateActiveCalNeed() : Float {
-        val averageSedentaryCalBurn = 1200/7
+        val averageSedentaryCalBurn = 2250/7
         return calculateBMR() + averageSedentaryCalBurn
     }
 
     fun calculateVeryActiveCalNeed() : Float {
-        val averageSedentaryCalBurn = 1800/7
+        val averageSedentaryCalBurn = 4000/7
         return calculateBMR() + averageSedentaryCalBurn
     }
 }

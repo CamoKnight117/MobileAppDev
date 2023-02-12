@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinnerItems">
-        <item>mild (100-300 cal/hr)</item>
+        <item>mild (0-300 cal/hr)</item>
         <item>moderate (301-600 cal/hr)</item>
         <item>intense (601+ cal/hr)</item>
     </string-array>

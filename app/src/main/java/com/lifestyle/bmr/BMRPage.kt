@@ -25,6 +25,7 @@ private const val ARG_PARAM2 = "param2"
 private val BMRUser = User()
 
 var isUpdatingPage = true
+var justSetSpinner = false
 
 
 /**
@@ -53,21 +54,24 @@ class BMRPage : Fragment() {
 
     private fun spinnerUpdate(view: View)
     {
-        val intensitySpinner = view.findViewById<Spinner>(R.id.intensitySpinner)
+        if(!justSetSpinner) {
+            val intensitySpinner = view.findViewById<Spinner>(R.id.intensitySpinner)
 
-        BMRUser.activityLevel.caloriesPerHour = (if(intensitySpinner.selectedItemPosition == 0)
-        {
-            150
-        }
-        else if(intensitySpinner.selectedItemPosition == 1)
-        {
-            450
+            BMRUser.activityLevel.caloriesPerHour =
+                (if (intensitySpinner.selectedItemPosition == 0) {
+                    150
+                } else if (intensitySpinner.selectedItemPosition == 1) {
+                    450
+                } else {
+                    750
+                })
+            justSetSpinner = true
+            updateBMRpage(view)
         }
         else
         {
-            750
-        })
-        updateBMRpage(view)
+            justSetSpinner = false
+        }
     }
     private fun updateBMRValues(view: View)
     {
@@ -140,6 +144,8 @@ class BMRPage : Fragment() {
         caloriesBurnedPerWorkoutText.text = BMRUser.activityLevel.getCaloriesBurnedPerWorkout().toString()
         workoutCaloriesPerWeekText.text = BMRUser.activityLevel.workoutCaloriesPerWeek().toString()
         println(isUpdatingPage)
+        if(!justSetSpinner) {
+            justSetSpinner = true
             if (BMRUser.activityLevel.caloriesPerHour < 300) {
                 intensitySpinner.setSelection(0)
             } else if (BMRUser.activityLevel.caloriesPerHour < 600) {
@@ -147,6 +153,10 @@ class BMRPage : Fragment() {
             } else {
                 intensitySpinner.setSelection(2)
             }
+        }
+        else {
+            justSetSpinner = false
+        }
 
         val activityLevelText = view.findViewById<TextView>(R.id.ActivityLevelTextView)
         val dailyCalorieNeedsText = view.findViewById<TextView>(R.id.dailyCalorieNeedsValue)
