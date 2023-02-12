@@ -166,7 +166,13 @@ class BMRPage : Fragment() {
         val activeRowText = view.findViewById<TextView>(R.id.activeRowValue)
         val veryActiveRowText = view.findViewById<TextView>(R.id.veryActiveRowValue)
 
-        activityLevelText.text = BMRUser.activityLevel.getLevel().toString()
+        activityLevelText.text = when(BMRUser.activityLevel.getLevel())
+        {
+            Level.SEDENTARY -> "Sedentary"
+            Level.LIGHTLY_ACTIVE -> "Lightly Active"
+            Level.ACTIVE -> "Active"
+            Level.VERY_ACTIVE -> "Very Active"
+        }
         dailyCalorieNeedsText.text = BMRUser.getDailyCalorieIntake().toString()
         bmrText.text = BMRUser.calculateBMR().toString()
 

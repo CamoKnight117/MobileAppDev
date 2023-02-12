@@ -41,12 +41,10 @@ class ActivityLevel() {
         NONE, MILD, MODERATE, INTENSE
     }
 
-    enum class Level {
-        SEDENTARY, LIGHTLY_ACTIVE, ACTIVE, VERY_ACTIVE
-    }
+}
 
-
-
+public enum class Level {
+    SEDENTARY, LIGHTLY_ACTIVE, ACTIVE, VERY_ACTIVE
 }
 
 
