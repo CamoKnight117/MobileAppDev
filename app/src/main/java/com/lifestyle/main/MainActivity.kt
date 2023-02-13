@@ -1,12 +1,10 @@
 package com.lifestyle.main
 
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import com.example.lifestyleapp_spring2023.R
+import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.fragment.NavBar
 
@@ -32,11 +30,9 @@ class MainActivity : AppCompatActivity() {
             // Handle button click here
         }
 
-        butt.setOnClickListener {
-            startFragment(NavBar())
-        }
+        startFragment(NavBar())
 
-        bmr_button.setOnClickListener {
+        findViewById<Button>(R.id.button_bmr).setOnClickListener {
             startFragment(BMRPage())
         }
     }
@@ -44,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private fun startFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frameLayout, fragment)
+        fragmentTransaction.replace(R.id.mainLayout, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }

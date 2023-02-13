@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     android:orientation="horizontal"
-    tools:context="com.lifestyle.main.MainActivity">
+    tools:context="com.lifestyle.main.MainActivity"
+    android:id="@+id/mainLayout">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/button_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="16dp"
-        android:layout_marginTop="@id/navBar">
+        android:padding="16dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
