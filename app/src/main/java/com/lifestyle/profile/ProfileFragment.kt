@@ -132,6 +132,10 @@ class ProfileFragment : Fragment() {
 
     companion object {
         private fun parseOrResetText(editText: EditText, text: CharSequence?, currentValue: Int): Int {
+            if (text.toString() == "") {
+                editText.setText("0")
+                return 0;
+            }
             if(text != null) {
                 try {
                     return Integer.parseInt(text.toString())
