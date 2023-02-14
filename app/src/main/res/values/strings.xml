@@ -16,10 +16,15 @@
     <string name="recommendedCalorieIntake">Recommended Calorie Intake  </string>
     <string name="calorieHeader">Calories</string>
     <string name="sedentaryRowLabel">Sedentary</string>
-    <string name="lightlyActiviteRowLabel">Lightly Active</string>
+    <string name="lightlyActiveRowLabel">Lightly Active</string>
     <string name="activeRowLabel">Active</string>
     <string name="veryActiveRowLabel">Very Active</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hints">---</string>
+    <string name="nav_button">-Navigation+</string>
+    <string name="prof_button">-Profile+</string>
+    <string name="bmr_button">+BMR-</string>
+    <string name="weather_button">+Weather-</string>
+    <string name="hikes_button">+Hikes-</string>
 </resources>

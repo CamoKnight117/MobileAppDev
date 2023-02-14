@@ -1,5 +1,6 @@
 package com.lifestyle.bmr
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,7 +15,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.main.User
-
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,9 +32,31 @@ var justSetSpinner = false
  * create an instance of this fragment.
  */
 class BMRPage : Fragment() {
+
+    private var listener: OnButtonClickListener? = null
+
+    interface OnButtonClickListener {
+        fun onButtonClicked(buttonId: Int)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnButtonClickListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement OnButtonClickListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
