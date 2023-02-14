@@ -12,7 +12,6 @@
     <string name="calBurnedPerWorkout">Calories burned per workout:</string>
     <string name="calPerDay">Calories/day</string>
     <string name="calPerHour">cal/hr</string>
-    <string name="calorieHeader">Calories</string>
     <string name="dailyCalorieNeeds">Daily Calorie Needs: </string>
     <string name="dailyCalorieNeedsMessage">Daily calorie needs by activity level: </string>
     <string name="heightLabel">Height:</string>
@@ -27,9 +26,7 @@
     <string name="workoutIntensity">Workout intensity:</string>
     <string name="workoutCalsPerDay">Workout calories per week:</string>
     <string name="calorieHeader">Calories</string>
-    <string name="sedentaryRowLabel">Sedentary</string>
     <string name="lightlyActiveRowLabel">Lightly Active</string>
-    <string name="activeRowLabel">Active</string>
     <string name="veryActiveRowLabel">Very Active</string>
     <string name="hints">---</string>
     <string name="yourName">Your Name</string>

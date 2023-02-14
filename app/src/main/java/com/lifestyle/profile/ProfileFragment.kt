@@ -5,8 +5,6 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -16,7 +14,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import com.example.lifestyleapp_spring2023.R
+import com.lifestyle.R
 import com.lifestyle.main.User
 import com.lifestyle.main.UserProvider
 
@@ -57,10 +55,10 @@ class ProfileFragment : Fragment() {
         heightEditText = view.findViewById<View>(R.id.profileHeight) as EditText
         sexSpinner = view.findViewById<View>(R.id.profileSex) as Spinner
         activityLevelTextView = view.findViewById<View>(R.id.profileActivityLevel) as TextView
-        portraitButton = view.findViewById<ImageButton>(R.id.profilePortrait)
+        portraitButton = view.findViewById(R.id.profilePortrait)
 
         // Get the data that was sent in.
-        var user = userProvider!!.getUser()
+        val user = userProvider!!.getUser()
 
         // Set view contents based on the data.
         nameEditText?.setText(user.name)
@@ -81,20 +79,20 @@ class ProfileFragment : Fragment() {
         activityLevelTextView?.text = user.activityLevel.getLevel().name(requireContext())
 
         // Set up handlers to change the data.
-        nameEditText?.doOnTextChanged { text, start, before, count -> user.name = text?.toString() }
-        ageEditText?.doOnTextChanged { text, start, before, count ->
+        nameEditText?.doOnTextChanged { text, _, _, _ -> user.name = text?.toString() }
+        ageEditText?.doOnTextChanged { text, _, _, _ ->
             if(text != null)
-                user.age = parseOrResetText(ageEditText!!, text, user.age);
+                user.age = parseOrResetText(ageEditText!!, text, user.age)
         }
-        heightEditText?.doOnTextChanged { text, start, before, count ->
+        heightEditText?.doOnTextChanged { text, _, _, _ ->
             if(text != null)
-                user.height = parseOrResetText(heightEditText!!, text, user.height);
+                user.height = parseOrResetText(heightEditText!!, text, user.height)
         }
-        weightEditText?.doOnTextChanged { text, start, before, count ->
-            user.weight = parseOrResetText(weightEditText!!, text, user.weight);
+        weightEditText?.doOnTextChanged { text, _, _, _ ->
+            user.weight = parseOrResetText(weightEditText!!, text, user.weight)
         }
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
-        portraitButton?.setOnClickListener { view:View ->
+        portraitButton?.setOnClickListener { _ ->
             //The button press should open a camera
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try{
@@ -109,13 +107,13 @@ class ProfileFragment : Fragment() {
 
     private var sexSpinnerListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-            var user: User? = userProvider?.getUser();
+            val user: User? = userProvider?.getUser()
             if(pos==0)
                 user?.sex = User.Sex.MALE
             else if(pos==1)
                 user?.sex = User.Sex.FEMALE
-            else if(user != null && user!!.sex != User.Sex.UNASSIGNED)
-                sexSpinner?.setSelection(user!!.sex.ordinal)
+            else if(user != null && user.sex != User.Sex.UNASSIGNED)
+                sexSpinner?.setSelection(user.sex.ordinal)
         }
 
         override fun onNothingSelected(parent: AdapterView<*>) { }
@@ -137,10 +135,10 @@ class ProfileFragment : Fragment() {
             if(text != null) {
                 try {
                     return Integer.parseInt(text.toString())
-                } catch(e : NumberFormatException) { }
+                } catch(_: NumberFormatException) { }
             }
-            editText.setText(currentValue);
-            return currentValue;
+            editText.setText(currentValue)
+            return currentValue
         }
     }
 }

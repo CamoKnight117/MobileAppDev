@@ -205,7 +205,7 @@ class BMRPage : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view: View = inflater.inflate(R.layout.fragment_bmr_page_fragment, container, false)
 
         val textWatcher = object : TextWatcher {
@@ -252,7 +252,7 @@ class BMRPage : Fragment() {
         workoutsPerWeekValue.addTextChangedListener(textWatcher)
         intensitySpinner.onItemSelectedListener = itemSelectListener
         updateBMRpage(view)
-        isUpdatingPage = false;
+        isUpdatingPage = false
         return view
     }
 
