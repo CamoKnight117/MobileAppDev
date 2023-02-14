@@ -14,15 +14,6 @@ class ActivityLevel() {
                 Intensity.INTENSE;
         }
     var intensity: Intensity = Intensity.NONE
-        set(value) {
-            field = value;
-            caloriesPerHour = when(value) {
-                Intensity.MILD -> 150
-                Intensity.MODERATE -> 450
-                Intensity.INTENSE -> 750
-                Intensity.NONE -> 0
-            }
-        }
 
     fun getCaloriesBurnedPerWorkout(): Float {
         return averageWorkoutLength * caloriesPerHour;
@@ -32,15 +23,15 @@ class ActivityLevel() {
         return getCaloriesBurnedPerWorkout() * workoutsPerWeek;
     }
     fun getLevel(): Level {
-        //Sedentary : 0 - 300
-        //Lightly Active : 301 - 900
-        //Active : 901 - 1500
-        //Very Active : 1501+
-        return if(workoutCaloriesPerWeek() < 301)
+        //Sedentary : 0 - 500
+        //Lightly Active : 501 - 1500
+        //Active : 1500 - 3000
+        //Very Active : 3001+
+        return if(workoutCaloriesPerWeek() < 501)
             Level.SEDENTARY
-        else if(workoutCaloriesPerWeek() < 901)
-            Level.LIGHTLY_ACTIVE
         else if(workoutCaloriesPerWeek() < 1501)
+            Level.LIGHTLY_ACTIVE
+        else if(workoutCaloriesPerWeek() < 3001)
             Level.ACTIVE
         else
             Level.VERY_ACTIVE
@@ -50,12 +41,10 @@ class ActivityLevel() {
         NONE, MILD, MODERATE, INTENSE
     }
 
-    enum class Level {
-        SEDENTARY, LIGHTLY_ACTIVE, ACTIVE, VERY_ACTIVE
-    }
+}
 
-
-
+public enum class Level {
+    SEDENTARY, LIGHTLY_ACTIVE, ACTIVE, VERY_ACTIVE
 }
 
 
