@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context="com.lifestyle.bmr.BMRPage">
+    tools:context=".BMRPage"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bmrDataCard"
@@ -37,7 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/dailyCalorieNeedsTextView2"
+                    android:id="@+id/ActivityLevelTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|center_horizontal"
@@ -277,7 +278,7 @@
                                     android:layout_marginLeft="4dp"
                                     android:layout_marginBottom="0dp"
                                     android:layout_weight="2"
-                                    android:text="@string/lightlyActiviteRowLabel"
+                                    android:text="@string/lightlyActiveRowLabel"
                                     android:textSize="20sp"
                                     tools:ignore="TextContrastCheck" />
                             </FrameLayout>

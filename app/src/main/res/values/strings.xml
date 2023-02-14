@@ -26,7 +26,16 @@
     <string name="workoutsPerWeek">Workouts per week:</string>
     <string name="workoutIntensity">Workout intensity:</string>
     <string name="workoutCalsPerDay">Workout calories per week:</string>
+    <string name="calorieHeader">Calories</string>
+    <string name="sedentaryRowLabel">Sedentary</string>
+    <string name="lightlyActiveRowLabel">Lightly Active</string>
+    <string name="activeRowLabel">Active</string>
     <string name="veryActiveRowLabel">Very Active</string>
     <string name="hints">---</string>
     <string name="yourName">Your Name</string>
+    <string name="nav_button">-Navigation+</string>
+    <string name="prof_button">-Profile+</string>
+    <string name="bmr_button">+BMR-</string>
+    <string name="weather_button">+Weather-</string>
+    <string name="hikes_button">+Hikes-</string>
 </resources>

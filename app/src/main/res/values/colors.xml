@@ -13,4 +13,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="spinnerTextColor">#0019FF</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="orange">#FFA500</color>
 </resources>
