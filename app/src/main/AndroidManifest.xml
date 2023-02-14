@@ -20,6 +20,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name="com.lifestyle.profile.ProfileActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name="com.lifestyle.main.MainActivity"
             android:exported="true">
             <intent-filter>
