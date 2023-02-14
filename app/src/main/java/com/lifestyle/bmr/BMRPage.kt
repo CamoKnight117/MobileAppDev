@@ -11,10 +11,8 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import com.example.lifestyleapp_spring2023.R
-import com.example.lifestyleapp_spring2023.databinding.FragmentBmrPageFragmentBinding
+import com.lifestyle.R
 import com.lifestyle.main.User
 
 

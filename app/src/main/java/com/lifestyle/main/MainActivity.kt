@@ -3,7 +3,7 @@ package com.lifestyle.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import com.example.lifestyleapp_spring2023.R
+import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.fragment.NavBar
 
