@@ -1,5 +1,6 @@
 package com.lifestyle.main
 
+import android.graphics.Bitmap
 import com.lifestyle.bmr.ActivityLevel
 
 class User() {
@@ -11,6 +12,7 @@ class User() {
     var sex = Sex.UNASSIGNED;
     var activityLevel = ActivityLevel();
     var profilePicture = "TODO";
+    var profilePictureThumbnail : Bitmap? = null
 
     enum class Sex
     {

@@ -63,6 +63,7 @@ class ProfileFragment : Fragment() {
         var user = userProvider!!.getUser()
 
         // Set view contents based on the data.
+        portraitButton?.setImageBitmap(user.profilePictureThumbnail);
         nameEditText?.setText(user.name)
         ageEditText?.setText(user.age.toString())
         weightEditText?.setText(user.weight.toString())
@@ -127,8 +128,11 @@ class ProfileFragment : Fragment() {
             //val thumbnailImage = extras!!["data"] as Bitmap?
 
             val thumbnailImage = result.data!!.getParcelableExtra<Bitmap>("data")
-            portraitButton?.setImageBitmap(thumbnailImage)
-            // TODO: Set userProvider.getUser()'s profile picture.
+            if(thumbnailImage != null) {
+                portraitButton?.setImageBitmap(thumbnailImage)
+                userProvider?.getUser()?.profilePictureThumbnail = thumbnailImage
+                // TODO: Set userProvider.getUser()'s profile picture.
+            }
         }
     }
 
