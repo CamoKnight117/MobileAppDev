@@ -61,7 +61,8 @@ class ProfileFragment : Fragment() {
         val user = userProvider!!.getUser()
 
         // Set view contents based on the data.
-        portraitButton?.setImageBitmap(user.profilePictureThumbnail);
+        if(user.profilePictureThumbnail != null)
+            portraitButton?.setImageBitmap(user.profilePictureThumbnail)
         nameEditText?.setText(user.name)
         ageEditText?.setText(user.age.toString())
         weightEditText?.setText(user.weight.toString())
