@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity(), UserProvider {
         user = User()
         user!!.name = "Bob Ross"
         user!!.age = 23
-        user!!.height = 180
-        user!!.weight = 70
+        user!!.height = 72.0f
+        user!!.weight = 145.0f
         user!!.sex = User.Sex.MALE
         user!!.activityLevel.caloriesPerHour = 210
         user!!.activityLevel.workoutsPerWeek = 3

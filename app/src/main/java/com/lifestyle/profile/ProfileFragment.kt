@@ -90,7 +90,7 @@ class ProfileFragment : Fragment() {
         ageEditText?.doOnTextChanged { text, _, _, _ ->
             run {
                 if (text != null) {
-                    user.age = parseOrResetText(ageEditText!!, text, user.age)
+                    user.age = parseOrResetText(ageEditText!!, text, user.age.toFloat()).roundToInt()
                     updateNavBar(user)
                 }
             }
@@ -170,17 +170,17 @@ class ProfileFragment : Fragment() {
     }
 
     companion object {
-        private fun parseOrResetText(editText: EditText, text: CharSequence?, currentValue: Int): Int {
+        private fun parseOrResetText(editText: EditText, text: CharSequence?, currentValue: Float): Float {
             if (text.toString() == "") {
                 editText.setText("0")
-                return 0;
+                return 0.0f
             }
             if(text != null) {
                 try {
-                    return Integer.parseInt(text.toString())
+                    return text.toString().toFloat()
                 } catch(_: NumberFormatException) { }
             }
-            editText.setText(currentValue)
+            editText.setText(currentValue.toString())
             return currentValue
         }
     }
