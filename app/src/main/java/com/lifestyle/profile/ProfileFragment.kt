@@ -88,20 +88,29 @@ class ProfileFragment : Fragment() {
             }
         }
         ageEditText?.doOnTextChanged { text, _, _, _ ->
-            if(text != null)
-                user.age = parseOrResetText(ageEditText!!, text, user.age)
-                updateNavBar(user)
+            run {
+                if (text != null) {
+                    user.age = parseOrResetText(ageEditText!!, text, user.age)
+                    updateNavBar(user)
+                }
+            }
 
         }
         heightEditText?.doOnTextChanged { text, _, _, _ ->
-            if(text != null)
-                user.height = parseOrResetText(heightEditText!!, text, user.height)
-                updateNavBar(user)
+            run {
+                if (text != null) {
+                    user.height = parseOrResetText(heightEditText!!, text, user.height)
+                    updateNavBar(user)
+                }
+            }
         }
         weightEditText?.doOnTextChanged { text, _, _, _ ->
-            if (text != null)
-                user.weight = parseOrResetText(weightEditText!!, text, user.weight)
-                updateNavBar(user)
+            run {
+                if (text != null) {
+                    user.weight = parseOrResetText(weightEditText!!, text, user.weight)
+                    updateNavBar(user)
+                }
+            }
         }
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
         portraitButton?.setOnClickListener { _ ->
