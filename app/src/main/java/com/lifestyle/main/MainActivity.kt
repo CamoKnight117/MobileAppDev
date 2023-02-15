@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
-import com.lifestyle.fragment.NavBar
 import com.lifestyle.profile.ProfileFragment
 
 /*
@@ -27,8 +26,6 @@ class MainActivity : AppCompatActivity(), UserProvider {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startFragment(NavBar())
-
         findViewById<Button>(R.id.prof_button).setOnClickListener {
             startFragment(ProfileFragment())
         }
@@ -40,7 +37,8 @@ class MainActivity : AppCompatActivity(), UserProvider {
 
     private fun startFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.button_card, fragment)
+        fragmentTransaction.replace(R.id.fragment_view, fragment)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 
