@@ -22,6 +22,8 @@ import com.lifestyle.profile.ProfileFragment
  */
 class MainActivity : AppCompatActivity(), UserProvider {
 
+    private var user: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,6 +35,15 @@ class MainActivity : AppCompatActivity(), UserProvider {
         findViewById<Button>(R.id.button_bmr).setOnClickListener {
             startFragment(BMRPage())
         }
+
+        user = User()
+        user!!.age = 23
+        user!!.height = 180
+        user!!.weight = 70
+        user!!.sex = User.Sex.MALE
+        user!!.activityLevel.caloriesPerHour = 210
+        user!!.activityLevel.workoutsPerWeek = 3
+        user!!.activityLevel.averageWorkoutLength = 0.5f
     }
 
     private fun startFragment(fragment: Fragment) {
@@ -43,14 +54,6 @@ class MainActivity : AppCompatActivity(), UserProvider {
     }
 
     override fun getUser(): User {
-        val user = User()
-        user.age = 23
-        user.height = 180
-        user.weight = 70
-        user.sex = User.Sex.MALE
-        user.activityLevel.caloriesPerHour = 210
-        user.activityLevel.workoutsPerWeek = 3
-        user.activityLevel.averageWorkoutLength = 0.5f
-        return user
+        return user!!
     }
 }
