@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), UserProvider {
         }
 
         user = User()
+        user!!.name = "Bob Ross"
         user!!.age = 23
         user!!.height = 180
         user!!.weight = 70

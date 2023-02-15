@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.main.User
 import com.lifestyle.main.UserProvider
+import org.w3c.dom.Text
+import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -163,21 +165,28 @@ class BMRPage : Fragment() {
         }
 
         val activityLevelText = view.findViewById<TextView>(R.id.ActivityLevelTextView)
+        val activityLevelValue = requireActivity().findViewById<TextView>(R.id.activityLevelValue)
         val dailyCalorieNeedsText = view.findViewById<TextView>(R.id.dailyCalorieNeedsValue)
+        val recommendedCalorieIntakeValue = requireActivity().findViewById<TextView>(R.id.recommendedCalorieIntakeValue)
         val bmrText = view.findViewById<TextView>(R.id.bmrValue)
         val sedentaryRowText = view.findViewById<TextView>(R.id.sedentaryRowValue)
         val lightlyActiveRowText = view.findViewById<TextView>(R.id.lightlyActiveRowValue)
         val activeRowText = view.findViewById<TextView>(R.id.activeRowValue)
         val veryActiveRowText = view.findViewById<TextView>(R.id.veryActiveRowValue)
 
-        activityLevelText.text = when(BMRUser!!.activityLevel.getLevel())
+        val activityLevel = when(BMRUser!!.activityLevel.getLevel())
         {
             Level.SEDENTARY -> "Sedentary"
             Level.LIGHTLY_ACTIVE -> "Lightly Active"
             Level.ACTIVE -> "Active"
             Level.VERY_ACTIVE -> "Very Active"
         }
+
+        activityLevelText.text = activityLevel
+        activityLevelValue.text = activityLevel
+
         dailyCalorieNeedsText.text = BMRUser!!.getDailyCalorieIntake().toString()
+        recommendedCalorieIntakeValue.text = getString(R.string.calPerDayShort, BMRUser!!.getDailyCalorieIntake().roundToInt().toString())
         bmrText.text = BMRUser!!.calculateBMR().toString()
 
         sedentaryRowText.text = BMRUser!!.calculateSedentaryCalNeed().toString()

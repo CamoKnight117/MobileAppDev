@@ -12,6 +12,8 @@
     <string name="calBurnedPerWorkout">Calories burned per workout:</string>
     <string name="calPerDay">Calories/day</string>
     <string name="calPerHour">cal/hr</string>
+    <string name="ageAndSex">%1$s %2$s</string>
+    <string name="calPerDayShort">%1$s cal/hr</string>
     <string name="dailyCalorieNeeds">Daily Calorie Needs: </string>
     <string name="dailyCalorieNeedsMessage">Daily calorie needs by activity level: </string>
     <string name="heightLabel">Height:</string>

@@ -15,8 +15,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
+import com.lifestyle.bmr.Level
 import com.lifestyle.main.User
 import com.lifestyle.main.UserProvider
+import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
     private var userProvider: UserProvider? = null
@@ -79,17 +81,27 @@ class ProfileFragment : Fragment() {
         activityLevelTextView?.text = user.activityLevel.getLevel().name(requireContext())
 
         // Set up handlers to change the data.
-        nameEditText?.doOnTextChanged { text, _, _, _ -> user.name = text?.toString() }
+        nameEditText?.doOnTextChanged { text, _, _, _ ->
+            run {
+                user.name = text?.toString()
+                updateNavBar(user)
+            }
+        }
         ageEditText?.doOnTextChanged { text, _, _, _ ->
             if(text != null)
                 user.age = parseOrResetText(ageEditText!!, text, user.age)
+                updateNavBar(user)
+
         }
         heightEditText?.doOnTextChanged { text, _, _, _ ->
             if(text != null)
                 user.height = parseOrResetText(heightEditText!!, text, user.height)
+                updateNavBar(user)
         }
         weightEditText?.doOnTextChanged { text, _, _, _ ->
-            user.weight = parseOrResetText(weightEditText!!, text, user.weight)
+            if (text != null)
+                user.weight = parseOrResetText(weightEditText!!, text, user.weight)
+                updateNavBar(user)
         }
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
         portraitButton?.setOnClickListener { _ ->
@@ -105,6 +117,22 @@ class ProfileFragment : Fragment() {
         return view
     }
 
+    private fun updateNavBar(user: User) {
+        requireActivity().findViewById<TextView>(R.id.recommendedCalorieIntakeValue).text =
+            getString(R.string.calPerDayShort, user.getDailyCalorieIntake().roundToInt().toString())
+        requireActivity().findViewById<TextView>(R.id.ageAndSexValue).text = getString(R.string.ageAndSex, user.age.toString(),  user.sex.toString().substring(0, 1))
+        val activityLevel = when(user.activityLevel.getLevel())
+        {
+            Level.SEDENTARY -> "Sedentary"
+            Level.LIGHTLY_ACTIVE -> "Lightly Active"
+            Level.ACTIVE -> "Active"
+            Level.VERY_ACTIVE -> "Very Active"
+        }
+        requireActivity().findViewById<TextView>(R.id.nameTextValue).text = user.name
+        activityLevelTextView?.text = activityLevel
+        requireActivity().findViewById<TextView>(R.id.activityLevelValue).text = activityLevel
+    }
+
     private var sexSpinnerListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
             val user: User? = userProvider?.getUser()
@@ -114,6 +142,7 @@ class ProfileFragment : Fragment() {
                 user?.sex = User.Sex.FEMALE
             else if(user != null && user.sex != User.Sex.UNASSIGNED)
                 sexSpinner?.setSelection(user.sex.ordinal)
+            updateNavBar(user!!)
         }
 
         override fun onNothingSelected(parent: AdapterView<*>) { }
@@ -126,6 +155,7 @@ class ProfileFragment : Fragment() {
 
             val thumbnailImage = result.data!!.getParcelableExtra<Bitmap>("data")
             portraitButton?.setImageBitmap(thumbnailImage)
+            requireActivity().findViewById<ImageButton>(R.id.imageButton).setImageBitmap(thumbnailImage)
             // TODO: Set userProvider.getUser()'s profile picture.
         }
     }
