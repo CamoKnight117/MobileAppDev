@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.fragment.NavBar
+import com.lifestyle.profile.ProfileFragment
 
 /*
     This is the heart of our mobile application
@@ -20,17 +21,17 @@ import com.lifestyle.fragment.NavBar
 
     This activity could be stored in a single table database design
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UserProvider {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fun onButtonClicked(buttonId: Int) {
-            // Handle button click here
-        }
-
         startFragment(NavBar())
+
+        findViewById<Button>(R.id.prof_button).setOnClickListener {
+            startFragment(ProfileFragment())
+        }
 
         findViewById<Button>(R.id.button_bmr).setOnClickListener {
             startFragment(BMRPage())
@@ -38,10 +39,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.mainLayout, fragment)
-        fragmentTransaction.addToBackStack(null)
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.button_card, fragment)
         fragmentTransaction.commit()
+    }
+
+    override fun getUser(): User {
+        val user = User()
+        user.age = 23
+        user.height = 180
+        user.weight = 70
+        user.sex = User.Sex.MALE
+        user.activityLevel.caloriesPerHour = 210
+        user.activityLevel.workoutsPerWeek = 3
+        user.activityLevel.averageWorkoutLength = 0.5f
+        return user
     }
 }

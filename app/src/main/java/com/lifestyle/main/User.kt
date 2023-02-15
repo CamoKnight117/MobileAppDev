@@ -4,14 +4,14 @@ import android.graphics.Bitmap
 import com.lifestyle.bmr.ActivityLevel
 
 class User() {
-    var name: String? = null;
-    var age = 0;
-    var location = "TODO";
-    var height = 0;
-    var weight = 0;
-    var sex = Sex.UNASSIGNED;
-    var activityLevel = ActivityLevel();
-    var profilePicture = "TODO";
+    var name: String? = null
+    var age = 0
+    var location = "TODO"
+    var height = 0
+    var weight = 0
+    var sex = Sex.UNASSIGNED
+    var activityLevel = ActivityLevel()
+    var profilePicture = "TODO"
     var profilePictureThumbnail : Bitmap? = null
 
     enum class Sex
@@ -22,9 +22,9 @@ class User() {
     fun getDailyCalorieIntake() : Float {
         val bmrVal = calculateBMR()
         return if(bmrVal != 0f) {
-            activityLevel.workoutCaloriesPerWeek()/7 + bmrVal;
+            activityLevel.workoutCaloriesPerWeek()/7 + bmrVal
         } else {
-            0f;
+            0f
         }
     }
 

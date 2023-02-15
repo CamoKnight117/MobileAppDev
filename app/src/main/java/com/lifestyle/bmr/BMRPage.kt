@@ -1,6 +1,5 @@
 package com.lifestyle.bmr
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -32,26 +31,6 @@ var justSetSpinner = false
  * create an instance of this fragment.
  */
 class BMRPage : Fragment() {
-
-    private var listener: OnButtonClickListener? = null
-
-    interface OnButtonClickListener {
-        fun onButtonClicked(buttonId: Int)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnButtonClickListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement OnButtonClickListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -205,7 +184,7 @@ class BMRPage : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view: View = inflater.inflate(R.layout.fragment_bmr_page_fragment, container, false)
 
         val textWatcher = object : TextWatcher {
@@ -252,7 +231,7 @@ class BMRPage : Fragment() {
         workoutsPerWeekValue.addTextChangedListener(textWatcher)
         intensitySpinner.onItemSelectedListener = itemSelectListener
         updateBMRpage(view)
-        isUpdatingPage = false;
+        isUpdatingPage = false
         return view
     }
 

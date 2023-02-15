@@ -1,40 +1,41 @@
 package com.lifestyle.bmr
 
 import android.content.Context
-import com.example.lifestyleapp_spring2023.R
+import com.lifestyle.R
 
-class ActivityLevel() {
+class ActivityLevel {
     var workoutsPerWeek: Int = 0
     var averageWorkoutLength: Float = 0f
     var caloriesPerHour: Int = 0
         set(value) {
             field = value
-            intensity = if(value < 300)
-                Intensity.MILD;
-            else if(value < 600)
-                Intensity.MODERATE;
+            intensity = if (value < 300)
+                Intensity.MILD
+            else if (value < 600)
+                Intensity.MODERATE
             else
-                Intensity.INTENSE;
+                Intensity.INTENSE
         }
-    var intensity: Intensity = Intensity.NONE
+    private var intensity: Intensity = Intensity.NONE
 
     fun getCaloriesBurnedPerWorkout(): Float {
-        return averageWorkoutLength * caloriesPerHour;
+        return averageWorkoutLength * caloriesPerHour
     }
 
     fun workoutCaloriesPerWeek(): Float {
-        return getCaloriesBurnedPerWorkout() * workoutsPerWeek;
+        return getCaloriesBurnedPerWorkout() * workoutsPerWeek
     }
+
     fun getLevel(): Level {
         //Sedentary : 0 - 500
         //Lightly Active : 501 - 1500
         //Active : 1500 - 3000
         //Very Active : 3001+
-        return if(workoutCaloriesPerWeek() < 501)
+        return if (workoutCaloriesPerWeek() < 501)
             Level.SEDENTARY
-        else if(workoutCaloriesPerWeek() < 1501)
+        else if (workoutCaloriesPerWeek() < 1501)
             Level.LIGHTLY_ACTIVE
-        else if(workoutCaloriesPerWeek() < 3001)
+        else if (workoutCaloriesPerWeek() < 3001)
             Level.ACTIVE
         else
             Level.VERY_ACTIVE
@@ -43,11 +44,12 @@ class ActivityLevel() {
     enum class Intensity {
         NONE, MILD, MODERATE, INTENSE
     }
+}
 
-public enum class Level {
+enum class Level {
     SEDENTARY, LIGHTLY_ACTIVE, ACTIVE, VERY_ACTIVE;
-    
-    public fun name(context: Context): String {
+
+    fun name(context: Context): String {
         return context.resources.getStringArray(R.array.activityLevel)[ordinal]
     }
 }
