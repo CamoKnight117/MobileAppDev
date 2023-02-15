@@ -1,701 +1,707 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".BMRPage"
-    >
+    tools:context=".BMRPage">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/bmrDataCard"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/light_gray"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bmrCard">
+        android:layout_height="match_parent"
+        android:background="@color/grey"
+        >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bmrDataCard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/light_gray"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bmrCard">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/ActivityLevelTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:layout_weight="0"
-                    android:text="@string/sedentaryRowLabel"
-                    android:textColor="@color/green"
-                    android:textSize="24sp"
-                    tools:ignore="TextContrastCheck" />
-
-                <TableLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/dailyCalorieNeedsTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_column="0"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="0dp"
-                            android:layout_weight="2"
-                            android:text="@string/dailyCalorieNeeds"
-                            android:textSize="20sp"
-                            tools:ignore="TextContrastCheck" />
-
-                        <TextView
-                            android:id="@+id/dailyCalorieNeedsValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:maxLength="4"
-                            android:text="3300"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/green"
-                            android:textSize="20sp"
-                            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-                            tools:textAlignment="textStart" />
-
-                        <TextView
-                            android:id="@+id/caloriesPerDayTextView2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_column="0"
-                            android:layout_marginLeft="0dp"
-                            android:layout_marginBottom="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/calPerDay"
-                            android:textSize="20sp"
-                            tools:ignore="TextContrastCheck" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/bmrTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_column="0"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="0dp"
-                            android:layout_weight="2"
-                            android:text="@string/bmr"
-                            android:textSize="20sp"
-                            tools:ignore="TextContrastCheck" />
-
-                        <TextView
-                            android:id="@+id/bmrValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:enabled="false"
-                            android:maxLength="4"
-                            android:text="2076"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/green"
-                            android:textSize="20sp"
-                            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-                            tools:textAlignment="textStart" />
-
-                        <TextView
-                            android:id="@+id/caloriesPerDayTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_column="0"
-                            android:layout_marginLeft="0dp"
-                            android:layout_marginBottom="0dp"
-                            android:layout_weight="1"
-                            android:text="@string/calPerDay"
-                            android:textSize="20sp"
-                            tools:ignore="TextContrastCheck" />
-
-                    </TableRow>
-
-                </TableLayout>
-
-                <TextView
-                    android:id="@+id/dailyCalorieNeedsMessageTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginBottom="0dp"
-                    android:text="@string/dailyCalorieNeedsMessage"
-                    android:textSize="20sp"
-                    tools:ignore="TextContrastCheck" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:background="@drawable/cell">
+                    <TextView
+                        android:id="@+id/ActivityLevelTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|center_horizontal"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="0"
+                        android:text="@string/sedentaryRowLabel"
+                        android:textColor="@color/green"
+                        android:textSize="24sp"
+                        tools:ignore="TextContrastCheck" />
 
                     <TableLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
-                        android:background="@drawable/cell">
+                        android:layout_height="wrap_content">
 
                         <TableRow
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <TextView
+                                android:id="@+id/dailyCalorieNeedsTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_column="0"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginBottom="0dp"
                                 android:layout_weight="2"
-                                android:background="@drawable/cell">
+                                android:text="@string/dailyCalorieNeeds"
+                                android:textSize="20sp"
+                                tools:ignore="TextContrastCheck" />
 
-                                <TextView
-                                    android:id="@+id/activityLevelHeader"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_column="0"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginBottom="0dp"
-                                    android:layout_weight="2"
-                                    android:text="@string/activityLevelHeader"
-                                    android:textSize="20sp"
-                                    tools:ignore="TextContrastCheck" />
-
-                            </FrameLayout>
-
-                            <FrameLayout
+                            <TextView
+                                android:id="@+id/dailyCalorieNeedsValue"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:background="@drawable/cell">
+                                android:background="@android:color/transparent"
+                                android:maxLength="4"
+                                android:text="3300"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/green"
+                                android:textSize="20sp"
+                                tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+                                tools:textAlignment="textStart" />
 
-                                <TextView
-                                    android:id="@+id/calorieHeader"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_column="0"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginBottom="0dp"
-                                    android:layout_weight="1"
-                                    android:text="@string/calorieHeader"
-                                    android:textSize="20sp"
-                                    tools:ignore="TextContrastCheck" />
-                            </FrameLayout>
-
-                        </TableRow>
-
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@drawable/cell">
-
-                                <TextView
-                                    android:id="@+id/sedentaryRowLabel"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_column="0"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginBottom="0dp"
-                                    android:layout_weight="2"
-                                    android:text="@string/sedentaryRowLabel"
-                                    android:textSize="20sp"
-                                    tools:ignore="TextContrastCheck" />
-                            </FrameLayout>
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <TextView
+                                android:id="@+id/caloriesPerDayTextView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_column="0"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginBottom="0dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/cell">
-
-                                <TextView
-                                    android:id="@+id/sedentaryRowValue"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_weight="1"
-                                    android:background="@android:color/transparent"
-                                    android:enabled="false"
-                                    android:maxLength="4"
-                                    android:text="2492"
-                                    android:textAlignment="textStart"
-                                    android:textColor="@color/green"
-                                    android:textSize="20sp"
-                                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-                                    tools:textAlignment="textStart" />
-                            </FrameLayout>
-
+                                android:text="@string/calPerDay"
+                                android:textSize="20sp"
+                                tools:ignore="TextContrastCheck" />
                         </TableRow>
 
                         <TableRow
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <TextView
+                                android:id="@+id/bmrTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_column="0"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginBottom="0dp"
                                 android:layout_weight="2"
-                                android:background="@drawable/cell">
+                                android:text="@string/bmr"
+                                android:textSize="20sp"
+                                tools:ignore="TextContrastCheck" />
 
-                                <TextView
-                                    android:id="@+id/lightlyActiveRowLabel"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_column="0"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginBottom="0dp"
-                                    android:layout_weight="2"
-                                    android:text="@string/lightlyActiveRowLabel"
-                                    android:textSize="20sp"
-                                    tools:ignore="TextContrastCheck" />
-                            </FrameLayout>
-
-                            <FrameLayout
+                            <TextView
+                                android:id="@+id/bmrValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:background="@drawable/cell">
+                                android:background="@android:color/transparent"
+                                android:enabled="false"
+                                android:maxLength="4"
+                                android:text="2076"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/green"
+                                android:textSize="20sp"
+                                tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+                                tools:textAlignment="textStart" />
 
-                                <TextView
-                                    android:id="@+id/lightlyActiveRowValue"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_weight="1"
-                                    android:background="@android:color/transparent"
-                                    android:enabled="false"
-                                    android:maxLength="4"
-                                    android:text="2855"
-                                    android:textAlignment="textStart"
-                                    android:textColor="@color/green"
-                                    android:textSize="20sp"
-                                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-                                    tools:textAlignment="textStart" />
-                            </FrameLayout>
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@drawable/cell">
-
-                                <TextView
-                                    android:id="@+id/ActiveRowLabel"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_column="0"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginBottom="0dp"
-                                    android:layout_weight="2"
-                                    android:text="@string/activeRowLabel"
-                                    android:textSize="20sp"
-                                    tools:ignore="TextContrastCheck" />
-                            </FrameLayout>
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <TextView
+                                android:id="@+id/caloriesPerDayTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_column="0"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginBottom="0dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/cell">
+                                android:text="@string/calPerDay"
+                                android:textSize="20sp"
+                                tools:ignore="TextContrastCheck" />
 
-                                <TextView
-                                    android:id="@+id/activeRowValue"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_weight="1"
-                                    android:background="@android:color/transparent"
-                                    android:enabled="false"
-                                    android:maxLength="4"
-                                    android:text="3042"
-                                    android:textAlignment="textStart"
-                                    android:textColor="@color/green"
-                                    android:textSize="20sp"
-                                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-                                    tools:textAlignment="textStart" />
-                            </FrameLayout>
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@drawable/cell">
-
-                                <TextView
-                                    android:id="@+id/veryActiveRowLabel"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_column="0"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_marginBottom="0dp"
-                                    android:layout_weight="2"
-                                    android:text="@string/veryActiveRowLabel"
-                                    android:textSize="20sp"
-                                    tools:ignore="TextContrastCheck" />
-                            </FrameLayout>
-
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@drawable/cell">
-
-                                <TextView
-                                    android:id="@+id/veryActiveRowValue"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="4dp"
-                                    android:layout_weight="1"
-                                    android:background="@android:color/transparent"
-                                    android:enabled="false"
-                                    android:maxLength="4"
-                                    android:text="3582"
-                                    android:textAlignment="textStart"
-                                    android:textColor="@color/green"
-                                    android:textSize="20sp"
-                                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-                                    tools:textAlignment="textStart" />
-                            </FrameLayout>
                         </TableRow>
 
                     </TableLayout>
-                </FrameLayout>
-
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/activityLevelCard"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@color/light_gray"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/activityLevelText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|center_vertical"
-            android:text="@string/activity_level"
-            android:textAlignment="center"
-            android:textColor="@color/red"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:ignore="TextContrastCheck" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/activityLevelDataCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/light_gray"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityLevelCard">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/workoutIntensityTextView"
+                        android:id="@+id/dailyCalorieNeedsMessageTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/workoutIntensity"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="@string/dailyCalorieNeedsMessage"
+                        android:textSize="20sp"
                         tools:ignore="TextContrastCheck" />
-                </TableRow>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:background="@drawable/cell">
 
-                        <EditText
-                            android:id="@+id/caloriesPerHourValue"
-                            android:layout_width="wrap_content"
+                        <TableLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:hint="@string/hints"
-                            android:inputType="number"
-                            android:maxLength="4"
-                            android:text="450"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/blue"
-                            android:textSize="16sp"
-                            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+                            android:layout_margin="1dp"
+                            android:background="@drawable/cell">
 
-                        <TextView
-                            android:id="@+id/caloriesPerHourTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:layout_weight="1"
-                            android:text="@string/calPerHour"
-                            android:textSize="16sp"
-                            tools:ignore="TextContrastCheck" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                        <Spinner
-                            android:id="@+id/intensitySpinner"
-                            style="@style/mySpinnerItemStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:entries="@array/spinnerItems"
-                            tools:ignore="TouchTargetSizeCheck" />
-                    </LinearLayout>
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/cell">
 
-                </TableRow>
+                                    <TextView
+                                        android:id="@+id/activityLevelHeader"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_column="0"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_weight="2"
+                                        android:text="@string/activityLevelHeader"
+                                        android:textSize="20sp"
+                                        tools:ignore="TextContrastCheck" />
 
-                <TableLayout
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/calorieHeader"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_column="0"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_weight="1"
+                                        android:text="@string/calorieHeader"
+                                        android:textSize="20sp"
+                                        tools:ignore="TextContrastCheck" />
+                                </FrameLayout>
+
+                            </TableRow>
+
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/sedentaryRowLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_column="0"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_weight="2"
+                                        android:text="@string/sedentaryRowLabel"
+                                        android:textSize="20sp"
+                                        tools:ignore="TextContrastCheck" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/sedentaryRowValue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_weight="1"
+                                        android:background="@android:color/transparent"
+                                        android:enabled="false"
+                                        android:maxLength="4"
+                                        android:text="2492"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/green"
+                                        android:textSize="20sp"
+                                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+                                        tools:textAlignment="textStart" />
+                                </FrameLayout>
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/lightlyActiveRowLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_column="0"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_weight="2"
+                                        android:text="@string/lightlyActiveRowLabel"
+                                        android:textSize="20sp"
+                                        tools:ignore="TextContrastCheck" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/lightlyActiveRowValue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_weight="1"
+                                        android:background="@android:color/transparent"
+                                        android:enabled="false"
+                                        android:maxLength="4"
+                                        android:text="2855"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/green"
+                                        android:textSize="20sp"
+                                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+                                        tools:textAlignment="textStart" />
+                                </FrameLayout>
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/ActiveRowLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_column="0"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_weight="2"
+                                        android:text="@string/activeRowLabel"
+                                        android:textSize="20sp"
+                                        tools:ignore="TextContrastCheck" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/activeRowValue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_weight="1"
+                                        android:background="@android:color/transparent"
+                                        android:enabled="false"
+                                        android:maxLength="4"
+                                        android:text="3042"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/green"
+                                        android:textSize="20sp"
+                                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+                                        tools:textAlignment="textStart" />
+                                </FrameLayout>
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/veryActiveRowLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_column="0"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_weight="2"
+                                        android:text="@string/veryActiveRowLabel"
+                                        android:textSize="20sp"
+                                        tools:ignore="TextContrastCheck" />
+                                </FrameLayout>
+
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/cell">
+
+                                    <TextView
+                                        android:id="@+id/veryActiveRowValue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="4dp"
+                                        android:layout_weight="1"
+                                        android:background="@android:color/transparent"
+                                        android:enabled="false"
+                                        android:maxLength="4"
+                                        android:text="3582"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/green"
+                                        android:textSize="20sp"
+                                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+                                        tools:textAlignment="textStart" />
+                                </FrameLayout>
+                            </TableRow>
+
+                        </TableLayout>
+                    </FrameLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/activityLevelCard"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="@color/light_gray"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/activityLevelText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|center_vertical"
+                android:text="@string/activity_level"
+                android:textAlignment="center"
+                android:textColor="@color/red"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="TextContrastCheck" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/activityLevelDataCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/light_gray"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activityLevelCard">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/workoutsPerWeekTextView"
+                            android:id="@+id/workoutIntensityTextView"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_column="0"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:text="@string/workoutsPerWeek"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/workoutIntensity"
+                            android:textAlignment="center"
                             android:textSize="16sp"
                             tools:ignore="TextContrastCheck" />
-
-                        <EditText
-                            android:id="@+id/workoutsPerWeekValue"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:hint="@string/hints"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:text="5"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/blue"
-                            android:textSize="16sp"
-                            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-                            tools:textAlignment="textStart" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/averageWorkoutLengthTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_column="0"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:text="@string/averageWorkoutLength"
-                            android:textSize="16sp"
-                            tools:ignore="TextContrastCheck" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <EditText
-                                android:id="@+id/workoutLengthValue"
+                                android:id="@+id/caloriesPerHourValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
                                 android:layout_weight="1"
                                 android:background="@android:color/transparent"
                                 android:hint="@string/hints"
-                                android:inputType="numberDecimal"
-                                android:maxLength="5"
-                                android:text="1.5"
-                                android:textAlignment="textStart"
+                                android:inputType="number"
+                                android:maxLength="4"
+                                android:text="450"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/blue"
                                 android:textSize="16sp"
                                 tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
                             <TextView
-                                android:id="@+id/workoutLengthTextView"
+                                android:id="@+id/caloriesPerHourTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_weight="1"
+                                android:text="@string/calPerHour"
+                                android:textSize="16sp"
+                                tools:ignore="TextContrastCheck" />
+
+                            <Spinner
+                                android:id="@+id/intensitySpinner"
+                                style="@style/mySpinnerItemStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:entries="@array/spinnerItems"
+                                tools:ignore="TouchTargetSizeCheck" />
+                        </LinearLayout>
+
+                    </TableRow>
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/workoutsPerWeekTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_column="0"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:text="@string/workoutsPerWeek"
+                                android:textSize="16sp"
+                                tools:ignore="TextContrastCheck" />
+
+                            <EditText
+                                android:id="@+id/workoutsPerWeekValue"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_weight="1"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/hints"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:text="5"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/blue"
+                                android:textSize="16sp"
+                                tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
+                                tools:textAlignment="textStart" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/averageWorkoutLengthTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:text="@string/averageWorkoutLength"
+                                android:textSize="16sp"
+                                tools:ignore="TextContrastCheck" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/workoutLengthValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_weight="1"
+                                    android:background="@android:color/transparent"
+                                    android:hint="@string/hints"
+                                    android:inputType="numberDecimal"
+                                    android:maxLength="5"
+                                    android:text="1.5"
+                                    android:textAlignment="textStart"
+                                    android:textColor="@color/blue"
+                                    android:textSize="16sp"
+                                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                                <TextView
+                                    android:id="@+id/workoutLengthTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="0"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginBottom="4dp"
+                                    android:layout_weight="1"
+                                    android:text="hours"
+                                    android:textSize="16sp"
+                                    tools:ignore="TextContrastCheck" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/caloriesBurnedPerWorkoutTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:text="@string/calBurnedPerWorkout"
+                                android:textSize="16sp"
+                                tools:ignore="TextContrastCheck" />
+
+                            <TextView
+                                android:id="@+id/caloriesBurnedPerWorkoutValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_column="0"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:layout_weight="1"
-                                android:text="hours"
+                                android:text="675"
+                                android:textColor="@color/green"
                                 android:textSize="16sp"
                                 tools:ignore="TextContrastCheck" />
-                        </LinearLayout>
-                    </TableRow>
+                        </TableRow>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/caloriesBurnedPerWorkoutTextView"
+                        <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_column="0"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:text="@string/calBurnedPerWorkout"
-                            android:textSize="16sp"
-                            tools:ignore="TextContrastCheck" />
+                            android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/caloriesBurnedPerWorkoutValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="0"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:layout_weight="1"
-                            android:text="675"
-                            android:textColor="@color/green"
-                            android:textSize="16sp"
-                            tools:ignore="TextContrastCheck" />
-                    </TableRow>
+                            <TextView
+                                android:id="@+id/workoutCaloriesPerWeekTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:text="@string/workoutCalsPerDay"
+                                android:textSize="16sp"
+                                tools:ignore="TextContrastCheck" />
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                            <TextView
+                                android:id="@+id/workoutCaloriesPerWeekValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_column="0"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_weight="1"
+                                android:text="482"
+                                android:textColor="@color/green"
+                                android:textSize="16sp"
+                                tools:ignore="TextContrastCheck" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/workoutCaloriesPerWeekTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_column="0"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:text="@string/workoutCalsPerDay"
-                            android:textSize="16sp"
-                            tools:ignore="TextContrastCheck" />
+        </androidx.cardview.widget.CardView>
 
-                        <TextView
-                            android:id="@+id/workoutCaloriesPerWeekValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_column="0"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:layout_weight="1"
-                            android:text="482"
-                            android:textColor="@color/green"
-                            android:textSize="16sp"
-                            tools:ignore="TextContrastCheck" />
-                    </TableRow>
-                </TableLayout>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bmrCard"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/light_gray"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activityLevelDataCard">
 
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/bmrCard"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/light_gray"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityLevelDataCard">
-
-        <TextView
-            android:id="@+id/activityLevelText2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|center_vertical"
-            android:text="@string/basicMetabolicRate"
-            android:textAlignment="center"
-            android:textColor="@color/red"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:ignore="TextContrastCheck" />
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/activityLevelText2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|center_vertical"
+                android:text="@string/basicMetabolicRate"
+                android:textAlignment="center"
+                android:textColor="@color/red"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="TextContrastCheck" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
