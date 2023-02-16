@@ -72,16 +72,16 @@
             app:layout_constraintStart_toStartOf="@id/profileName"
             app:layout_constraintTop_toBottomOf="@id/profileSpace1" />
 
-        <EditText
+        <Button
             android:id="@+id/profileAge"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
             tools:text="AGE"
             android:textAlignment="center"
-            android:textColor="#0000FF"
+            android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:letterSpacing="0"
             app:layout_constraintBaseline_toBaselineOf="@id/profileAgeLabel"
             app:layout_constraintEnd_toStartOf="@id/profileSexLabel"
             app:layout_constraintStart_toEndOf="@id/profileAgeLabel" />
@@ -151,18 +151,17 @@
             app:layout_constraintStart_toStartOf="@id/profileName"
             app:layout_constraintTop_toBottomOf="@id/profileSpace3" />
 
-        <EditText
+        <Button
             android:id="@+id/profileHeight"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
             tools:text="HEIGHT"
             android:textAlignment="center"
-            android:textColor="#0000FF"
+            android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="@id/profileHeightLabel"
-            app:layout_constraintBottom_toBottomOf="@id/profileHeightLabel"
+            android:letterSpacing="0"
+            app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
             app:layout_constraintEnd_toStartOf="@id/profileWeightLabel"
             app:layout_constraintStart_toEndOf="@id/profileHeightLabel" />
 
@@ -179,16 +178,17 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/profileSpace6" />
 
-        <EditText
+        <Button
             android:id="@+id/profileWeight"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             tools:text="WEIGHT"
             android:textAlignment="center"
-            android:textColor="#0000FF"
+            android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:letterSpacing="0"
             app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
             app:layout_constraintEnd_toEndOf="@id/profileName"
             app:layout_constraintStart_toEndOf="@id/profileWeightLabel" />

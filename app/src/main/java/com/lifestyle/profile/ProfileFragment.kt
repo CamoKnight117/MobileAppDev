@@ -13,20 +13,26 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.lifestyle.R
+import com.lifestyle.fragment.NumberPickerFragment
 import com.lifestyle.main.User
 import com.lifestyle.main.UserProvider
 
 class ProfileFragment : Fragment() {
     private var userProvider: UserProvider? = null
     private var nameEditText: EditText? = null
-    private var ageEditText: EditText? = null
-    private var weightEditText: EditText? = null
-    private var heightEditText: EditText? = null
+    private var ageButton: Button? = null
+    private var weightButton: Button? = null
+    private var heightButton: Button? = null
     private var sexSpinner: Spinner? = null
     private var activityLevelTextView : TextView? = null
     private var portraitButton : ImageButton? = null
+    private val NUMBER_PICKER_TAG_AGE = "profileAge"
+    private val NUMBER_PICKER_TAG_HEIGHT = "profileHeight"
+    private val NUMBER_PICKER_TAG_WEIGHT = "profileWeight"
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -50,9 +56,9 @@ class ProfileFragment : Fragment() {
 
         //Get the views
         nameEditText = view.findViewById<View>(R.id.profileName) as EditText
-        ageEditText = view.findViewById<View>(R.id.profileAge) as EditText
-        weightEditText = view.findViewById<View>(R.id.profileWeight) as EditText
-        heightEditText = view.findViewById<View>(R.id.profileHeight) as EditText
+        ageButton = view.findViewById<View>(R.id.profileAge) as Button
+        weightButton = view.findViewById<View>(R.id.profileWeight) as Button
+        heightButton = view.findViewById<View>(R.id.profileHeight) as Button
         sexSpinner = view.findViewById<View>(R.id.profileSex) as Spinner
         activityLevelTextView = view.findViewById<View>(R.id.profileActivityLevel) as TextView
         portraitButton = view.findViewById(R.id.profilePortrait)
@@ -64,9 +70,10 @@ class ProfileFragment : Fragment() {
         if(user.profilePictureThumbnail != null)
             portraitButton?.setImageBitmap(user.profilePictureThumbnail)
         nameEditText?.setText(user.name)
-        ageEditText?.setText(user.age.toString())
-        weightEditText?.setText(user.weight.toString())
-        heightEditText?.setText(user.height.toString())
+        // Update the age, weight, height views.
+        onAgeChanged()
+        onWeightChanged()
+        onHeightChanged()
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.sex,
@@ -82,17 +89,40 @@ class ProfileFragment : Fragment() {
 
         // Set up handlers to change the data.
         nameEditText?.doOnTextChanged { text, _, _, _ -> user.name = text?.toString() }
-        ageEditText?.doOnTextChanged { text, _, _, _ ->
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_AGE, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.age = result
+            onAgeChanged()
+        }
+        ageButton?.setOnClickListener { _ ->
+            NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, user.age, getString(R.string.years))
+                .show(childFragmentManager, NUMBER_PICKER_TAG_AGE)
+        }
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_HEIGHT, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.height = result
+            onHeightChanged()
+        }
+        heightButton?.setOnClickListener { _ ->
+            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, user.height, getString(R.string.inches))
+                .show(childFragmentManager, NUMBER_PICKER_TAG_HEIGHT)
+        }
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WEIGHT, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.weight = result
+            onWeightChanged()
+        }
+        weightButton?.setOnClickListener { _ ->
+            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight, getString(R.string.pounds))
+                .show(childFragmentManager, NUMBER_PICKER_TAG_WEIGHT)
+        }
+        /*heightButton?.doOnTextChanged { text, _, _, _ ->
             if(text != null)
-                user.age = parseOrResetText(ageEditText!!, text, user.age)
+                user.height = parseOrResetText(heightButton!!, text, user.height)
         }
-        heightEditText?.doOnTextChanged { text, _, _, _ ->
-            if(text != null)
-                user.height = parseOrResetText(heightEditText!!, text, user.height)
-        }
-        weightEditText?.doOnTextChanged { text, _, _, _ ->
-            user.weight = parseOrResetText(weightEditText!!, text, user.weight)
-        }
+        weightButton?.doOnTextChanged { text, _, _, _ ->
+            user.weight = parseOrResetText(weightButton!!, text, user.weight)
+        }*/
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
         portraitButton?.setOnClickListener { _ ->
             //The button press should open a camera
@@ -105,6 +135,18 @@ class ProfileFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun onAgeChanged() {
+        ageButton?.setText(userProvider?.getUser()?.age.toString() +" "+ getString(R.string.yearsAbbreviation))
+    }
+
+    private fun onHeightChanged() {
+        heightButton?.setText(userProvider?.getUser()?.height.toString() +" "+ getString(R.string.inchesAbbreviation))
+    }
+
+    private fun onWeightChanged() {
+        weightButton?.setText(userProvider?.getUser()?.weight.toString() +" "+ getString(R.string.poundsAbbreviation))
     }
 
     private var sexSpinnerListener = object : AdapterView.OnItemSelectedListener {

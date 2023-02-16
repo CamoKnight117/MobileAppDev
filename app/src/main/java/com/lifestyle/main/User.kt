@@ -5,10 +5,10 @@ import com.lifestyle.bmr.ActivityLevel
 
 class User() {
     var name: String? = null
-    var age = 0
+    var age = 30
     var location = "TODO"
-    var height = 0
-    var weight = 0
+    var height = 68
+    var weight = 150
     var sex = Sex.UNASSIGNED
     var activityLevel = ActivityLevel()
     var profilePicture = "TODO"

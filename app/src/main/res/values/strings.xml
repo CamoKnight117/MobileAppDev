@@ -12,15 +12,24 @@
     <string name="calBurnedPerWorkout">Calories burned per workout:</string>
     <string name="calPerDay">Calories/day</string>
     <string name="calPerHour">cal/hr</string>
+    <string name="cancel">Cancel</string>
     <string name="dailyCalorieNeeds">Daily Calorie Needs: </string>
     <string name="dailyCalorieNeedsMessage">Daily calorie needs by activity level: </string>
     <string name="heightLabel">Height:</string>
+    <string name="inches">inches</string>
+    <string name="inchesAbbreviation">in.</string>
     <string name="recommendedCalorieIntake">Recommended Calorie Intake  </string>
     <string name="lightlyActiviteRowLabel">Lightly Active</string>
     <string name="location">Location</string>
     <string name="name">Name</string>
+    <string name="pounds">pounds</string>
+    <string name="poundsAbbreviation">lb.</string>
     <string name="sedentaryRowLabel">Sedentary</string>
+    <string name="setAge">Set age</string>
+    <string name="setHeight">Set height</string>
+    <string name="setWeight">Set weight</string>
     <string name="sexLabel">Sex:</string>
+    <string name="submit">Submit</string>
     <string name="weightLabel">Weight:</string>
     <string name="workoutsPerWeek">Workouts per week:</string>
     <string name="workoutIntensity">Workout intensity:</string>
@@ -35,4 +44,6 @@
     <string name="bmr_button">+BMR-</string>
     <string name="weather_button">+Weather-</string>
     <string name="hikes_button">+Hikes-</string>
+    <string name="years">years</string>
+    <string name="yearsAbbreviation">yr.</string>
 </resources>
