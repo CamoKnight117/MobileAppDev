@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.fragment.NavBar
 import com.lifestyle.profile.ProfileFragment
