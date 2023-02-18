@@ -50,7 +50,7 @@
                 android:contentDescription="@string/bmr_button"
                 tools:ignore="ButtonStyle" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/weather_button"
                 android:layout_width="64dp"
                 android:layout_height="64dp"

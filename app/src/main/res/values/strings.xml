@@ -22,6 +22,7 @@
     <string name="lightlyActiviteRowLabel">Lightly Active</string>
     <string name="location">Location</string>
     <string name="name">Name</string>
+    <string name="none">None</string>
     <string name="pounds">pounds</string>
     <string name="poundsAbbreviation">lb.</string>
     <string name="sedentaryRowLabel">Sedentary</string>
