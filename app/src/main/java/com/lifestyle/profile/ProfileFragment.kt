@@ -24,10 +24,11 @@ import com.lifestyle.main.UserProvider
 class ProfileFragment : Fragment() {
     private var userProvider: UserProvider? = null
     private var nameEditText: EditText? = null
-    private var ageButton: Button? = null
-    private var weightButton: Button? = null
-    private var heightButton: Button? = null
+    private var ageButton: TextView? = null
+    private var weightButton: TextView? = null
+    private var heightButton: TextView? = null
     private var sexSpinner: Spinner? = null
+    private var locationTextView : TextView? = null
     private var activityLevelTextView : TextView? = null
     private var portraitButton : ImageButton? = null
     private val NUMBER_PICKER_TAG_AGE = "profileAge"
@@ -56,10 +57,11 @@ class ProfileFragment : Fragment() {
 
         //Get the views
         nameEditText = view.findViewById<View>(R.id.profileName) as EditText
-        ageButton = view.findViewById<View>(R.id.profileAge) as Button
-        weightButton = view.findViewById<View>(R.id.profileWeight) as Button
-        heightButton = view.findViewById<View>(R.id.profileHeight) as Button
+        ageButton = view.findViewById(R.id.profileAge)
+        weightButton = view.findViewById(R.id.profileWeight)
+        heightButton = view.findViewById(R.id.profileHeight)
         sexSpinner = view.findViewById<View>(R.id.profileSex) as Spinner
+        locationTextView = view.findViewById(R.id.profileLocation)
         activityLevelTextView = view.findViewById<View>(R.id.profileActivityLevel) as TextView
         portraitButton = view.findViewById(R.id.profilePortrait)
 
@@ -86,6 +88,7 @@ class ProfileFragment : Fragment() {
         }
         sexSpinner?.setSelection(user.sex.ordinal)
         activityLevelTextView?.text = user.activityLevel.getLevel().name(requireContext())
+        onLocationUpdated()
 
         // Set up handlers to change the data.
         nameEditText?.doOnTextChanged { text, _, _, _ -> user.name = text?.toString() }
@@ -133,20 +136,31 @@ class ProfileFragment : Fragment() {
                 //Do error handling here
             }
         }
+        locationTextView?.setOnClickListener { view ->
+            activity?.let {
+                user?.refreshLocation(it) { newLocation ->
+                    onLocationUpdated()
+                }
+            }
+        }
 
         return view
     }
 
     private fun onAgeChanged() {
-        ageButton?.setText(userProvider?.getUser()?.age.toString() +" "+ getString(R.string.yearsAbbreviation))
+        ageButton?.text = getString(R.string.yearsQuantity, userProvider?.getUser()?.age)
     }
 
     private fun onHeightChanged() {
-        heightButton?.setText(userProvider?.getUser()?.height.toString() +" "+ getString(R.string.inchesAbbreviation))
+        heightButton?.text = getString(R.string.inchesQuantity, userProvider?.getUser()?.height)
     }
 
     private fun onWeightChanged() {
-        weightButton?.setText(userProvider?.getUser()?.weight.toString() +" "+ getString(R.string.poundsAbbreviation))
+        weightButton?.text = getString(R.string.poundsQuantity, userProvider?.getUser()?.weight)
+    }
+
+    private fun onLocationUpdated() {
+        locationTextView?.text = userProvider?.getUser()?.locationName ?: getString(R.string.none)
     }
 
     private var sexSpinnerListener = object : AdapterView.OnItemSelectedListener {

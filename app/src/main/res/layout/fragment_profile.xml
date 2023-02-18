@@ -72,16 +72,16 @@
             app:layout_constraintStart_toStartOf="@id/profileName"
             app:layout_constraintTop_toBottomOf="@id/profileSpace1" />
 
-        <Button
+        <TextView
             android:id="@+id/profileAge"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             tools:text="AGE"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textColor="#0000FF"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:letterSpacing="0"
             app:layout_constraintBaseline_toBaselineOf="@id/profileAgeLabel"
             app:layout_constraintEnd_toStartOf="@id/profileSexLabel"
             app:layout_constraintStart_toEndOf="@id/profileAgeLabel" />
@@ -103,8 +103,9 @@
             android:id="@+id/profileSex"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             tools:text="SEX"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="#0000FF"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -129,8 +130,9 @@
             android:id="@+id/profileLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintHeight_min="48dp"
             tools:text="LOCATION"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="#0000FF"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -151,16 +153,16 @@
             app:layout_constraintStart_toStartOf="@id/profileName"
             app:layout_constraintTop_toBottomOf="@id/profileSpace3" />
 
-        <Button
+        <TextView
             android:id="@+id/profileHeight"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             tools:text="HEIGHT"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textColor="#0000FF"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:letterSpacing="0"
             app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
             app:layout_constraintEnd_toStartOf="@id/profileWeightLabel"
             app:layout_constraintStart_toEndOf="@id/profileHeightLabel" />
@@ -178,17 +180,17 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/profileSpace6" />
 
-        <Button
+        <TextView
             android:id="@+id/profileWeight"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:inputType="number"
             tools:text="WEIGHT"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textColor="#0000FF"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:letterSpacing="0"
             app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
             app:layout_constraintEnd_toEndOf="@id/profileName"
             app:layout_constraintStart_toEndOf="@id/profileWeightLabel" />

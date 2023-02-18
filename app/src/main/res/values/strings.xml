@@ -17,14 +17,14 @@
     <string name="dailyCalorieNeedsMessage">Daily calorie needs by activity level: </string>
     <string name="heightLabel">Height:</string>
     <string name="inches">inches</string>
-    <string name="inchesAbbreviation">in.</string>
+    <string name="inchesQuantity">%1$d in.</string>
     <string name="recommendedCalorieIntake">Recommended Calorie Intake  </string>
     <string name="lightlyActiviteRowLabel">Lightly Active</string>
     <string name="location">Location</string>
     <string name="name">Name</string>
     <string name="none">None</string>
     <string name="pounds">pounds</string>
-    <string name="poundsAbbreviation">lb.</string>
+    <string name="poundsQuantity">%1$d lb.</string>
     <string name="sedentaryRowLabel">Sedentary</string>
     <string name="setAge">Set age</string>
     <string name="setHeight">Set height</string>
@@ -46,5 +46,5 @@
     <string name="weather_button">+Weather-</string>
     <string name="hikes_button">+Hikes-</string>
     <string name="years">years</string>
-    <string name="yearsAbbreviation">yr.</string>
+    <string name="yearsQuantity">%1$d yr.</string>
 </resources>
