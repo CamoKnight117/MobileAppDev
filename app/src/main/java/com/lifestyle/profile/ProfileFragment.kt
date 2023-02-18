@@ -119,13 +119,6 @@ class ProfileFragment : Fragment() {
             NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight, getString(R.string.pounds))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_WEIGHT)
         }
-        /*heightButton?.doOnTextChanged { text, _, _, _ ->
-            if(text != null)
-                user.height = parseOrResetText(heightButton!!, text, user.height)
-        }
-        weightButton?.doOnTextChanged { text, _, _, _ ->
-            user.weight = parseOrResetText(weightButton!!, text, user.weight)
-        }*/
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
         portraitButton?.setOnClickListener { _ ->
             //The button press should open a camera
@@ -188,22 +181,6 @@ class ProfileFragment : Fragment() {
                 userProvider?.getUser()?.profilePictureThumbnail = thumbnailImage
                 // TODO: Set userProvider.getUser()'s profile picture.
             }
-        }
-    }
-
-    companion object {
-        private fun parseOrResetText(editText: EditText, text: CharSequence?, currentValue: Int): Int {
-            if (text.toString() == "") {
-                editText.setText("0")
-                return 0;
-            }
-            if(text != null) {
-                try {
-                    return Integer.parseInt(text.toString())
-                } catch(_: NumberFormatException) { }
-            }
-            editText.setText(currentValue)
-            return currentValue
         }
     }
 }
