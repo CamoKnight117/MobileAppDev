@@ -19,6 +19,7 @@
     <string name="lightlyActiviteRowLabel">Lightly Active</string>
     <string name="location">Location</string>
     <string name="name">Name</string>
+    <string name="none">None</string>
     <string name="sedentaryRowLabel">Sedentary</string>
     <string name="sexLabel">Sex:</string>
     <string name="weightLabel">Weight:</string>

@@ -11,17 +11,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/weatherWeatherFragment"
-        android:text="PROFILE ACTIVITY"
+        android:text="WEATHER ACTIVITY"
         android:textColor="#000000"
         />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/weatherWeatherFragment"
-        android:name="com.lifestyle.profile.ProfileFragment"
+        android:name="com.lifestyle.weather.WeatherFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/weatherDebugLabel"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_weather" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
