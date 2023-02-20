@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".BMRPage">
+    tools:context="com.lifestyle.bmr.BMRPage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,8 +17,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/bmrDataCard"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="274dp"
+            android:layout_marginTop="7dp"
             app:cardBackgroundColor="@color/light_gray"
             app:cardCornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -423,7 +423,7 @@
             android:id="@+id/activityLevelCard"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="7dp"
             app:cardBackgroundColor="@color/light_gray"
             app:cardCornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -447,8 +447,8 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/activityLevelDataCard"
             android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="190dp"
+            android:layout_marginTop="7dp"
             app:cardBackgroundColor="@color/light_gray"
             app:cardCornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -471,7 +471,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/workoutIntensity"
                     android:textAlignment="center"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     tools:ignore="TextContrastCheck" />
 
                 <TableLayout
@@ -492,7 +492,7 @@
                                 android:id="@+id/intensitySpinner"
                                 style="@style/mySpinnerItemStyle"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:entries="@array/spinnerItems"
                                 tools:ignore="TouchTargetSizeCheck" />
                         </LinearLayout>
@@ -515,7 +515,7 @@
                                 android:text="450"
                                 android:textAlignment="textEnd"
                                 android:textColor="@color/blue"
-                                android:textSize="16sp"
+                                android:textSize="20sp"
                                 tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
                             <TextView
@@ -525,7 +525,7 @@
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:text="@string/calPerHour"
-                                android:textSize="16sp"
+                                android:textSize="20sp"
                                 tools:ignore="TextContrastCheck" />
 
                         </LinearLayout>
@@ -545,7 +545,7 @@
                             android:layout_marginBottom="4dp"
                             android:layout_weight="3"
                             android:text="@string/workoutsPerWeek"
-                            android:textSize="16sp"
+                            android:textSize="20sp"
                             tools:ignore="TextContrastCheck" />
 
                         <EditText
@@ -560,7 +560,7 @@
                             android:text="5"
                             android:textAlignment="textStart"
                             android:textColor="@color/blue"
-                            android:textSize="16sp"
+                            android:textSize="20sp"
                             tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                             tools:textAlignment="textStart" />
                     </TableRow>
@@ -578,7 +578,7 @@
                             android:layout_marginBottom="4dp"
                             android:layout_weight="3"
                             android:text="@string/averageWorkoutLength"
-                            android:textSize="16sp"
+                            android:textSize="20sp"
                             tools:ignore="TextContrastCheck" />
 
                         <LinearLayout
@@ -599,7 +599,7 @@
                                 android:text="1.5"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/blue"
-                                android:textSize="16sp"
+                                android:textSize="20sp"
                                 tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
                             <TextView
@@ -610,7 +610,7 @@
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginBottom="4dp"
                                 android:text="hours"
-                                android:textSize="16sp"
+                                android:textSize="20sp"
                                 tools:ignore="TextContrastCheck" />
                         </LinearLayout>
                     </TableRow>
@@ -628,7 +628,7 @@
                             android:layout_marginBottom="4dp"
                             android:layout_weight="3"
                             android:text="@string/calBurnedPerWorkout"
-                            android:textSize="16sp"
+                            android:textSize="20sp"
                             tools:ignore="TextContrastCheck" />
 
                         <TextView
@@ -641,7 +641,7 @@
                             android:layout_weight="2"
                             android:text="675"
                             android:textColor="@color/green"
-                            android:textSize="16sp"
+                            android:textSize="20sp"
                             tools:ignore="TextContrastCheck" />
                     </TableRow>
 
@@ -658,7 +658,7 @@
                             android:layout_marginBottom="4dp"
                             android:layout_weight="3"
                             android:text="@string/workoutCalsPerDay"
-                            android:textSize="16sp"
+                            android:textSize="20sp"
                             tools:ignore="TextContrastCheck" />
 
                         <TextView
@@ -671,7 +671,7 @@
                             android:layout_weight="2"
                             android:text="482"
                             android:textColor="@color/green"
-                            android:textSize="16sp"
+                            android:textSize="20sp"
                             tools:ignore="TextContrastCheck" />
                     </TableRow>
                 </TableLayout>
@@ -683,7 +683,7 @@
             android:id="@+id/bmrCard"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             app:cardBackgroundColor="@color/light_gray"
             app:cardCornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="parent"
