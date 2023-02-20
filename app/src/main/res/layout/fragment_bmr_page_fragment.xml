@@ -483,57 +483,55 @@
                             tools:ignore="TextContrastCheck" />
                     </TableRow>
 
-                    <TableRow
+                    <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <LinearLayout
+                        <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <EditText
-                                android:id="@+id/caloriesPerHourValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@android:color/transparent"
-                                android:hint="@string/hints"
-                                android:inputType="number"
-                                android:maxLength="4"
-                                android:text="450"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/blue"
-                                android:textSize="16sp"
-                                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
-
-                            <TextView
-                                android:id="@+id/caloriesPerHourTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:layout_marginBottom="4dp"
-                                android:layout_weight="1"
-                                android:text="@string/calPerHour"
-                                android:textSize="16sp"
-                                tools:ignore="TextContrastCheck" />
+                            android:layout_height="match_parent">
 
                             <Spinner
                                 android:id="@+id/intensitySpinner"
                                 style="@style/mySpinnerItemStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:entries="@array/spinnerItems"
                                 tools:ignore="TouchTargetSizeCheck" />
-                        </LinearLayout>
 
-                    </TableRow>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="4dp"
+                                android:orientation="horizontal">
 
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                                <EditText
+                                    android:id="@+id/caloriesPerHourValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:hint="@string/hints"
+                                    android:inputType="number"
+                                    android:maxLength="4"
+                                    android:text="450"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/blue"
+                                    android:textSize="16sp"
+                                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                                <TextView
+                                    android:id="@+id/caloriesPerHourTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginBottom="4dp"
+                                    android:text="@string/calPerHour"
+                                    android:textSize="16sp"
+                                    tools:ignore="TextContrastCheck" />
+
+                            </LinearLayout>
+
+                        </TableRow>
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -554,7 +552,6 @@
                                 android:id="@+id/workoutsPerWeekValue"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:layout_weight="1"
                                 android:background="@android:color/transparent"
                                 android:hint="@string/hints"
                                 android:inputType="number"
@@ -639,7 +636,6 @@
                                 android:layout_column="0"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginBottom="4dp"
-                                android:layout_weight="1"
                                 android:text="675"
                                 android:textColor="@color/green"
                                 android:textSize="16sp"
@@ -668,7 +664,6 @@
                                 android:layout_column="0"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginBottom="4dp"
-                                android:layout_weight="1"
                                 android:text="482"
                                 android:textColor="@color/green"
                                 android:textSize="16sp"
