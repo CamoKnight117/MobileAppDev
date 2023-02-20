@@ -89,6 +89,7 @@ class ProfileFragment : Fragment() {
         sexSpinner?.setSelection(user.sex.ordinal)
         activityLevelTextView?.text = user.activityLevel.getLevel().name(requireContext())
         onLocationUpdated()
+        portraitButton?.setImageBitmap(user.profilePictureThumbnail)
 
         // Set up handlers to change the data.
         nameEditText?.doOnTextChanged { text, _, _, _ -> user.name = text?.toString() }

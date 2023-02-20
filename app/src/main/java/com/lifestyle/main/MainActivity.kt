@@ -26,7 +26,7 @@ import com.lifestyle.weather.WeatherFragment
     This activity could be stored in a single table database design
  */
 class MainActivity : AppCompatActivity(), UserProvider {
-    private val user: User = User()
+    private var user: User = User()
     init {
         user.age = 23
         user.height = 180
@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity(), UserProvider {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Load any saved [User] from storage.
+        user = User.loadFromDevice(this) ?: user
+
         startFragment(NavBar())
 
         findViewById<Button>(R.id.prof_button).setOnClickListener {
@@ -54,6 +57,12 @@ class MainActivity : AppCompatActivity(), UserProvider {
         findViewById<View>(R.id.weather_button).setOnClickListener {
             startFragment(WeatherFragment())
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        user?.saveToDevice(this)
     }
 
     private fun startFragment(fragment: Fragment) {

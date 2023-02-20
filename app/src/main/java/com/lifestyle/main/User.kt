@@ -5,16 +5,32 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.location.Location
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
 import com.lifestyle.bmr.ActivityLevel
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.encodeToString
+import java.io.FileNotFoundException
 
+@Serializable
 class User() {
     var name: String? = null
     var age = 0
-    var location: Location? = null
+    public var location: Location?
+        get() = serializableLocation?.location
+        set(value) {
+            serializableLocation = if(value == null)
+                null;
+            else
+                SerializableLocation(value)
+        }
+    private var serializableLocation: SerializableLocation? = null
     var locationName: String? = null
         private set
     var height = 0
@@ -22,6 +38,7 @@ class User() {
     var sex = Sex.UNASSIGNED
     var activityLevel = ActivityLevel()
     var profilePicture = "TODO"
+    @Transient
     var profilePictureThumbnail : Bitmap? = null
 
     enum class Sex
@@ -117,6 +134,42 @@ class User() {
                 successCallback(newLocation)
             }
         } catch(e : SecurityException) {}
+    }
+
+    /** Write this [User] to a reserved location in internal storage. */
+    public fun saveToDevice(context: Context) {
+        // Save user data.
+        context.openFileOutput(userSavePath, Context.MODE_PRIVATE).use { file ->
+            file.write(Json.encodeToString(this).encodeToByteArray());
+        }
+        // Save the profile picture thumbnail.
+        val portrait = profilePictureThumbnail
+        if(portrait != null) {
+            context.openFileOutput(userThumbnailSavePath, Context.MODE_PRIVATE).use { file ->
+                portrait.compress(Bitmap.CompressFormat.PNG, 90, file)
+            }
+        }
+    }
+
+    companion object {
+        private val userSavePath = "userProfile.json"
+        private val userThumbnailSavePath = "userProfileThumbnail.png"
+
+        /** @return The User stored in internal storage, or null if no user is stored. */
+        public fun loadFromDevice(context: Context): User? {
+            var result: User? = null
+            try {
+                // Read user data.
+                context.openFileInput(userSavePath).use { file ->
+                    result = Json.decodeFromString<User>(file.readBytes().decodeToString())
+                }
+                // Read the profile picture thumbnail.
+                context.openFileInput(userThumbnailSavePath).use { file ->
+                    result?.profilePictureThumbnail = BitmapFactory.decodeStream(file)
+                }
+            } catch (e: FileNotFoundException) { }
+            return result
+        }
     }
 }
 
