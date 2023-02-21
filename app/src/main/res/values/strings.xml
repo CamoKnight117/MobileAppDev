@@ -47,4 +47,6 @@
     <string name="hikes_button">+Hikes-</string>
     <string name="years">years</string>
     <string name="yearsQuantity">%1$d yr.</string>
+    <string name="weather">Weather</string>
+    <string name="temperature">Temperature</string>
 </resources>
