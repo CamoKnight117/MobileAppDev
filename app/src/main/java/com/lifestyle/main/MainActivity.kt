@@ -2,6 +2,7 @@ package com.lifestyle.main
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity(), UserProvider {
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.prof_button).setOnClickListener {
+            startFragment(ProfileFragment())
+        }
+
+        findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
             startFragment(ProfileFragment())
         }
 
