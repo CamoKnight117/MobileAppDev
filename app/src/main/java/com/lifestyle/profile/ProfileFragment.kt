@@ -13,8 +13,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.lifestyle.R
+import com.lifestyle.fragment.NumberPickerFragment
 import com.lifestyle.bmr.Level
 import com.lifestyle.main.User
 import com.lifestyle.main.UserProvider
@@ -23,12 +26,16 @@ import kotlin.math.roundToInt
 class ProfileFragment : Fragment() {
     private var userProvider: UserProvider? = null
     private var nameEditText: EditText? = null
-    private var ageEditText: EditText? = null
-    private var weightEditText: EditText? = null
-    private var heightEditText: EditText? = null
+    private var ageButton: TextView? = null
+    private var weightButton: TextView? = null
+    private var heightButton: TextView? = null
     private var sexSpinner: Spinner? = null
+    private var locationTextView : TextView? = null
     private var activityLevelTextView : TextView? = null
     private var portraitButton : ImageButton? = null
+    private val NUMBER_PICKER_TAG_AGE = "profileAge"
+    private val NUMBER_PICKER_TAG_HEIGHT = "profileHeight"
+    private val NUMBER_PICKER_TAG_WEIGHT = "profileWeight"
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,10 +59,11 @@ class ProfileFragment : Fragment() {
 
         //Get the views
         nameEditText = view.findViewById<View>(R.id.profileName) as EditText
-        ageEditText = view.findViewById<View>(R.id.profileAge) as EditText
-        weightEditText = view.findViewById<View>(R.id.profileWeight) as EditText
-        heightEditText = view.findViewById<View>(R.id.profileHeight) as EditText
+        ageButton = view.findViewById(R.id.profileAge)
+        weightButton = view.findViewById(R.id.profileWeight)
+        heightButton = view.findViewById(R.id.profileHeight)
         sexSpinner = view.findViewById<View>(R.id.profileSex) as Spinner
+        locationTextView = view.findViewById(R.id.profileLocation)
         activityLevelTextView = view.findViewById<View>(R.id.profileActivityLevel) as TextView
         portraitButton = view.findViewById(R.id.profilePortrait)
 
@@ -63,10 +71,13 @@ class ProfileFragment : Fragment() {
         val user = userProvider!!.getUser()
 
         // Set view contents based on the data.
+        if(user.profilePictureThumbnail != null)
+            portraitButton?.setImageBitmap(user.profilePictureThumbnail)
         nameEditText?.setText(user.name)
-        ageEditText?.setText(user.age.toString())
-        weightEditText?.setText(user.weight.toString())
-        heightEditText?.setText(user.height.toString())
+        // Update the age, weight, height views.
+        onAgeChanged()
+        onWeightChanged()
+        onHeightChanged()
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.sex,
@@ -79,38 +90,40 @@ class ProfileFragment : Fragment() {
         }
         sexSpinner?.setSelection(user.sex.ordinal)
         activityLevelTextView?.text = user.activityLevel.getLevel().name(requireContext())
+        onLocationUpdated()
+        portraitButton?.setImageBitmap(user.profilePictureThumbnail)
 
         // Set up handlers to change the data.
-        nameEditText?.doOnTextChanged { text, _, _, _ ->
-            run {
-                user.name = text?.toString()
-                updateNavBar(user)
-            }
+        nameEditText?.doOnTextChanged { text, _, _, _ -> user.name = text?.toString() }
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_AGE, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.age = result
+            updateNavBar(user)
+            onAgeChanged()
         }
-        ageEditText?.doOnTextChanged { text, _, _, _ ->
-            run {
-                if (text != null) {
-                    user.age = parseOrResetText(ageEditText!!, text, user.age.toFloat()).roundToInt()
-                    updateNavBar(user)
-                }
-            }
-
+        ageButton?.setOnClickListener { _ ->
+            NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, user.age, getString(R.string.years))
+                .show(childFragmentManager, NUMBER_PICKER_TAG_AGE)
         }
-        heightEditText?.doOnTextChanged { text, _, _, _ ->
-            run {
-                if (text != null) {
-                    user.height = parseOrResetText(heightEditText!!, text, user.height)
-                    updateNavBar(user)
-                }
-            }
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_HEIGHT, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.height = result.toFloat()
+            updateNavBar(user)
+            onHeightChanged()
         }
-        weightEditText?.doOnTextChanged { text, _, _, _ ->
-            run {
-                if (text != null) {
-                    user.weight = parseOrResetText(weightEditText!!, text, user.weight)
-                    updateNavBar(user)
-                }
-            }
+        heightButton?.setOnClickListener { _ ->
+            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, user.height.roundToInt(), getString(R.string.inches))
+                .show(childFragmentManager, NUMBER_PICKER_TAG_HEIGHT)
+        }
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WEIGHT, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.weight = result.toFloat()
+            updateNavBar(user)
+            onWeightChanged()
+        }
+        weightButton?.setOnClickListener { _ ->
+            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight.roundToInt(), getString(R.string.pounds))
+                .show(childFragmentManager, NUMBER_PICKER_TAG_WEIGHT)
         }
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
         portraitButton?.setOnClickListener { _ ->
@@ -122,10 +135,33 @@ class ProfileFragment : Fragment() {
                 //Do error handling here
             }
         }
+        locationTextView?.setOnClickListener { view ->
+            activity?.let {
+                user?.refreshLocation(it) { newLocation ->
+                    onLocationUpdated()
+                }
+            }
+        }
 
         return view
     }
 
+    private fun onAgeChanged() {
+        ageButton?.text = getString(R.string.yearsQuantity, userProvider?.getUser()?.age)
+    }
+
+    private fun onHeightChanged() {
+        heightButton?.text = getString(R.string.inchesQuantity, userProvider?.getUser()?.height?.roundToInt())
+    }
+
+    private fun onWeightChanged() {
+        weightButton?.text = getString(R.string.poundsQuantity, userProvider?.getUser()?.weight?.roundToInt())
+    }
+
+    private fun onLocationUpdated() {
+        locationTextView?.text = userProvider?.getUser()?.locationName ?: getString(R.string.none)
+    }
+    
     private fun updateNavBar(user: User) {
         requireActivity().findViewById<TextView>(R.id.recommendedCalorieIntakeValue).text =
             getString(R.string.calPerDayShort, user.getDailyCalorieIntake().roundToInt().toString())
@@ -163,25 +199,11 @@ class ProfileFragment : Fragment() {
             //val thumbnailImage = extras!!["data"] as Bitmap?
 
             val thumbnailImage = result.data!!.getParcelableExtra<Bitmap>("data")
-            portraitButton?.setImageBitmap(thumbnailImage)
-            requireActivity().findViewById<ImageButton>(R.id.imageButton).setImageBitmap(thumbnailImage)
-            // TODO: Set userProvider.getUser()'s profile picture.
-        }
-    }
-
-    companion object {
-        private fun parseOrResetText(editText: EditText, text: CharSequence?, currentValue: Float): Float {
-            if (text.toString() == "") {
-                editText.setText("0")
-                return 0.0f
+            if(thumbnailImage != null) {
+                portraitButton?.setImageBitmap(thumbnailImage)
+                userProvider?.getUser()?.profilePictureThumbnail = thumbnailImage
+                // TODO: Set userProvider.getUser()'s profile picture.
             }
-            if(text != null) {
-                try {
-                    return text.toString().toFloat()
-                } catch(_: NumberFormatException) { }
-            }
-            editText.setText(currentValue.toString())
-            return currentValue
         }
     }
 }

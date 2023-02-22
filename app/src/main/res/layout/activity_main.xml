@@ -177,7 +177,7 @@
                 tools:backgroundTint="#2E841D"
                 tools:ignore="ButtonStyle" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/weather_button"
                 android:layout_width="wrap_content"
                 android:layout_height="105dp"

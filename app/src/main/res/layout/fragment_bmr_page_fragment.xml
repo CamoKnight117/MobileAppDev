@@ -31,7 +31,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ActivityLevelTextView"
+                android:id="@+id/LocationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_horizontal"
@@ -150,7 +150,7 @@
             </TableLayout>
 
             <TextView
-                android:id="@+id/dailyCalorieNeedsMessageTextView"
+                android:id="@+id/CountryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
