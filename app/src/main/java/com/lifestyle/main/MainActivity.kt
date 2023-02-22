@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity(), UserProvider {
             initUser()
 
         findViewById<Button>(R.id.prof_button).setOnClickListener {
+            startFragment(ProfileFragment())
+        }
+
+        findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
             startFragment(ProfileFragment())
         }
 
