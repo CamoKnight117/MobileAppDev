@@ -13,9 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.lifestyle.R
 import com.lifestyle.fragment.NumberPickerFragment
 import com.lifestyle.bmr.Level
@@ -31,7 +29,6 @@ class ProfileFragment : Fragment() {
     private var heightButton: TextView? = null
     private var sexSpinner: Spinner? = null
     private var locationTextView : TextView? = null
-    private var activityLevelTextView : TextView? = null
     private var portraitButton : ImageButton? = null
     private val NUMBER_PICKER_TAG_AGE = "profileAge"
     private val NUMBER_PICKER_TAG_HEIGHT = "profileHeight"
@@ -64,7 +61,6 @@ class ProfileFragment : Fragment() {
         heightButton = view.findViewById(R.id.profileHeight)
         sexSpinner = view.findViewById<View>(R.id.profileSex) as Spinner
         locationTextView = view.findViewById(R.id.profileLocation)
-        activityLevelTextView = view.findViewById<View>(R.id.profileActivityLevel) as TextView
         portraitButton = view.findViewById(R.id.profilePortrait)
 
         // Get the data that was sent in.
@@ -89,7 +85,6 @@ class ProfileFragment : Fragment() {
             sexSpinner?.adapter = adapter
         }
         sexSpinner?.setSelection(user.sex.ordinal)
-        activityLevelTextView?.text = user.activityLevel.getLevel().name(requireContext())
         onLocationUpdated()
         portraitButton?.setImageBitmap(user.profilePictureThumbnail)
 
@@ -174,7 +169,6 @@ class ProfileFragment : Fragment() {
             Level.VERY_ACTIVE -> "Very Active"
         }
         requireActivity().findViewById<TextView>(R.id.nameTextValue).text = user.name
-        activityLevelTextView?.text = activityLevel
         requireActivity().findViewById<TextView>(R.id.activityLevelValue).text = activityLevel
     }
 

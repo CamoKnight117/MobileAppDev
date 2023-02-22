@@ -196,30 +196,6 @@
             app:layout_constraintEnd_toEndOf="@id/profileName"
             app:layout_constraintStart_toEndOf="@id/profileWeightLabel" />
 
-        <TextView
-            android:id="@+id/profileActivityLevelLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/activity_level"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/profileSpace4"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/profileActivityLevel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/profileActivityLevelLabel"
-            tools:text="ACTIVITY_LEVEL" />
-
         <Space
             android:id="@+id/profileSpace0"
             android:layout_width="match_parent"
@@ -274,12 +250,6 @@
             app:layout_constraintTop_toTopOf="@+id/profileHeight"
             tools:layout_editor_absoluteX="129dp" />
 
-        <Space
-            android:id="@+id/profileSpace7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/profileActivityLevel"
-            tools:layout_editor_absoluteX="129dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Space
