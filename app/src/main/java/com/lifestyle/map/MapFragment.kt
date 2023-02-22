@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -106,7 +107,7 @@ class MapFragment : Fragment() {
             {
                 val lat = addresses[0].latitude
                 val long = addresses[0].longitude
-                searchUri = Uri.parse("geo:$lat,$long?q=hikes near me")
+                searchUri = Uri.parse("geo:$lat,$long?q=hikes")
             }
             else
             {
@@ -124,6 +125,7 @@ class MapFragment : Fragment() {
             activity?.let {
                 user.refreshLocation(it) { newLocation ->
                     onLocationUpdated()
+                    updateUserLocation()
                 }
             }
         }
@@ -140,6 +142,7 @@ class MapFragment : Fragment() {
                 user.textLocation.zipCode = addresses[0].postalCode;
                 user.textLocation.streetAddress = addresses[0].thoroughfare;
                 onLocationUpdated()
+                updateUserLocation()
             }
         }
 
@@ -167,27 +170,58 @@ class MapFragment : Fragment() {
 
     private fun parseStringLocation() : String {
         var retval = ""
-        if(location?.streetAddress != null) {
+        if(!location?.streetAddress.isNullOrBlank()) {
             val streetAddress = location?.streetAddress.toString()
             retval = "$retval $streetAddress"
         }
-        if(location?.city != null) {
+        if(!location?.city.isNullOrBlank()) {
             val city = location?.city.toString()
             retval = "$retval $city"
         }
-        if(location?.state != null) {
+        if(!location?.state.isNullOrBlank()) {
             val state = location?.state.toString()
             retval = "$retval $state"
         }
-        if(location?.zipCode != null) {
+        if(!location?.zipCode.isNullOrBlank()) {
             val zipCode = location?.zipCode.toString()
             retval = "$retval $zipCode"
         }
-        if(location?.country != null) {
+        if(!location?.country.isNullOrBlank()) {
             val country = location?.country.toString()
             retval = "$retval $country"
         }
         return retval
+    }
+
+    private fun parseShortStringLocation() : String {
+        var retval = ""
+        if(!location?.city.isNullOrBlank()) {
+            val city = location?.city.toString()
+            retval = "$city"
+        }
+        if(!location?.state.isNullOrBlank()) {
+            val state = location?.state.toString()
+            retval = if(retval != "") {
+                "$retval, $state"
+            } else {
+                "$state"
+            }
+        }
+        if(!location?.country.isNullOrBlank()) {
+            val country = location?.country.toString()
+            retval = if(retval != "") {
+                "$retval, $country"
+            } else {
+                "$country"
+            }
+        }
+        return retval
+    }
+
+    private fun updateUserLocation(){
+        val user = userProvider!!.getUser()
+        user.locationName = parseShortStringLocation()
+        user.location = Location(parseShortStringLocation()) //Not sure if this works
     }
 
 }

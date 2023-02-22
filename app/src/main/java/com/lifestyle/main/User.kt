@@ -35,7 +35,6 @@ class User() {
         }
     private var serializableLocation: SerializableLocation? = null
     var locationName: String? = null
-        private set
     var textLocation = TextLocation()
     
     var height = 0.0f
