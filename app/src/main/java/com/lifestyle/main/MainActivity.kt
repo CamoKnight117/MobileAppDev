@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.bmr.Level
+import com.lifestyle.map.MapFragment
 import com.lifestyle.profile.ProfileFragment
 import kotlin.math.roundToInt
 
@@ -37,6 +38,10 @@ class MainActivity : AppCompatActivity(), UserProvider {
 
         findViewById<Button>(R.id.button_bmr).setOnClickListener {
             startFragment(BMRPage())
+        }
+
+        findViewById<Button>(R.id.hikes_button).setOnClickListener {
+            startFragment(MapFragment())
         }
 
         initUser()

@@ -1,11 +1,12 @@
 package com.lifestyle.main
 
 import com.lifestyle.bmr.ActivityLevel
+import com.lifestyle.map.Location
 
 class User {
     var name: String? = null
     var age = 0
-    var location = "TODO"
+    var location = Location()
     var height = 0.0f
         get() {
             return field / 2.54f

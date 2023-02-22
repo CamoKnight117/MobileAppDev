@@ -165,7 +165,7 @@ class BMRPage : Fragment() {
             justSetSpinner = false
         }
 
-        val activityLevelText = view.findViewById<TextView>(R.id.ActivityLevelTextView)
+        val activityLevelText = view.findViewById<TextView>(R.id.LocationTextView)
         val activityLevelValue = requireActivity().findViewById<TextView>(R.id.activityLevelValue)
         val dailyCalorieNeedsText = view.findViewById<TextView>(R.id.dailyCalorieNeedsValue)
         val recommendedCalorieIntakeValue = requireActivity().findViewById<TextView>(R.id.recommendedCalorieIntakeValue)

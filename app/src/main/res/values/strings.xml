@@ -37,4 +37,16 @@
     <string name="bmr_button">+BMR-</string>
     <string name="weather_button">+Weather-</string>
     <string name="hikes_button">+Hikes-</string>
+    <string name="Location">Location</string>
+    <string name="City">City</string>
+    <string name="State">State</string>
+    <string name="Country">Country</string>
+    <string name="Street">Street Address</string>
+    <string name="zipCode">Zip Code</string>
+    <string name="GotoHikesButton">Go to Hikes Near Me!</string>
+    <string name="CityPrompt">Enter City Here</string>
+    <string name="StatePrompt">Enter State Here</string>
+    <string name="CountryPrompt">Enter Country Here</string>
+    <string name="StreetPrompt">Enter Street Address Here</string>
+    <string name="zipCodePrompt">Enter Zip Code Here</string>
 </resources>
