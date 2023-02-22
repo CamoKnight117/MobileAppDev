@@ -37,7 +37,6 @@ class MapFragment : Fragment() {
         } catch (e: ClassCastException) {
             throw ClassCastException("$context must implement ${UserProvider::class}")
         }
-        location = userProvider?.getUser()?.location
     }
 
     override fun onCreateView(
@@ -49,6 +48,10 @@ class MapFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
+
+        val user = userProvider!!.getUser()
+        location = user.location
+
         countryEditText = view.findViewById<View>(R.id.CountryEditText) as EditText
         stateEditText = view.findViewById<View>(R.id.StateEditText) as EditText
         cityEditText = view.findViewById<View>(R.id.CityEditText) as EditText
@@ -56,14 +59,23 @@ class MapFragment : Fragment() {
         zipcodeEditText = view.findViewById<View>(R.id.ZipCodeEditText) as EditText
         gotoMapButton = view.findViewById<View>(R.id.gotoMapButton) as Button
 
-        countryEditText!!.setText(location?.country.toString())
-        stateEditText!!.setText(location?.state.toString())
-        cityEditText!!.setText(location?.city.toString())
-        streetEditText!!.setText(location?.streetAddress.toString())
-        zipcodeEditText!!.setText(location?.zipCode.toString())
+        if(location?.country != null) {
+            countryEditText!!.setText(location?.country.toString())
+        }
+        if(location?.state != null) {
+            stateEditText!!.setText(location?.state.toString())
+        }
+        if(location?.city != null) {
+            cityEditText!!.setText(location?.city.toString())
+        }
+        if(location?.streetAddress != null) {
+            streetEditText!!.setText(location?.streetAddress.toString())
+        }
+        if(location?.zipCode != null) {
+            zipcodeEditText!!.setText(location?.zipCode.toString())
+        }
 
         //Set up handlers for text changes
-        val user = userProvider!!.getUser()
 
         countryEditText?.doOnTextChanged { text, _, _, _ ->
             run {
@@ -93,7 +105,30 @@ class MapFragment : Fragment() {
 
         gotoMapButton?.setOnClickListener { _ ->
             //The button press should open a camera
-            val searchUri = Uri.parse("geo:40.767778,-111.845205?q=hikes near me")
+            var addressText = ""
+
+            if(location?.streetAddress != null) {
+                val streetAddress = location?.streetAddress.toString()
+                addressText = "$addressText $streetAddress"
+            }
+            if(location?.city != null) {
+                val city = location?.city.toString()
+                addressText = "$addressText $city"
+            }
+            if(location?.state != null) {
+                val state = location?.state.toString()
+                addressText = "$addressText $state"
+            }
+            if(location?.zipCode != null) {
+                val zipCode = location?.zipCode.toString()
+                addressText = "$addressText $zipCode"
+            }
+            if(location?.country != null) {
+                val country = location?.country.toString()
+                addressText = "$addressText $country"
+            }
+
+            val searchUri = Uri.parse("geo:0,0?q=hikes near $addressText")
             val mapIntent = Intent(Intent.ACTION_VIEW, searchUri)
             try{
                 startActivity(mapIntent)
