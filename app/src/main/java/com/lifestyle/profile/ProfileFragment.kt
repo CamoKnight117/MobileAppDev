@@ -196,6 +196,7 @@ class ProfileFragment : Fragment() {
             if(thumbnailImage != null) {
                 portraitButton?.setImageBitmap(thumbnailImage)
                 userProvider?.getUser()?.profilePictureThumbnail = thumbnailImage
+                requireActivity().findViewById<ImageButton>(R.id.imageButton).setImageBitmap(thumbnailImage)
                 // TODO: Set userProvider.getUser()'s profile picture.
             }
         }
