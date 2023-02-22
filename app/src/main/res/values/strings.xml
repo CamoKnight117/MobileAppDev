@@ -31,6 +31,9 @@
     <string name="setWeight">Set weight</string>
     <string name="sexLabel">Sex:</string>
     <string name="submit">Submit</string>
+    <string name="temperature">Temperature</string>
+    <string name="temperatureErrorMessage">There was a problem getting the temperature :(</string>
+    <string name="temperatureFarenheit">%1$d °F</string>
     <string name="weightLabel">Weight:</string>
     <string name="workoutsPerWeek">Workouts per week:</string>
     <string name="workoutIntensity">Workout intensity:</string>
@@ -48,5 +51,5 @@
     <string name="years">years</string>
     <string name="yearsQuantity">%1$d yr.</string>
     <string name="weather">Weather</string>
-    <string name="temperature">Temperature</string>
+    <string name="weatherErrorMessage">There was a problem getting the weather :(</string>
 </resources>
