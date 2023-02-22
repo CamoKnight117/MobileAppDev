@@ -22,7 +22,7 @@
     <string name="poundsQuantity">%1$d lb.</string>
     <string name="ageAndSex">%1$s %2$s</string>
     <string name="calPerDayShort">%1$s cal/day</string>
-    <string name="heightLabel">Ht. (in):</string>
+    <string name="heightLabel">Height:</string>
     <string name="recommendedCalorieIntake">Calorie Needs  </string>
     <string name="lightlyActiviteRowLabel">Lightly Active</string>
     <string name="location">Location</string>
@@ -36,7 +36,7 @@
     <string name="temperature">Temperature</string>
     <string name="temperatureErrorMessage">There was a problem getting the temperature :(</string>
     <string name="temperatureFarenheit">%1$d °F</string>
-    <string name="weightLabel">Wt. (lbs):</string>
+    <string name="weightLabel">Weight:</string>
     <string name="workoutsPerWeek">Workouts per week:</string>
     <string name="workoutIntensity">Workout intensity:</string>
     <string name="workoutCalsPerDay">Workout calories per week:</string>

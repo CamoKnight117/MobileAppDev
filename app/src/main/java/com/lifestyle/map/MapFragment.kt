@@ -1,13 +1,11 @@
 package com.lifestyle.map
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -100,8 +98,8 @@ class MapFragment : Fragment() {
         gotoMapButton?.setOnClickListener { _ ->
             //The button press should open a camera
             var addressText = parseStringLocation()
-            val geocoder: Geocoder = Geocoder(context)
-            val addresses = geocoder.getFromLocationName(addressText, 1)
+            val geocoder: Geocoder = Geocoder(requireContext())
+            val addresses = geocoder.getFromLocationName(addressText, 1)!!
             var searchUri : Uri? = null
             if(addresses.size != 0)
             {
@@ -131,16 +129,16 @@ class MapFragment : Fragment() {
         }
         //Set the click handler for the submit button
         submitLocationButton?.setOnClickListener { _ ->
-            val geocoder: Geocoder = Geocoder(context)
+            val geocoder: Geocoder = Geocoder(requireContext())
             val stringLocation = parseStringLocation()
-            val addresses = geocoder.getFromLocationName(stringLocation, 1)
+            val addresses = geocoder.getFromLocationName(stringLocation, 1)!!
             if(addresses.size != 0)
             {
-                user.textLocation.city = addresses[0].locality;
-                user.textLocation.state = addresses[0].adminArea;
-                user.textLocation.country = addresses[0].countryName;
-                user.textLocation.zipCode = addresses[0].postalCode;
-                user.textLocation.streetAddress = addresses[0].thoroughfare;
+                user.textLocation.city = addresses[0].locality
+                user.textLocation.state = addresses[0].adminArea
+                user.textLocation.country = addresses[0].countryName
+                user.textLocation.zipCode = addresses[0].postalCode
+                user.textLocation.streetAddress = addresses[0].thoroughfare
                 onLocationUpdated()
                 updateUserLocation()
             }
