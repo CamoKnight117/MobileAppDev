@@ -145,10 +145,16 @@ class User() {
 
                     val geocoder: Geocoder = Geocoder(context)
                     val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)
-                    if(addresses.size >= 1)
+                    if(addresses.size >= 1) {
                         locationName = addresses[0].let {
-                            it.locality +", "+ it.adminArea +", "+ it.countryName
+                            it.locality + ", " + it.adminArea + ", " + it.countryName
                         }
+                        textLocation.city = addresses[0].locality;
+                        textLocation.state = addresses[0].adminArea;
+                        textLocation.country = addresses[0].countryName;
+                        textLocation.zipCode = addresses[0].postalCode;
+                        textLocation.streetAddress = addresses[0].thoroughfare;
+                    }
 
 
                     successCallback(newLocation)

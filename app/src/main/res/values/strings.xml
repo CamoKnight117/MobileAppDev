@@ -66,4 +66,6 @@
     <string name="CountryPrompt">Enter Country Here</string>
     <string name="StreetPrompt">Enter Street Address Here</string>
     <string name="zipCodePrompt">Enter Zip Code Here</string>
+    <string name="UseGPSLocationButton">Use Current GPS Location</string>
+    <string name="SubmitNewLocationButton">Submit Location Changes</string>
 </resources>

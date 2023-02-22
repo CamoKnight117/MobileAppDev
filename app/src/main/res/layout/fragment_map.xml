@@ -44,6 +44,13 @@
                     android:textSize="34sp"
                     tools:ignore="TextContrastCheck" />
 
+                <Button
+                    android:id="@+id/useGPSLocationButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="@string/UseGPSLocationButton" />
+
                 <TextView
                     android:id="@+id/CountryTextView"
                     android:layout_width="match_parent"
@@ -172,6 +179,13 @@
                     android:textColorHint="@color/green"
                     android:textSize="20sp"
                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                <Button
+                    android:id="@+id/submitNewLocationButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="@string/SubmitNewLocationButton" />
 
                 <Button
                     android:id="@+id/gotoMapButton"
