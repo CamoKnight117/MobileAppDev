@@ -13,14 +13,14 @@
     <string name="calPerDay">Calories/day</string>
     <string name="calPerHour">cal/hr</string>
     <string name="ageAndSex">%1$s %2$s</string>
-    <string name="calPerDayShort">%1$s cal/hr</string>
+    <string name="calPerDayShort">%1$s cal/day</string>
     <string name="dailyCalorieNeeds">Daily Calorie Needs: </string>
     <string name="dailyCalorieNeedsMessage">Daily calorie needs by activity level: </string>
     <string name="heightLabel">Ht. (in):</string>
-    <string name="recommendedCalorieIntake">Recommended Calorie Intake  </string>
+    <string name="recommendedCalorieIntake">Calorie Needs  </string>
     <string name="lightlyActiviteRowLabel">Lightly Active</string>
     <string name="location">Location</string>
-    <string name="name">Name</string>
+    <string name="name">Name</string>c
     <string name="sedentaryRowLabel">Sedentary</string>
     <string name="sexLabel">Sex:</string>
     <string name="weightLabel">Wt. (lbs):</string>
