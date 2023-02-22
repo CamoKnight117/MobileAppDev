@@ -8,8 +8,10 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.location.Location
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.lifestyle.bmr.ActivityLevel
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -137,18 +139,21 @@ class User() {
 
     private fun setLocationToLastDeviceLocation(context: Context, successCallback: (Location) -> Unit) {
         try {
-            LocationServices.getFusedLocationProviderClient(context).lastLocation.addOnSuccessListener { newLocation ->
-                location = newLocation
+            LocationServices.getFusedLocationProviderClient(context).getCurrentLocation(Priority.PRIORITY_LOW_POWER, null).addOnSuccessListener { newLocation ->
+                if(newLocation != null) {
+                    location = newLocation
 
-                val geocoder: Geocoder = Geocoder(context)
-                val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)
-                if(addresses.size >= 1)
-                    locationName = addresses[0].let {
-                        it.locality +", "+ it.adminArea +", "+ it.countryName
-                    }
+                    val geocoder: Geocoder = Geocoder(context)
+                    val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)
+                    if(addresses.size >= 1)
+                        locationName = addresses[0].let {
+                            it.locality +", "+ it.adminArea +", "+ it.countryName
+                        }
 
 
-                successCallback(newLocation)
+                    successCallback(newLocation)
+                } else
+                    Toast.makeText(context, "Couldn't find your location!", Toast.LENGTH_LONG).show()
             }
         } catch(e : SecurityException) {}
     }
