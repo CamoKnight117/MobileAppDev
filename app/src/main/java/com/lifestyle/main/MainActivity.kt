@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.bmr.Level
 import com.lifestyle.profile.ProfileFragment
