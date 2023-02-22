@@ -17,6 +17,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 import java.io.FileNotFoundException
+import com.lifestyle.map.TextLocation
 
 @Serializable
 class User() {
@@ -33,8 +34,24 @@ class User() {
     private var serializableLocation: SerializableLocation? = null
     var locationName: String? = null
         private set
-    var height = 0
-    var weight = 0
+    var textLocation = TextLocation()
+    
+    var height = 0.0f
+        get() {
+            return field / 2.54f
+        }
+        set(value) {
+            //1 in = 2.54 cm, and we store the height as centimeters (for easier calculation for BMR)
+            field = value * 2.54f
+        }
+    var weight = 0.0f
+        get() {
+            return field / 0.453592f
+        }
+        set(value) {
+            //1 lb = 0.453592 kg, and we store the weight as kilograms (for easier calculation for BMR)
+            field = value * 0.453592f
+        }
     var sex = Sex.UNASSIGNED
     var activityLevel = ActivityLevel()
     var profilePicture = "TODO"
@@ -56,7 +73,7 @@ class User() {
     }
 
     fun calculateBMR() : Float {
-        return if(age != 0 && height != 0 && weight != 0 && sex != Sex.UNASSIGNED) {
+        return if(age != 0 && height != 0.0f && weight != 0.0f && sex != Sex.UNASSIGNED) {
             when (sex) {
                 Sex.MALE -> 88.362f + (13.397f * weight) + (4.799f*height)-(5.677f*age)
                 Sex.FEMALE -> (447.593f + (9.247f * weight) + (3.098f * height)-(4.330f * age))

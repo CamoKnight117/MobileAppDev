@@ -18,8 +18,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.lifestyle.R
 import com.lifestyle.fragment.NumberPickerFragment
+import com.lifestyle.bmr.Level
 import com.lifestyle.main.User
 import com.lifestyle.main.UserProvider
+import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
     private var userProvider: UserProvider? = null
@@ -96,6 +98,7 @@ class ProfileFragment : Fragment() {
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_AGE, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
             userProvider?.getUser()?.age = result
+            updateNavBar(user)
             onAgeChanged()
         }
         ageButton?.setOnClickListener { _ ->
@@ -104,20 +107,22 @@ class ProfileFragment : Fragment() {
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_HEIGHT, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
-            userProvider?.getUser()?.height = result
+            userProvider?.getUser()?.height = result.toFloat()
+            updateNavBar(user)
             onHeightChanged()
         }
         heightButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, user.height, getString(R.string.inches))
+            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, user.height.roundToInt(), getString(R.string.inches))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_HEIGHT)
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WEIGHT, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
-            userProvider?.getUser()?.weight = result
+            userProvider?.getUser()?.weight = result.toFloat()
+            updateNavBar(user)
             onWeightChanged()
         }
         weightButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight, getString(R.string.pounds))
+            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight.roundToInt(), getString(R.string.pounds))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_WEIGHT)
         }
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
@@ -146,15 +151,31 @@ class ProfileFragment : Fragment() {
     }
 
     private fun onHeightChanged() {
-        heightButton?.text = getString(R.string.inchesQuantity, userProvider?.getUser()?.height)
+        heightButton?.text = getString(R.string.inchesQuantity, userProvider?.getUser()?.height?.roundToInt())
     }
 
     private fun onWeightChanged() {
-        weightButton?.text = getString(R.string.poundsQuantity, userProvider?.getUser()?.weight)
+        weightButton?.text = getString(R.string.poundsQuantity, userProvider?.getUser()?.weight?.roundToInt())
     }
 
     private fun onLocationUpdated() {
         locationTextView?.text = userProvider?.getUser()?.locationName ?: getString(R.string.none)
+    }
+    
+    private fun updateNavBar(user: User) {
+        requireActivity().findViewById<TextView>(R.id.recommendedCalorieIntakeValue).text =
+            getString(R.string.calPerDayShort, user.getDailyCalorieIntake().roundToInt().toString())
+        requireActivity().findViewById<TextView>(R.id.ageAndSexValue).text = getString(R.string.ageAndSex, user.age.toString(),  user.sex.toString().substring(0, 1))
+        val activityLevel = when(user.activityLevel.getLevel())
+        {
+            Level.SEDENTARY -> "Sedentary"
+            Level.LIGHTLY_ACTIVE -> "Lightly Active"
+            Level.ACTIVE -> "Active"
+            Level.VERY_ACTIVE -> "Very Active"
+        }
+        requireActivity().findViewById<TextView>(R.id.nameTextValue).text = user.name
+        activityLevelTextView?.text = activityLevel
+        requireActivity().findViewById<TextView>(R.id.activityLevelValue).text = activityLevel
     }
 
     private var sexSpinnerListener = object : AdapterView.OnItemSelectedListener {
@@ -166,6 +187,7 @@ class ProfileFragment : Fragment() {
                 user?.sex = User.Sex.FEMALE
             else if(user != null && user.sex != User.Sex.UNASSIGNED)
                 sexSpinner?.setSelection(user.sex.ordinal)
+            updateNavBar(user!!)
         }
 
         override fun onNothingSelected(parent: AdapterView<*>) { }

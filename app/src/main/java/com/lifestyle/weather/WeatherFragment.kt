@@ -68,9 +68,9 @@ class WeatherFragment : Fragment() {
         @Serializable
         public class Wind(val speed: Double, val deg: Double, val gust: Double) { }
         @Serializable
-        public class Rain(@SerialName("1h") val oneH: Double, @SerialName("3h") val threeH: Double) { }
+        public class Rain(@SerialName("1h") val oneH: Double? = null, @SerialName("3h") val threeH: Double? = null) { }
         @Serializable
-        public class Snow(@SerialName("1h") val oneH: Double, @SerialName("3h") val threeH: Double) { }
+        public class Snow(@SerialName("1h") val oneH: Double? = null, @SerialName("3h") val threeH: Double? = null) { }
         @Serializable
         public class Sys(val country: String? = null, val sunrise: Double, val sunset: Double) { }
     }
@@ -118,8 +118,7 @@ class WeatherFragment : Fragment() {
 
         // Start a weather API request if needed.
         val activity = requireActivity()
-        if(lastWeatherCallThread==null || System.currentTimeMillis() - timestampLastWeatherCall >= weatherRefreshIntervalMillis) {
-            timestampLastWeatherCall = System.currentTimeMillis()
+        if((lastWeatherCallThread?.isAlive != true) || System.currentTimeMillis() - timestampLastWeatherReply >= weatherRefreshIntervalMillis) {
             if(ActivityCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
                 sendWeatherRequest(handler)
             } else {
@@ -146,6 +145,7 @@ class WeatherFragment : Fragment() {
             try {
                 val weather = Json{ignoreUnknownKeys=true}.decodeFromString<OpenWeatherCurrentWeatherReply>(response)
                 handler.post {
+                    timestampLastWeatherReply = System.currentTimeMillis()
                     lastWeatherReply = weather
                     putWeatherOnUI()
                 }
@@ -187,7 +187,7 @@ class WeatherFragment : Fragment() {
         // Weather query rate limiting is managed over the lifetime of the app by static fields:
         private const val weatherRefreshIntervalMillis = 1000 * 60 * 60
         private var lastWeatherCallThread: Thread? = null
-        private var timestampLastWeatherCall: Long = 0
+        private var timestampLastWeatherReply: Long = 0
         private var lastWeatherReply: OpenWeatherCurrentWeatherReply? = null
 
         /**
