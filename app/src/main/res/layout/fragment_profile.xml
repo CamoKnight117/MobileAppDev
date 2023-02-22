@@ -11,293 +11,317 @@
     android:padding="10dp"
     android:clipToPadding="false" >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/profileMainContent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCard"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.0"
-        app:layout_constraintHeight_min="wrap"
-        app:layout_constraintVertical_weight="4"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/light_gray"
+        app:cardCornerRadius="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/profilePortrait"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/portrait_icon"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.25"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/profileName"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/yourName"
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textColor="#0000FF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/profileSpace0"
-            app:layout_constraintVertical_chainStyle="packed" />
+            android:layout_height="match_parent"
+            android:background="#005B5B5B"
+            android:clipToPadding="false"
+            android:padding="10dp"
+            tools:context="com.lifestyle.profile.ProfileFragment">
 
-        <TextView
-            android:id="@+id/profileNameLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/name"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/profileName" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profileMainContent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_min="wrap"
+                app:layout_constraintHeight_percent="0.0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_weight="4">
 
-        <TextView
-            android:id="@+id/profileAgeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/ageLabel"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@id/profileAge"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@id/profileName"
-            app:layout_constraintTop_toBottomOf="@id/profileSpace1" />
+                <ImageButton
+                    android:id="@+id/profilePortrait"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/portrait_icon"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.25"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-        <TextView
-            android:id="@+id/profileAge"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            tools:text="AGE"
-            android:gravity="center"
-            android:textColor="#0000FF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@id/profileAgeLabel"
-            app:layout_constraintEnd_toStartOf="@id/profileSexLabel"
-            app:layout_constraintStart_toEndOf="@id/profileAgeLabel" />
+                <EditText
+                    android:id="@+id/profileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/yourName"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textColor="#0000FF"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/profileSpace0"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:id="@+id/profileSexLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sexLabel"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/profileAgeLabel"
-            app:layout_constraintEnd_toStartOf="@id/profileSex"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@id/profileSpace5" />
+                <TextView
+                    android:id="@+id/profileNameLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/name"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toBottomOf="@id/profileName" />
 
-        <Spinner
-            android:id="@+id/profileSex"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            tools:text="SEX"
-            android:gravity="center"
-            android:textColor="#0000FF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="@id/profileAgeLabel"
-            app:layout_constraintBottom_toBottomOf="@id/profileAgeLabel"
-            app:layout_constraintEnd_toEndOf="@id/profileName"
-            app:layout_constraintStart_toEndOf="@id/profileSexLabel" />
+                <TextView
+                    android:id="@+id/profileAgeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/ageLabel"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@id/profileAge"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/profileName"
+                    app:layout_constraintTop_toBottomOf="@id/profileSpace1" />
 
-        <TextView
-            android:id="@+id/profileLocationLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/location"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/profileSpace2"
-            app:layout_constraintVertical_chainStyle="packed" />
+                <TextView
+                    android:id="@+id/profileAge"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    android:textColor="#0000FF"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@id/profileAgeLabel"
+                    app:layout_constraintEnd_toStartOf="@id/profileSexLabel"
+                    app:layout_constraintStart_toEndOf="@id/profileAgeLabel"
+                    tools:text="AGE" />
 
-        <TextView
-            android:id="@+id/profileLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintHeight_min="48dp"
-            tools:text="LOCATION"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:textColor="#0000FF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/profileLocationLabel" />
+                <TextView
+                    android:id="@+id/profileSexLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sexLabel"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/profileAgeLabel"
+                    app:layout_constraintEnd_toStartOf="@id/profileSex"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/profileSpace5" />
 
-        <TextView
-            android:id="@+id/profileHeightLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/heightLabel"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@id/profileHeight"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@id/profileName"
-            app:layout_constraintTop_toBottomOf="@id/profileSpace3" />
+                <Spinner
+                    android:id="@+id/profileSex"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    android:textColor="#0000FF"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/profileAgeLabel"
+                    app:layout_constraintEnd_toEndOf="@id/profileName"
+                    app:layout_constraintStart_toEndOf="@id/profileSexLabel"
+                    app:layout_constraintTop_toTopOf="@id/profileAgeLabel"
+                    tools:ignore="SpeakableTextPresentCheck"
+                    tools:text="SEX" />
 
-        <TextView
-            android:id="@+id/profileHeight"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            tools:text="HEIGHT"
-            android:gravity="center"
-            android:textColor="#0000FF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
-            app:layout_constraintEnd_toStartOf="@id/profileWeightLabel"
-            app:layout_constraintStart_toEndOf="@id/profileHeightLabel" />
+                <TextView
+                    android:id="@+id/profileLocationLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/location"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toBottomOf="@id/profileSpace2"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:id="@+id/profileWeightLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/weightLabel"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
-            app:layout_constraintEnd_toStartOf="@id/profileWeight"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@id/profileSpace6" />
+                <TextView
+                    android:id="@+id/profileLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textColor="#0000FF"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintHeight_min="48dp"
+                    app:layout_constraintTop_toBottomOf="@id/profileLocationLabel"
+                    tools:text="LOCATION" />
 
-        <TextView
-            android:id="@+id/profileWeight"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:inputType="number"
-            tools:text="WEIGHT"
-            android:gravity="center"
-            android:textColor="#0000FF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
-            app:layout_constraintEnd_toEndOf="@id/profileName"
-            app:layout_constraintStart_toEndOf="@id/profileWeightLabel" />
+                <TextView
+                    android:id="@+id/profileHeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/heightLabel"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@id/profileHeight"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/profileName"
+                    app:layout_constraintTop_toBottomOf="@id/profileSpace3" />
 
-        <TextView
-            android:id="@+id/profileActivityLevelLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/activity_level"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@id/profileSpace4"
-            app:layout_constraintVertical_chainStyle="packed" />
+                <TextView
+                    android:id="@+id/profileHeight"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    android:textColor="#0000FF"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
+                    app:layout_constraintEnd_toStartOf="@id/profileWeightLabel"
+                    app:layout_constraintStart_toEndOf="@id/profileHeightLabel"
+                    tools:text="HEIGHT" />
 
-        <TextView
-            android:id="@+id/profileActivityLevel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/profileActivityLevelLabel"
-            tools:text="ACTIVITY_LEVEL" />
+                <TextView
+                    android:id="@+id/profileWeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weightLabel"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
+                    app:layout_constraintEnd_toStartOf="@id/profileWeight"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/profileSpace6" />
 
-        <Space
-            android:id="@+id/profileSpace0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/profilePortrait"
-            tools:layout_editor_absoluteX="129dp" />
+                <TextView
+                    android:id="@+id/profileWeight"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:textColor="#0000FF"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@id/profileHeightLabel"
+                    app:layout_constraintEnd_toEndOf="@id/profileName"
+                    app:layout_constraintStart_toEndOf="@id/profileWeightLabel"
+                    tools:text="WEIGHT" />
 
-        <Space
-            android:id="@+id/profileSpace1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/profileNameLabel"
-            tools:layout_editor_absoluteX="129dp" />
+                <TextView
+                    android:id="@+id/profileActivityLevelLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/activity_level"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toBottomOf="@id/profileSpace4"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
-        <Space
-            android:id="@+id/profileSpace2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/profileAgeLabel"
-            tools:layout_editor_absoluteX="129dp" />
+                <TextView
+                    android:id="@+id/profileActivityLevel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/profileActivityLevelLabel"
+                    tools:text="ACTIVITY_LEVEL" />
 
-        <Space
-            android:id="@+id/profileSpace3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/profileLocation"
-            tools:layout_editor_absoluteX="129dp" />
+                <Space
+                    android:id="@+id/profileSpace0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/profilePortrait"
+                    tools:layout_editor_absoluteX="129dp" />
 
-        <Space
-            android:id="@+id/profileSpace4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/profileHeightLabel"
-            tools:layout_editor_absoluteX="129dp" />
+                <Space
+                    android:id="@+id/profileSpace1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/profileNameLabel"
+                    tools:layout_editor_absoluteX="129dp" />
 
-        <Space
-            android:id="@+id/profileSpace5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/profileAge"
-            app:layout_constraintStart_toEndOf="@+id/profileAge"
-            app:layout_constraintTop_toTopOf="@+id/profileAge"
-            tools:layout_editor_absoluteX="129dp" />
+                <Space
+                    android:id="@+id/profileSpace2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/profileAgeLabel"
+                    tools:layout_editor_absoluteX="129dp" />
 
-        <Space
-            android:id="@+id/profileSpace6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/profileHeight"
-            app:layout_constraintStart_toEndOf="@+id/profileHeight"
-            app:layout_constraintTop_toTopOf="@+id/profileHeight"
-            tools:layout_editor_absoluteX="129dp" />
+                <Space
+                    android:id="@+id/profileSpace3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/profileLocation"
+                    tools:layout_editor_absoluteX="129dp" />
 
-        <Space
-            android:id="@+id/profileSpace7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/profileActivityLevel"
-            tools:layout_editor_absoluteX="129dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <Space
+                    android:id="@+id/profileSpace4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/profileHeightLabel"
+                    tools:layout_editor_absoluteX="129dp" />
 
-    <Space
-        android:id="@+id/profileHeader"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="2"
-        app:layout_constraintBottom_toTopOf="@id/profileMainContent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="129dp" />
+                <Space
+                    android:id="@+id/profileSpace5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/profileAge"
+                    app:layout_constraintStart_toEndOf="@+id/profileAge"
+                    app:layout_constraintTop_toTopOf="@+id/profileAge"
+                    tools:layout_editor_absoluteX="129dp" />
 
-    <Space
-        android:id="@+id/profileFooter"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileMainContent"
-        tools:layout_editor_absoluteX="129dp" />
+                <Space
+                    android:id="@+id/profileSpace6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/profileHeight"
+                    app:layout_constraintStart_toEndOf="@+id/profileHeight"
+                    app:layout_constraintTop_toTopOf="@+id/profileHeight"
+                    tools:layout_editor_absoluteX="129dp" />
+
+                <Space
+                    android:id="@+id/profileSpace7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/profileActivityLevel"
+                    tools:layout_editor_absoluteX="129dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Space
+                android:id="@+id/profileHeader"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/profileMainContent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_weight="2"
+                tools:layout_editor_absoluteX="129dp" />
+
+            <Space
+                android:id="@+id/profileFooter"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileMainContent"
+                app:layout_constraintVertical_weight="3"
+                tools:layout_editor_absoluteX="129dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
