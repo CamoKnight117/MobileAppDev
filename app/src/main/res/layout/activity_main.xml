@@ -162,11 +162,11 @@
             <Button
                 android:id="@+id/prof_button"
                 android:layout_width="match_parent"
-                android:layout_height="95dp"
+                android:layout_height="94dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/buttonBlue"
                 android:contentDescription="@string/prof_button"
-                android:drawableTop="@drawable/common_google_signin_btn_icon_dark"
+                android:drawableTop="@drawable/profile_icon"
                 android:text="Profile"
                 android:textSize="12sp"
                 tools:backgroundTint="@color/buttonBlue" />
@@ -174,24 +174,25 @@
             <Button
                 android:id="@+id/button_bmr"
                 android:layout_width="match_parent"
-                android:layout_height="95dp"
+                android:layout_height="94dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/buttonGreen"
                 android:contentDescription="@string/bmr_button"
-                android:drawableTop="@drawable/common_google_signin_btn_icon_dark"
+                android:drawableTop="@drawable/bmr_icon"
                 android:text="BMR"
                 android:textSize="12sp"
                 tools:backgroundTint="@color/buttonGreen"
+                tools:iconGravity="textStart"
                 tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/weather_button"
                 android:layout_width="match_parent"
-                android:layout_height="95dp"
+                android:layout_height="94dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/buttonYellow"
                 android:contentDescription="@string/bmr_button"
-                android:drawableTop="@drawable/common_google_signin_btn_icon_dark"
+                android:drawableTop="@drawable/weather_icon"
                 android:text="Weather"
                 android:textSize="12sp"
                 tools:backgroundTint="@color/buttonYellow"
@@ -200,14 +201,16 @@
             <Button
                 android:id="@+id/hikes_button"
                 android:layout_width="match_parent"
-                android:layout_height="95dp"
+                android:layout_height="94dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/buttonRed"
                 android:contentDescription="@string/hikes_button"
-                android:drawableTop="@drawable/common_google_signin_btn_icon_dark"
+                android:drawableTop="@drawable/hiking_icon"
                 android:text="Hikes"
                 android:textSize="12sp"
-                tools:backgroundTint="@color/buttonRed" />
+                tools:backgroundTint="@color/buttonRed"
+                tools:ignore="ButtonStyle" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
