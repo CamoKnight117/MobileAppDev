@@ -15,4 +15,8 @@
     <color name="spinnerTextColor">#0019FF</color>
     <color name="yellow">#FFFF00</color>
     <color name="orange">#FFA500</color>
+    <color name="buttonBlue">#3A9FFE</color>
+    <color name="buttonGreen">#2E841D</color>
+    <color name="buttonYellow">#B1B542</color>
+    <color name="buttonRed">#C25655</color>
 </resources>

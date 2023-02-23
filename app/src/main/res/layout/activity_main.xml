@@ -131,6 +131,7 @@
                 android:id="@+id/imageButton"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
+                tools:ignore="SpeakableTextPresentCheck"
                 tools:layout_gravity="right" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -160,41 +161,53 @@
 
             <Button
                 android:id="@+id/prof_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="95dp"
                 android:layout_weight="1"
-                android:backgroundTint="#3A9FFE"
+                android:backgroundTint="@color/buttonBlue"
                 android:contentDescription="@string/prof_button"
-                tools:backgroundTint="#3A9FFE" />
+                android:drawableTop="@drawable/common_google_signin_btn_icon_dark"
+                android:text="Profile"
+                android:textSize="12sp"
+                tools:backgroundTint="@color/buttonBlue" />
 
             <Button
                 android:id="@+id/button_bmr"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="95dp"
                 android:layout_weight="1"
-                android:backgroundTint="#2E841D"
+                android:backgroundTint="@color/buttonGreen"
                 android:contentDescription="@string/bmr_button"
-                tools:backgroundTint="#2E841D"
+                android:drawableTop="@drawable/common_google_signin_btn_icon_dark"
+                android:text="BMR"
+                android:textSize="12sp"
+                tools:backgroundTint="@color/buttonGreen"
                 tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/weather_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="95dp"
                 android:layout_weight="1"
-                android:backgroundTint="#D9DC88"
+                android:backgroundTint="@color/buttonYellow"
                 android:contentDescription="@string/bmr_button"
-                tools:backgroundTint="#D9DC88"
+                android:drawableTop="@drawable/common_google_signin_btn_icon_dark"
+                android:text="Weather"
+                android:textSize="12sp"
+                tools:backgroundTint="@color/buttonYellow"
                 tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/hikes_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="95dp"
                 android:layout_weight="1"
-                android:backgroundTint="#C25655"
+                android:backgroundTint="@color/buttonRed"
                 android:contentDescription="@string/hikes_button"
-                tools:backgroundTint="#C25655" />
+                android:drawableTop="@drawable/common_google_signin_btn_icon_dark"
+                android:text="Hikes"
+                android:textSize="12sp"
+                tools:backgroundTint="@color/buttonRed" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

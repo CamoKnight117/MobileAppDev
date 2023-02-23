@@ -131,16 +131,22 @@ class MapFragment : Fragment() {
         submitLocationButton?.setOnClickListener { _ ->
             val geocoder: Geocoder = Geocoder(requireContext())
             val stringLocation = parseStringLocation()
-            val addresses = geocoder.getFromLocationName(stringLocation, 1)!!
-            if(addresses.size != 0)
+            try {
+                val addresses = geocoder.getFromLocationName(stringLocation, 1)!!
+                if(addresses.size != 0)
+                {
+                    user.textLocation.city = addresses[0].locality
+                    user.textLocation.state = addresses[0].adminArea
+                    user.textLocation.country = addresses[0].countryName
+                    user.textLocation.zipCode = addresses[0].postalCode
+                    user.textLocation.streetAddress = addresses[0].thoroughfare
+                    onLocationUpdated()
+                    updateUserLocation()
+                }
+            }
+            catch (e: java.io.IOException)
             {
-                user.textLocation.city = addresses[0].locality
-                user.textLocation.state = addresses[0].adminArea
-                user.textLocation.country = addresses[0].countryName
-                user.textLocation.zipCode = addresses[0].postalCode
-                user.textLocation.streetAddress = addresses[0].thoroughfare
-                onLocationUpdated()
-                updateUserLocation()
+                //This occurs if there are no text inputs. Just do nothing in this case and carry on
             }
         }
 

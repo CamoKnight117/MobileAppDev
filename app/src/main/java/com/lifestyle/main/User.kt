@@ -160,7 +160,8 @@ class User() {
                 } else
                     Toast.makeText(context, "Couldn't find your location!", Toast.LENGTH_LONG).show()
             }
-        } catch(e : SecurityException) {}
+        } catch(e : SecurityException){}
+        catch(e: java.io.IOException) {}
     }
 
     /** Write this [User] to a reserved location in internal storage. */
