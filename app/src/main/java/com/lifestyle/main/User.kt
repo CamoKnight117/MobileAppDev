@@ -1,5 +1,8 @@
 package com.lifestyle.main
 
+import android.app.Activity
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
 import com.lifestyle.bmr.ActivityLevel
 
 class User {
