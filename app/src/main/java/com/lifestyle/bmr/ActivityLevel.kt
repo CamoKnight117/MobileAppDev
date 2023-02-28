@@ -3,6 +3,7 @@ package com.lifestyle.bmr
 import android.content.Context
 import com.lifestyle.R
 
+@kotlinx.serialization.Serializable
 class ActivityLevel {
     var workoutsPerWeek: Int = 0
     var averageWorkoutLength: Float = 0f

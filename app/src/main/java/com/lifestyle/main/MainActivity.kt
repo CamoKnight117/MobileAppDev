@@ -1,15 +1,20 @@
 package com.lifestyle.main
 
+import android.app.Activity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.bmr.Level
+import com.lifestyle.map.MapFragment
 import com.lifestyle.profile.ProfileFragment
+import com.lifestyle.weather.WeatherFragment
 import kotlin.math.roundToInt
 
 /*
@@ -25,12 +30,17 @@ import kotlin.math.roundToInt
     This activity could be stored in a single table database design
  */
 class MainActivity : AppCompatActivity(), UserProvider {
-
     private var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Load any saved [User] from storage.
+        user = User.loadFromDevice(this) ?: user
+
+        if(user == null)
+            initUser()
 
         findViewById<Button>(R.id.prof_button).setOnClickListener {
             startFragment(ProfileFragment())
@@ -44,9 +54,23 @@ class MainActivity : AppCompatActivity(), UserProvider {
             startFragment(BMRPage())
         }
 
-        initUser()
+        findViewById<View>(R.id.weather_button).setOnClickListener {
+            startFragment(WeatherFragment())
+        }
+        
+        findViewById<Button>(R.id.hikes_button).setOnClickListener {
+            startFragment(MapFragment())
+        }
+
         updateNavBar(user!!)
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        user?.saveToDevice(this)
+    }
+    
 
     private fun initUser() {
         user = User()
@@ -84,5 +108,33 @@ class MainActivity : AppCompatActivity(), UserProvider {
 
     override fun getUser(): User {
         return user!!
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        permissionRequestCodeToResultCallback[requestCode]?.invoke(this, permissions, grantResults)
+    }
+
+    companion object {
+        private var permissionRequestCodeToResultCallback = HashMap<Int, PermissionRequestCallback>()
+        private var nextPermissionRequestCode = 0
+
+        public interface PermissionRequestCallback {
+            fun invoke(activity: Activity, permissions: Array<out String>, grantResults: IntArray);
+        }
+
+        /**
+         * @return The request code to pass to ActivityCompat.requestPermissions for permission requests that should invoke the given callback when they're completed.
+         */
+        public fun registerPermissionRequestCallback(callback : PermissionRequestCallback) : Int {
+            val newPermissionRequestCode = nextPermissionRequestCode++
+            permissionRequestCodeToResultCallback[newPermissionRequestCode] = callback
+            return newPermissionRequestCode
+        }
     }
 }

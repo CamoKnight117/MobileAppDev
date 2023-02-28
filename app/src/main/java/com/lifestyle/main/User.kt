@@ -1,14 +1,43 @@
 package com.lifestyle.main
 
+import android.graphics.Bitmap
+import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.location.Geocoder
+import android.location.Location
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.lifestyle.bmr.ActivityLevel
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.encodeToString
+import java.io.FileNotFoundException
+import com.lifestyle.map.TextLocation
 
-class User {
+@Serializable
+class User() {
     var name: String? = null
     var age = 0
-    var location = "TODO"
+    public var location: Location?
+        get() = serializableLocation?.location
+        set(value) {
+            serializableLocation = if(value == null)
+                null;
+            else
+                SerializableLocation(value)
+        }
+    private var serializableLocation: SerializableLocation? = null
+    var locationName: String? = null
+        private set
+    var textLocation = TextLocation()
+    
     var height = 0.0f
         get() {
             return field / 2.54f
@@ -28,6 +57,8 @@ class User {
     var sex = Sex.UNASSIGNED
     var activityLevel = ActivityLevel()
     var profilePicture = "TODO"
+    @Transient
+    var profilePictureThumbnail : Bitmap? = null
 
     enum class Sex
     {
@@ -163,4 +194,5 @@ class User {
         }
     }
 }
+
 
