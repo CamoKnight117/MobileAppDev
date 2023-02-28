@@ -71,5 +71,93 @@ class User {
         val averageSedentaryCalBurn = 4000/7
         return calculateBMR() + averageSedentaryCalBurn
     }
+
+    /**
+     * Sets this User's location to the device's most recent coarse location. Asks for coarse location permissions if needed.
+     * @param activity The Activity context that should be responsible for the location permission and request.
+     */
+    public fun refreshLocation(activity: Activity, successCallback: (Location)->Unit) {
+        if (ActivityCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val requestCode = MainActivity.registerPermissionRequestCallback(object : MainActivity.Companion.PermissionRequestCallback {
+                override fun invoke(activity: Activity, permissions: Array<out String>, grantResults: IntArray) {
+                    setLocationToLastDeviceLocation(activity, successCallback)
+                }
+            })
+            // Calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), requestCode)
+            return
+        }
+        setLocationToLastDeviceLocation(activity, successCallback)
+    }
+
+    private fun setLocationToLastDeviceLocation(context: Context, successCallback: (Location) -> Unit) {
+        try {
+            LocationServices.getFusedLocationProviderClient(context).getCurrentLocation(Priority.PRIORITY_LOW_POWER, null).addOnSuccessListener { newLocation ->
+                if(newLocation != null) {
+                    location = newLocation
+
+                    val geocoder: Geocoder = Geocoder(context)
+                    val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)
+                    if(addresses.size >= 1)
+                        locationName = addresses[0].let {
+                            it.locality +", "+ it.adminArea +", "+ it.countryName
+                        }
+
+
+                    successCallback(newLocation)
+                } else
+                    Toast.makeText(context, "Couldn't find your location!", Toast.LENGTH_LONG).show()
+            }
+        } catch(e : SecurityException) {}
+    }
+
+    /** Write this [User] to a reserved location in internal storage. */
+    public fun saveToDevice(context: Context) {
+        // Save user data.
+        context.openFileOutput(userSavePath, Context.MODE_PRIVATE).use { file ->
+            file.write(Json.encodeToString(this).encodeToByteArray());
+        }
+        // Save the profile picture thumbnail.
+        val portrait = profilePictureThumbnail
+        if(portrait != null) {
+            context.openFileOutput(userThumbnailSavePath, Context.MODE_PRIVATE).use { file ->
+                portrait.compress(Bitmap.CompressFormat.PNG, 90, file)
+            }
+        }
+    }
+
+    companion object {
+        private val userSavePath = "userProfile.json"
+        private val userThumbnailSavePath = "userProfileThumbnail.png"
+
+        /** @return The User stored in internal storage, or null if no user is stored. */
+        public fun loadFromDevice(context: Context): User? {
+            var result: User? = null
+            try {
+                // Read user data.
+                context.openFileInput(userSavePath).use { file ->
+                    result = Json{ignoreUnknownKeys=true}.decodeFromString<User>(file.readBytes().decodeToString())
+                }
+                // Read the profile picture thumbnail.
+                context.openFileInput(userThumbnailSavePath).use { file ->
+                    result?.profilePictureThumbnail = BitmapFactory.decodeStream(file)
+                }
+            } catch (e: FileNotFoundException) { }
+            return result
+        }
+    }
 }
 

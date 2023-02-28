@@ -1,4 +1,4 @@
-package com.example.lifestyleapp_spring2023
+package com.example.lifestyle
 
 import org.junit.Test
 
