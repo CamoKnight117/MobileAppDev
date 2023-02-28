@@ -35,7 +35,6 @@ class User() {
         }
     private var serializableLocation: SerializableLocation? = null
     var locationName: String? = null
-        private set
     var textLocation = TextLocation()
     
     var height = 0.0f
@@ -144,18 +143,25 @@ class User() {
                     location = newLocation
 
                     val geocoder: Geocoder = Geocoder(context)
-                    val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)
-                    if(addresses.size >= 1)
+                    val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)!!
+                    if(addresses.size >= 1) {
                         locationName = addresses[0].let {
-                            it.locality +", "+ it.adminArea +", "+ it.countryName
+                            it.locality + ", " + it.adminArea + ", " + it.countryName
                         }
+                        textLocation.city = addresses[0].locality
+                        textLocation.state = addresses[0].adminArea
+                        textLocation.country = addresses[0].countryName
+                        textLocation.zipCode = addresses[0].postalCode
+                        textLocation.streetAddress = addresses[0].thoroughfare
+                    }
 
 
                     successCallback(newLocation)
                 } else
                     Toast.makeText(context, "Couldn't find your location!", Toast.LENGTH_LONG).show()
             }
-        } catch(e : SecurityException) {}
+        } catch(e : SecurityException){}
+        catch(e: java.io.IOException) {}
     }
 
     /** Write this [User] to a reserved location in internal storage. */
