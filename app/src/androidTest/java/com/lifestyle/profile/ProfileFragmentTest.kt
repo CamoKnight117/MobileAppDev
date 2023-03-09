@@ -17,7 +17,6 @@ import com.lifestyle.R
 import com.lifestyle.main.MainActivity
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
-import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Before
@@ -57,6 +56,12 @@ class ProfileFragmentTest {
     fun onWeight() = onView(withId(R.id.profileWeight))
     fun onNumberPicker() = onView(withId(R.id.numberPickerNumberPicker))
     fun onNumberPickerEditText() = onView(withParent(withId(R.id.numberPickerNumberPicker)))
+    fun onSexSpinner() = onView(withId(R.id.profileSex))
+    fun onSexSpinnerOption(option: String) = onData(allOf(
+        `is`(instanceOf(String::class.java)),
+        `is`(option),
+        //withParent(withId(R.id.profileSex))
+    ))
 
     @get:Rule
     var activityScenarioRule = activityScenarioRule<MainActivity>()
@@ -124,17 +129,17 @@ class ProfileFragmentTest {
 
     @Test
     fun changeSex() {
-        onView(withId(R.id.profileSex)).perform(scrollTo(), click())
-        onData(allOf(`is`(instanceOf(String::class.java)), `is`("F"))).perform(click())
-        onView(withId(R.id.profileSex)).check(matches(withSpinnerText(containsString("F"))))
+        onSexSpinner().perform(scrollTo(), click())
+        onSexSpinnerOption("F").perform(click())
+        onSexSpinner().check(matches(withSpinnerText(containsString("F"))))
         onHeaderAgeAndSex().check(matches(withText(object : BaseMatcher<String>() {
             override fun describeTo(description: Description?) { }
             override fun matches(text: Any) = text is String && text.endsWith("F")
         })))
 
-        onView(withId(R.id.profileSex)).perform(scrollTo(), click())
-        onData(allOf(`is`(instanceOf(String::class.java)), `is`("M"))).perform(click())
-        onView(withId(R.id.profileSex)).check(matches(withSpinnerText(containsString("M"))))
+        onSexSpinner().perform(scrollTo(), click())
+        onSexSpinnerOption("M").perform(click())
+        onSexSpinner().check(matches(withSpinnerText(containsString("M"))))
         onHeaderAgeAndSex().check(matches(withText(object : BaseMatcher<String>() {
             override fun describeTo(description: Description?) { }
             override fun matches(text: Any) = text is String && text.endsWith("M")
