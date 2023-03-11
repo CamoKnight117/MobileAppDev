@@ -160,19 +160,19 @@
             <Button
                 android:id="@+id/prof_button"
                 android:layout_width="match_parent"
-                android:layout_height="154dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/buttonBlue"
                 android:contentDescription="@string/prof_button"
                 android:drawableTop="@drawable/profile_icon"
                 android:text="Profile"
-                android:textSize="28sp"
+                android:textSize="30sp"
                 tools:backgroundTint="@color/buttonBlue" />
 
             <Button
                 android:id="@+id/button_bmr"
                 android:layout_width="match_parent"
-                android:layout_height="154dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/buttonGreen"
                 android:contentDescription="@string/bmr_button"
@@ -186,7 +186,7 @@
             <Button
                 android:id="@+id/weather_button"
                 android:layout_width="match_parent"
-                android:layout_height="154dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/buttonYellow"
                 android:contentDescription="@string/bmr_button"
@@ -199,7 +199,7 @@
             <Button
                 android:id="@+id/hikes_button"
                 android:layout_width="match_parent"
-                android:layout_height="154dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/buttonRed"
                 android:contentDescription="@string/hikes_button"

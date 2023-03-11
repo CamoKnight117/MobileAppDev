@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.main.UserProvider
+import com.lifestyle.util.Helpers
 import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
@@ -201,6 +202,9 @@ class BMRPage : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view: View = inflater.inflate(R.layout.fragment_bmr_page, container, false)
+
+        //Setup spinner
+        Helpers.setUpSpinner(view.context, view.findViewById(R.id.intensitySpinner), resources.getStringArray(R.array.spinnerItems))
 
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
