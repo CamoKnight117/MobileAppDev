@@ -200,7 +200,7 @@ class BMRPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view: View = inflater.inflate(R.layout.fragment_bmr_page_fragment, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_bmr_page, container, false)
 
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
