@@ -81,7 +81,12 @@ class ProfileFragment : Fragment() {
         portraitButton?.setImageBitmap(user.profilePictureThumbnail)
 
         // Set up handlers to change the data.
-        nameEditText?.doOnTextChanged { text, _, _, _ -> user.name = text?.toString() }
+        nameEditText?.doOnTextChanged { text, _, _, _ ->
+            run {
+                user.name = text?.toString()
+                updateNavBar(user)
+            }
+        }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_AGE, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
             userProvider?.getUser()?.age = result
