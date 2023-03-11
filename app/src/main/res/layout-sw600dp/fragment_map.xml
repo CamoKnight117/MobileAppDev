@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:padding="10dp"
+    tools:context=".map.MapFragment">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey">
+
+        <!-- TODO: Update blank fragment layout -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profileCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/light_gray"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/LocationTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|center_horizontal"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="0"
+                        android:text="@string/Location"
+                        android:textColor="@color/red"
+                        android:textSize="46sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <Button
+                        android:id="@+id/useGPSLocationButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_weight="0"
+                        android:text="@string/UseGPSLocationButton"
+                        android:textSize="34sp" />
+
+                    <TextView
+                        android:id="@+id/CountryTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="0dp"
+                        android:gravity="center"
+                        android:text="@string/Country"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <EditText
+                        android:id="@+id/CountryEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:hint="@string/CountryPrompt"
+                        android:maxLength="40"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="30sp"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                    <TextView
+                        android:id="@+id/StateTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="0"
+                        android:gravity="center"
+                        android:text="@string/State"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <EditText
+                        android:id="@+id/StateEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:hint="@string/StatePrompt"
+                        android:maxLength="40"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="30sp"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                    <TextView
+                        android:id="@+id/CityTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="0"
+                        android:gravity="center"
+                        android:text="@string/City"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <EditText
+                        android:id="@+id/CityEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:hint="@string/CityPrompt"
+                        android:maxLength="40"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="30sp"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                    <TextView
+                        android:id="@+id/StreetTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="0"
+                        android:gravity="center"
+                        android:text="@string/Street"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <EditText
+                        android:id="@+id/StreetEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:hint="@string/StreetPrompt"
+                        android:maxLength="40"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="30sp"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                    <TextView
+                        android:id="@+id/ZipCodeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="0"
+                        android:gravity="center"
+                        android:text="@string/zipCode"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        tools:ignore="TextContrastCheck" />
+
+                    <EditText
+                        android:id="@+id/ZipCodeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:hint="@string/zipCodePrompt"
+                        android:maxLength="15"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:textSize="30sp"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                    <Button
+                        android:id="@+id/submitNewLocationButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_weight="0"
+                        android:text="@string/SubmitNewLocationButton"
+                        android:textSize="34sp" />
+
+                    <Button
+                        android:id="@+id/gotoMapButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:layout_weight="0"
+                        android:text="@string/GotoHikesButton"
+                        android:textSize="34sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</ScrollView>

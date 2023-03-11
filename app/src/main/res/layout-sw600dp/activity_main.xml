@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:background="@color/grey"
+    android:orientation="horizontal"
+    tools:context="com.lifestyle.main.MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/light_gray"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        tools:layout_editor_absoluteX="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="72dp">
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/nameTextValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="2"
+                        android:text="Name"
+                        android:textColor="@color/green"
+                        app:autoSizeMaxTextSize="40sp"
+                        app:autoSizeMinTextSize="1sp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform" />
+
+                    <TextView
+                        android:id="@+id/ageAndSexValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="2dp"
+                        android:text="23M"
+                        android:textColor="@color/green"
+                        app:autoSizeMaxTextSize="40sp"
+                        app:autoSizeMinTextSize="1sp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/activityLevelLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="2"
+                        android:text="@string/activity_level"
+                        android:textColor="@color/black"
+                        app:autoSizeMaxTextSize="40sp"
+                        app:autoSizeMinTextSize="1sp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform" />
+
+                    <TextView
+                        android:id="@+id/activityLevelValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="2dp"
+                        android:text="@string/lightlyActiveRowLabel"
+                        android:textColor="@color/green"
+                        app:autoSizeMaxTextSize="40sp"
+                        app:autoSizeMinTextSize="1sp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/recommendedCalorieIntakeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="2"
+                        android:text="@string/recommendedCalorieIntake"
+                        android:textColor="@color/black"
+                        app:autoSizeMaxTextSize="40sp"
+                        app:autoSizeMinTextSize="1sp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform" />
+
+                    <TextView
+                        android:id="@+id/recommendedCalorieIntakeValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="2dp"
+                        android:text="2500cal/day"
+                        android:textColor="@color/green"
+                        app:autoSizeMaxTextSize="40sp"
+                        app:autoSizeMinTextSize="1sp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform" />
+                </TableRow>
+
+            </TableLayout>
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                tools:ignore="SpeakableTextPresentCheck"
+                tools:layout_gravity="right" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/fragment_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:layout_editor_absoluteX="117dp">
+
+    </FrameLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottom_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <!-- Four square buttons -->
+
+            <Button
+                android:id="@+id/prof_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/buttonBlue"
+                android:contentDescription="@string/prof_button"
+                android:drawableTop="@drawable/profile_icon"
+                android:text="Profile"
+                android:textSize="30sp"
+                tools:backgroundTint="@color/buttonBlue" />
+
+            <Button
+                android:id="@+id/button_bmr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/buttonGreen"
+                android:contentDescription="@string/bmr_button"
+                android:drawableTop="@drawable/bmr_icon"
+                android:text="BMR"
+                android:textSize="30sp"
+                tools:backgroundTint="@color/buttonGreen"
+                tools:iconGravity="textStart"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/weather_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/buttonYellow"
+                android:contentDescription="@string/bmr_button"
+                android:drawableTop="@drawable/weather_icon"
+                android:text="Weather"
+                android:textSize="30sp"
+                tools:backgroundTint="@color/buttonYellow"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/hikes_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/buttonRed"
+                android:contentDescription="@string/hikes_button"
+                android:drawableTop="@drawable/hiking_icon"
+                android:text="Hikes"
+                android:textSize="30sp"
+                tools:backgroundTint="@color/buttonRed"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

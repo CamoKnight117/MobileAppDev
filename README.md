@@ -29,12 +29,14 @@ Additionally, there are a couple other main features:
 - Bottom navbar - A bottom navbar with buttons to each part of the app that is shown at all times to allow for quick navigation while using different modules.
 - Top navbar - Displays at all times a basic summary of the user's information, including their daily calories needs and their profile picture.
 
+The app was tested using a emulators for the Pixel 6 (for phones) and Nexus 10 (for tablets) with API 33, so the app should look good and function well on both phones and tablets, especially for these devices specifically.
+
 Design Features
 -----------------------
 There are a set of 11 design features detailed by the client (and 2 optional features as well). Below is a description of each and how they were implemented (or not implemented):
 1. The app should look good and function well on both a phone and a tablet.
-  - Implemented: 
-  - Details: 
+  - Implemented: Yes
+  - Details: Alternative layouts are used for bigger screens. The threshold we determined was anything wider than 600dp to be a tablet. As mentioned above, all testing was done using a Pixel 6 (for phones) and Nexus 10 (for tablets), so everything should look good and function well on both phones and tablets, especially on those devices specifically.
 2. The app should display module names on-screen at all times, and tapping on one should allow the user access to the particular module. On a tablet, the list of modules should always be visible on the left, even while using a module. On a phone, there is not enough room, so it should only display the module the user is on.
   - Implemented: Yes
   - Details: On both phones and tablets, we have a bottom navbar which displays all modules. Clicking on one switches to that particular module. This navbar is visible at all times.

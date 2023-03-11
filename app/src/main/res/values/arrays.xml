@@ -3,7 +3,11 @@
     <string-array name="sex">
         <item>M</item>
         <item>F</item>
-        <item>-</item>
+    </string-array>
+    <string-array name="spinnerItems">
+        <item>mild (0-300 cal/hr)</item>
+        <item>moderate (301-600 cal/hr)</item>
+        <item>intense (601+ cal/hr)</item>
     </string-array>
     <string-array name="activityLevel">
         <item>Sedentary</item>

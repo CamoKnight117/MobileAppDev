@@ -120,6 +120,9 @@ class MainActivity : AppCompatActivity(), UserProvider {
         permissionRequestCodeToResultCallback[requestCode]?.invoke(this, permissions, grantResults)
     }
 
+    private val isTablet: Boolean
+        get() = resources.getBoolean(R.bool.isTablet)
+
     companion object {
         private var permissionRequestCodeToResultCallback = HashMap<Int, PermissionRequestCallback>()
         private var nextPermissionRequestCode = 0
