@@ -129,13 +129,12 @@
 
                     <Spinner
                         android:id="@+id/profileSex"
+                        style="@style/mySpinnerItemStyle"
+                        android:entries="@array/sex"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:minHeight="48dp"
-                        android:textColor="#0000FF"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/profileAgeLabel"
                         app:layout_constraintEnd_toEndOf="@id/profileName"
                         app:layout_constraintStart_toEndOf="@id/profileSexLabel"

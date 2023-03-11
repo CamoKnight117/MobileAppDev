@@ -7,9 +7,10 @@ import com.lifestyle.R
 
 class Helpers {
     companion object {
-        fun setUpSpinner(context: Context, spinner: Spinner, items: Array<String>) {
-            val arrayAdapter = ArrayAdapter<Any?>(context, R.layout.spinner_list, items)
-            arrayAdapter.setDropDownViewResource(R.layout.spinner_list)
+        fun setUpSpinner(context: Context, spinner: Spinner, items: Array<String>, isBold: Boolean) {
+            var spinnerList = if (isBold) { R.layout.spinner_list_bold} else { R.layout.spinner_list}
+            val arrayAdapter = ArrayAdapter<Any?>(context, spinnerList, items)
+            arrayAdapter.setDropDownViewResource(spinnerList)
             spinner.adapter = arrayAdapter
         }
     }

@@ -19,6 +19,7 @@ import com.lifestyle.fragment.NumberPickerFragment
 import com.lifestyle.bmr.Level
 import com.lifestyle.main.User
 import com.lifestyle.main.UserProvider
+import com.lifestyle.util.Helpers
 import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
@@ -50,16 +51,15 @@ class ProfileFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         //Get the views
-        nameEditText = view.findViewById<View>(R.id.profileName) as EditText
+        nameEditText = view.findViewById(R.id.profileName)
         ageButton = view.findViewById(R.id.profileAge)
         weightButton = view.findViewById(R.id.profileWeight)
         heightButton = view.findViewById(R.id.profileHeight)
-        sexSpinner = view.findViewById<View>(R.id.profileSex) as Spinner
+        sexSpinner = view.findViewById(R.id.profileSex)
         locationTextView = view.findViewById(R.id.profileLocation)
         portraitButton = view.findViewById(R.id.profilePortrait)
 
@@ -74,16 +74,8 @@ class ProfileFragment : Fragment() {
         onAgeChanged()
         onWeightChanged()
         onHeightChanged()
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.sex,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            sexSpinner?.adapter = adapter
-        }
+        // Setup spinner
+        Helpers.setUpSpinner(view.context, sexSpinner!!, resources.getStringArray(R.array.sex), true)
         sexSpinner?.setSelection(user.sex.ordinal)
         onLocationUpdated()
         portraitButton?.setImageBitmap(user.profilePictureThumbnail)

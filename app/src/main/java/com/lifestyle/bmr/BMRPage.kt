@@ -204,7 +204,7 @@ class BMRPage : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_bmr_page, container, false)
 
         //Setup spinner
-        Helpers.setUpSpinner(view.context, view.findViewById(R.id.intensitySpinner), resources.getStringArray(R.array.spinnerItems))
+        Helpers.setUpSpinner(view.context, view.findViewById(R.id.intensitySpinner), resources.getStringArray(R.array.spinnerItems), false)
 
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
