@@ -38,24 +38,9 @@ class User() {
     var textLocation = TextLocation()
     
     var height = 0.0f
-        get() {
-            return field / 2.54f
-        }
-        set(value) {
-            //1 in = 2.54 cm, and we store the height as centimeters (for easier calculation for BMR)
-            field = value * 2.54f
-        }
     var weight = 0.0f
-        get() {
-            return field / 0.453592f
-        }
-        set(value) {
-            //1 lb = 0.453592 kg, and we store the weight as kilograms (for easier calculation for BMR)
-            field = value * 0.453592f
-        }
     var sex = Sex.UNASSIGNED
     var activityLevel = ActivityLevel()
-    var profilePicture = "TODO"
     @Transient
     var profilePictureThumbnail : Bitmap? = null
 
@@ -73,11 +58,17 @@ class User() {
         }
     }
 
+    /**
+     * Calculates a user's BMR using the formula (found at https://www.garnethealth.org/news/basal-metabolic-rate-calculator#:~:text=Your%20basal%20metabolism%20rate%20is,4.330%20x%20age%20in%20years)
+     * Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) – (5.677 x age in years)
+     * Women: BMR = 447.593 + (9.247 x weight in kg) + (3.098 x height in cm) – (4.330 x age in years)
+     * However, it's been adjusted to use imperial units instead, so it assumes that weight is in pounds and height is in inches
+     */
     fun calculateBMR() : Float {
         return if(age != 0 && height != 0.0f && weight != 0.0f && sex != Sex.UNASSIGNED) {
             when (sex) {
-                Sex.MALE -> 88.362f + (13.397f * weight) + (4.799f*height)-(5.677f*age)
-                Sex.FEMALE -> (447.593f + (9.247f * weight) + (3.098f * height)-(4.330f * age))
+                Sex.MALE -> 88.362f + (29.535f * weight) + (1.889f*height)-(5.677f*age)
+                Sex.FEMALE -> (447.593f + (20.386f * weight) + (1.220f * height)-(4.330f * age))
                 Sex.UNASSIGNED -> 0f
             }
         } else {
@@ -189,8 +180,13 @@ class User() {
             try {
                 // Read user data.
                 context.openFileInput(userSavePath).use { file ->
-                    result = Json.decodeFromString<User>(file.readBytes().decodeToString())
+                    try {
+                        result = Json {
+                            ignoreUnknownKeys = true
+                        }.decodeFromString<User>(file.readBytes().decodeToString())
+                    } catch (ignore: Exception) {}
                 }
+                println(result)
                 // Read the profile picture thumbnail.
                 context.openFileInput(userThumbnailSavePath).use { file ->
                     result?.profilePictureThumbnail = BitmapFactory.decodeStream(file)
@@ -198,6 +194,20 @@ class User() {
             } catch (e: FileNotFoundException) { }
             return result
         }
+    }
+
+    override fun toString(): String {
+        var s = StringBuilder()
+        s.appendLine("Name: $name")
+        s.appendLine("Age: $age")
+        s.appendLine("Location: $locationName")
+        s.appendLine("Height: $height")
+        s.appendLine("Weight: $weight")
+        s.appendLine("Sex: $sex")
+        s.appendLine("CalPerHour: ${activityLevel.caloriesPerHour}")
+        s.appendLine("WorkoutLength: ${activityLevel.averageWorkoutLength}")
+        s.appendLine("WorkoutsPerWeek: ${activityLevel.workoutsPerWeek}")
+        return s.toString()
     }
 }
 

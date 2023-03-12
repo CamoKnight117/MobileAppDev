@@ -7,13 +7,13 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.bmr.Level
 import com.lifestyle.map.MapFragment
 import com.lifestyle.profile.ProfileFragment
+import com.lifestyle.util.Helpers
 import com.lifestyle.weather.WeatherFragment
 import kotlin.math.roundToInt
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), UserProvider {
             startFragment(MapFragment())
         }
 
-        updateNavBar(user!!)
+        Helpers.updateNavBar(this, user!!)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -82,21 +82,6 @@ class MainActivity : AppCompatActivity(), UserProvider {
         user!!.activityLevel.caloriesPerHour = 210
         user!!.activityLevel.workoutsPerWeek = 3
         user!!.activityLevel.averageWorkoutLength = 0.5f
-    }
-
-    private fun updateNavBar(user: User) {
-        findViewById<TextView>(R.id.recommendedCalorieIntakeValue).text =
-            getString(R.string.calPerDayShort, user.getDailyCalorieIntake().roundToInt().toString())
-        findViewById<TextView>(R.id.ageAndSexValue).text = getString(R.string.ageAndSex, user.age.toString(),  user.sex.toString().substring(0, 1))
-        val activityLevel = when(user.activityLevel.getLevel())
-        {
-            Level.SEDENTARY -> "Sedentary"
-            Level.LIGHTLY_ACTIVE -> "Lightly Active"
-            Level.ACTIVE -> "Active"
-            Level.VERY_ACTIVE -> "Very Active"
-        }
-        findViewById<TextView>(R.id.nameTextValue).text = user.name
-        findViewById<TextView>(R.id.activityLevelValue).text = activityLevel
     }
 
     private fun startFragment(fragment: Fragment) {

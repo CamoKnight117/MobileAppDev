@@ -151,7 +151,6 @@ class BMRPage : Fragment() {
 
         caloriesBurnedPerWorkoutText.text = user.activityLevel.getCaloriesBurnedPerWorkout().toString()
         workoutCaloriesPerWeekText.text = user.activityLevel.workoutCaloriesPerWeek().toString()
-        println(isUpdatingPage)
         if(!justSetSpinner) {
             justSetSpinner = true
             if (user.activityLevel.caloriesPerHour < 300) {
