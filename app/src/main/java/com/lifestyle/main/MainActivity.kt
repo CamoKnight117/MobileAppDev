@@ -85,6 +85,9 @@ class MainActivity : AppCompatActivity(), UserProvider {
     }
 
     private fun startFragment(fragment: Fragment) {
+        //Save any changes to user before switching fragments
+        user?.saveToDevice(this)
+        //Set up fragment
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_view, fragment)
         fragmentTransaction.addToBackStack(null)
