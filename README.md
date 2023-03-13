@@ -71,5 +71,5 @@ There are a set of 11 design features detailed by the client (and 2 optional fea
   - Implemented: Yes
   - Details: As detailed above, each module has a button in both the main page and in the bottom navbar, each with their own icons and text (and color) to differentiate them.
 13. (optional) The app should be optimized for both portrait and landscape modes on both phones and tablets.
-  - Implemented: 
-  - Details: 
+  - Implemented: Yes
+  - Details: As mentioned above, there are specific layouts for just the tablet, and also as mentioned above, the app is usable in both portrait and landscape modes.
