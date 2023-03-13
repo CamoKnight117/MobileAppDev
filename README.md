@@ -56,8 +56,8 @@ There are a set of 11 design features detailed by the client (and 2 optional fea
   - Implemented: Yes
   - Details: Text sizes are appropriately large enough to be read, and in some cases (mainly the top navbar) are dynamically changed in the app when information changes or a larger screen is used. Additionally, a common color scheme of gray backgrounds along with colored text and buttons are utilized. Red text is used for card headers, black for plain text, green for values that change but can't be edited, and blue for values that change and can be edited. Additionally, as detailed above, each module button is color coded and have appealing icons associated with them. 
 8. The app should work even after rotating the device, hit the phone's back button while in the app, or switch out of the app and back into it.
-  - Implemented: 
-  - Details: 
+  - Implemented: Yes
+  - Details: Data is saved in the onSaveInstanceState method in the main activity, and loaded back in the onCreate method. This allows for data to remain consistent in the app no matter whether the device is rotated, exited, etc. Similarly, the screens are scrollable, which is very helpful when using the app after rotating. Overall, the app will still work as expected even after rotating the screen or leaving the app and re-entering.
 9. The app should be well-tested. It should not crash or be too annoying.
   - Implemented: 
   - Details: 
