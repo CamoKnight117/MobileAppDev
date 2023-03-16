@@ -19,6 +19,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import com.lifestyle.R
 import com.lifestyle.main.MainActivity
+import com.lifestyle.main.UserProvider
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Before
@@ -41,13 +42,23 @@ class WeatherFragmentTest {
 
     @Before
     fun setUp() {
+        activityScenarioRule.scenario.onActivity { activity ->
+            (activity as UserProvider).getUser().location = null
+        }
+
+        //Thread.sleep(3000)
+
         onView(withId(R.id.weather_button)).perform(click())
     }
 
     @Test
     fun updateLocation() {
+
+        //Thread.sleep(3000)
+
         onLocation().perform(click())
         onLocation().check(matches(not(withText("None"))))
+        onLocation().check(matches(not(withText(""))))
         onWeather().check(matches(not(withText(""))))
         onTemperature().check(matches(not(withText(""))))
     }
