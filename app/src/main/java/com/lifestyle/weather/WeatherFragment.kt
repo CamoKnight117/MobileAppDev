@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -60,19 +61,19 @@ class WeatherFragment : Fragment() {
         val timezone: Double? = null
     ) {
         @Serializable
-        public class Coord(val lon: Double, val lat: Double) { }
+        public class Coord(val lon: Double? = null, val lat: Double? = null) { }
         @Serializable
-        public class Weather(val id: Double, val main: String, val description: String, val icon: String) { }
+        public class Weather(val id: Double? = null, val main: String? = null, val description: String? = null, val icon: String? = null) { }
         @Serializable
-        public class Main(val temp: Double, val feels_like: Double, val temp_min: Double, val temp_max: Double, val pressure: Double, val humidity: Double, val sea_level: Double, val grnd_level: Double)
+        public class Main(val temp: Double? = null, val feels_like: Double? = null, val temp_min: Double? = null, val temp_max: Double? = null, val pressure: Double? = null, val humidity: Double? = null, val sea_level: Double? = null, val grnd_level: Double? = null)
         @Serializable
-        public class Wind(val speed: Double, val deg: Double, val gust: Double) { }
+        public class Wind(val speed: Double? = null, val deg: Double? = null, val gust: Double? = null) { }
         @Serializable
         public class Rain(@SerialName("1h") val oneH: Double? = null, @SerialName("3h") val threeH: Double? = null) { }
         @Serializable
         public class Snow(@SerialName("1h") val oneH: Double? = null, @SerialName("3h") val threeH: Double? = null) { }
         @Serializable
-        public class Sys(val country: String? = null, val sunrise: Double, val sunset: Double) { }
+        public class Sys(val country: String? = null, val sunrise: Double? = null, val sunset: Double? = null) { }
     }
 
     override fun onAttach(context: Context) {
@@ -117,8 +118,22 @@ class WeatherFragment : Fragment() {
         }
 
         // Start a weather API request if needed.
+        sendWeatherRequestIfNeeded()
+
+        return newView
+    }
+
+    private fun sendWeatherRequestIfNeeded() {
+        // The minimum distance in meters a user's location must change before the weather should be re-queried.
+        val minWeatherRefreshDistance : Float = 10000f
         val activity = requireActivity()
-        if((lastWeatherCallThread?.isAlive != true) || System.currentTimeMillis() - timestampLastWeatherReply >= weatherRefreshIntervalMillis) {
+        val location = userProvider?.getUser()?.location
+        val isLocationDifferent = (locationOnLastWeatherReply==null && location!=null)
+                || (locationOnLastWeatherReply!=null && location!=null && location.distanceTo(locationOnLastWeatherReply!!) > minWeatherRefreshDistance+locationOnLastWeatherReply!!.accuracy+location.accuracy)
+        if((lastWeatherCallThread?.isAlive != true)
+            || System.currentTimeMillis() - timestampLastWeatherReply >= weatherRefreshIntervalMillis
+            || isLocationDifferent
+        ) {
             if(ActivityCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
                 sendWeatherRequest(handler)
             } else {
@@ -130,8 +145,6 @@ class WeatherFragment : Fragment() {
                 ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.INTERNET), requestCode)
             }
         }
-
-        return newView
     }
 
     private fun sendWeatherRequest(handler: Handler) {
@@ -141,7 +154,24 @@ class WeatherFragment : Fragment() {
         lastWeatherCallThread = thread() {
             var weatherText: String?
             var temperatureText: String?
-            val response: String = URL("https://api.openweathermap.org/data/2.5/weather?lat=0&lon=0&appid=cd31a8658a4169b5b89342953b4f940b").readText() // .openConnection() as HttpURLConnection //URL("https", "api.openweathermap.org", -1, "/data/2.5/weather?lat=0&lon=0&appid=${INSECURE_OPENWEATHER_KEY}").openConnection()
+            val userProviderVal = userProvider
+            if(userProviderVal == null) {
+                handler.post {
+                    this.weatherTextView?.text     = getString(R.string.weatherErrorMessage)
+                    this.temperatureTextView?.text = null
+                }
+                return@thread
+            }
+            val user = userProviderVal.getUser()
+            val location = user.location
+            if(location == null) {
+                handler.post {
+                    this.weatherTextView?.text     = null
+                    this.temperatureTextView?.text = null
+                }
+                return@thread
+            }
+            val response: String = URL("https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=cd31a8658a4169b5b89342953b4f940b").readText() // .openConnection() as HttpURLConnection //URL("https", "api.openweathermap.org", -1, "/data/2.5/weather?lat=0&lon=0&appid=${INSECURE_OPENWEATHER_KEY}").openConnection()
             try {
                 val weather = Json{ignoreUnknownKeys=true}.decodeFromString<OpenWeatherCurrentWeatherReply>(response)
                 handler.post {
@@ -177,6 +207,7 @@ class WeatherFragment : Fragment() {
 
     private fun onLocationUpdated() {
         locationTextView?.text = userProvider?.getUser()?.locationName ?: getString(R.string.none)
+        sendWeatherRequestIfNeeded()
     }
 
     companion object {
@@ -188,6 +219,7 @@ class WeatherFragment : Fragment() {
         private const val weatherRefreshIntervalMillis = 1000 * 60 * 60
         private var lastWeatherCallThread: Thread? = null
         private var timestampLastWeatherReply: Long = 0
+        private var locationOnLastWeatherReply : Location? = null
         private var lastWeatherReply: OpenWeatherCurrentWeatherReply? = null
 
         /**

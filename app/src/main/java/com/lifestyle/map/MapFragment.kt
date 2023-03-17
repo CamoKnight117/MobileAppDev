@@ -123,7 +123,6 @@ class MapFragment : Fragment() {
             activity?.let {
                 user.refreshLocation(it) { newLocation ->
                     onLocationUpdated()
-                    updateUserLocation()
                 }
             }
         }
@@ -141,7 +140,7 @@ class MapFragment : Fragment() {
                     user.textLocation.zipCode = addresses[0].postalCode
                     user.textLocation.streetAddress = addresses[0].thoroughfare
                     onLocationUpdated()
-                    updateUserLocation()
+                    setUserLocationFromTextLocation()
                 }
             }
             catch (e: java.io.IOException)
@@ -222,7 +221,7 @@ class MapFragment : Fragment() {
         return retval
     }
 
-    private fun updateUserLocation(){
+    private fun setUserLocationFromTextLocation(){
         val user = userProvider!!.getUser()
         user.locationName = parseShortStringLocation()
         user.location = Location(parseShortStringLocation()) //Not sure if this works
