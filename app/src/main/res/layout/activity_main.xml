@@ -13,6 +13,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -21,14 +23,28 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="?attr/homeAsUpIndicator"
         tools:layout_editor_absoluteX="6dp">
+
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="72dp">
+
+            <Button
+                android:id="@+id/main_button"
+                android:layout_width="wrap_content"
+                android:layout_height="94dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/buttonPink"
+                android:text="Back"
+                android:textSize="12sp"
+                tools:backgroundTint="@color/buttonPink" />
+
 
             <TableLayout
                 android:layout_width="wrap_content"

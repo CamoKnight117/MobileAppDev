@@ -68,4 +68,7 @@
     <string name="zipCodePrompt">Enter Zip Code Here</string>
     <string name="UseGPSLocationButton">Use Current GPS Location</string>
     <string name="SubmitNewLocationButton">Submit Location Changes</string>
+    <string name="TheLifestyleApp"><u>The Lifestyle App</u></string>
+    <string name="Modules">Modules</string>
+
 </resources>

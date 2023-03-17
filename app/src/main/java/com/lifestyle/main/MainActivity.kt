@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity(), UserProvider {
         if(user == null)
             initUser()
 
+        findViewById<Button>(R.id.main_button).setOnClickListener {
+            startFragment(MainFragment())
+        }
+
         findViewById<Button>(R.id.prof_button).setOnClickListener {
             startFragment(ProfileFragment())
         }
