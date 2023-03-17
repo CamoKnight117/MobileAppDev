@@ -4,7 +4,6 @@ package com.lifestyle.map
 import android.location.Location
 import android.view.InputDevice
 import android.view.MotionEvent
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.GeneralClickAction
 import androidx.test.espresso.action.GeneralLocation
@@ -19,8 +18,6 @@ import androidx.test.rule.GrantPermissionRule
 import com.lifestyle.R
 import com.lifestyle.main.MainActivity
 import com.lifestyle.main.UserProvider
-import org.hamcrest.BaseMatcher
-import org.hamcrest.Description
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Before
@@ -76,7 +73,7 @@ class MapFragmentTest {
             user.textLocation = TextLocation()
         }
 
-        onView(withId(R.id.hikes_button)).perform(click())
+        onView(withId(R.id.hikes_main_button)).perform(click())
     }
 
     @Test

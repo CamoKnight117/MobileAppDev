@@ -71,7 +71,7 @@ class BMRFragmentTest {
 
     @Before
     fun setUp() {
-        onView(withId(R.id.button_bmr)).perform(click())
+        onView(withId(R.id.bmr_main_button)).perform(click())
     }
 
     @Test

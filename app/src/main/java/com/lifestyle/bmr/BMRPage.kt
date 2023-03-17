@@ -14,6 +14,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
+import com.lifestyle.fragment.NumberPickerFragment
 import com.lifestyle.main.UserProvider
 import com.lifestyle.util.Helpers
 import kotlin.math.roundToInt
@@ -22,6 +23,9 @@ import kotlin.math.roundToInt
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val NUMBER_PICKER_TAG_CALPERHOUR = "CalPerHour"
+private const val NUMBER_PICKER_TAG_WORKOUTSPERWEEK = "WorkoutsPerWeek"
+private const val NUMBER_PICKER_TAG_WORKOUTLENGTH = "WorkoutLength"
 
 
 /**
@@ -69,16 +73,23 @@ class BMRPage : Fragment() {
     }
 
     private fun addListeners(view: View) {
-        view.findViewById<EditText>(R.id.caloriesPerHourValue).addTextChangedListener(textChangeListener)
-        view.findViewById<EditText>(R.id.workoutsPerWeekValue).addTextChangedListener(textChangeListener)
-        view.findViewById<EditText>(R.id.workoutLengthValue).addTextChangedListener(textChangeListener)
+        val user = userProvider!!.getUser()
+        view.findViewById<TextView>(R.id.caloriesPerHourValue).addTextChangedListener(textChangeListener)
+
+        view.findViewById<TextView>(R.id.caloriesPerHourValue)?.setOnClickListener { _ ->
+            NumberPickerFragment.newInstance(getString(R.string.SetCaloriesPerHour), 0, 1000, user.activityLevel.caloriesPerHour, getString(R.string.cals))
+                .show(childFragmentManager, NUMBER_PICKER_TAG_CALPERHOUR)
+        }
+
+        view.findViewById<TextView>(R.id.workoutsPerWeekValue).addTextChangedListener(textChangeListener)
+        view.findViewById<TextView>(R.id.workoutLengthValue).addTextChangedListener(textChangeListener)
         view.findViewById<Spinner>(R.id.intensitySpinner).onItemSelectedListener = itemSelectListener
     }
 
     private fun removeListeners(view: View) {
-        view.findViewById<EditText>(R.id.caloriesPerHourValue).removeTextChangedListener(textChangeListener)
-        view.findViewById<EditText>(R.id.workoutsPerWeekValue).removeTextChangedListener(textChangeListener)
-        view.findViewById<EditText>(R.id.workoutLengthValue).removeTextChangedListener(textChangeListener)
+        view.findViewById<TextView>(R.id.caloriesPerHourValue).removeTextChangedListener(textChangeListener)
+        view.findViewById<TextView>(R.id.workoutsPerWeekValue).removeTextChangedListener(textChangeListener)
+        view.findViewById<TextView>(R.id.workoutLengthValue).removeTextChangedListener(textChangeListener)
         view.findViewById<Spinner>(R.id.intensitySpinner).onItemSelectedListener = null
     }
 
@@ -90,7 +101,7 @@ class BMRPage : Fragment() {
         val intensitySpinner = view.findViewById<Spinner>(R.id.intensitySpinner)
 
         //Calories per hour
-        val calPerHourEditText = view.findViewById<EditText>(R.id.caloriesPerHourValue)
+        val calPerHourEditText = view.findViewById<TextView>(R.id.caloriesPerHourValue)
         val capPerHourText = calPerHourEditText.text.toString()
         if (capPerHourText == "") {
             user.activityLevel.caloriesPerHour = 0
@@ -117,7 +128,7 @@ class BMRPage : Fragment() {
         }
 
         //Workouts per week
-        val workoutsPerWeekEditText = view.findViewById<EditText>(R.id.workoutsPerWeekValue)
+        val workoutsPerWeekEditText = view.findViewById<TextView>(R.id.workoutsPerWeekValue)
         val workoutsPerWeekText = workoutsPerWeekEditText.text.toString()
         if (workoutsPerWeekText == "") {
             user.activityLevel.workoutsPerWeek = 0
@@ -132,7 +143,7 @@ class BMRPage : Fragment() {
         }
 
         //Workout length
-        val workoutLengthEditText = view.findViewById<EditText>(R.id.workoutLengthValue)
+        val workoutLengthEditText = view.findViewById<TextView>(R.id.workoutLengthValue)
         val workoutLengthText = workoutLengthEditText.text.toString()
         if (workoutLengthText == "" || workoutLengthText == ".") {
             user.activityLevel.averageWorkoutLength = 0f

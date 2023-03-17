@@ -1,21 +1,21 @@
 package com.lifestyle.main
 
 import android.app.Activity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
-import com.lifestyle.bmr.Level
 import com.lifestyle.map.MapFragment
 import com.lifestyle.profile.ProfileFragment
 import com.lifestyle.util.Helpers
 import com.lifestyle.weather.WeatherFragment
-import kotlin.math.roundToInt
 
 /*
     This is the heart of our mobile application
@@ -29,7 +29,7 @@ import kotlin.math.roundToInt
 
     This activity could be stored in a single table database design
  */
-class MainActivity : AppCompatActivity(), UserProvider {
+class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface {
     private var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,34 +39,38 @@ class MainActivity : AppCompatActivity(), UserProvider {
         // Load any saved [User] from storage.
         user = User.loadFromDevice(this) ?: user
 
+        val backButton = findViewById<ImageView>(R.id.back_button)
+        val navBar = findViewById<CardView>(R.id.bottom_navbar)
+
         if(user == null)
             initUser()
 
-        findViewById<Button>(R.id.main_button).setOnClickListener {
-            startFragment(MainFragment())
+        backButton.setOnClickListener {
+            startMainFrag()
         }
 
-        findViewById<Button>(R.id.prof_button).setOnClickListener {
-            startFragment(ProfileFragment())
+        findViewById<Button>(R.id.prof_main_button).setOnClickListener {
+            startProfileFrag()
         }
 
         findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
-            startFragment(ProfileFragment())
+            startProfileFrag()
         }
 
-        findViewById<Button>(R.id.button_bmr).setOnClickListener {
-            startFragment(BMRPage())
+        findViewById<Button>(R.id.bmr_main_button).setOnClickListener {
+            startBMRFrag()
         }
 
-        findViewById<View>(R.id.weather_button).setOnClickListener {
-            startFragment(WeatherFragment())
+        findViewById<View>(R.id.weather_main_button).setOnClickListener {
+            startWeatherFrag()
         }
         
-        findViewById<Button>(R.id.hikes_button).setOnClickListener {
-            startFragment(MapFragment())
+        findViewById<Button>(R.id.hikes_main_button).setOnClickListener {
+            startHikesFrag()
         }
 
         Helpers.updateNavBar(this, user!!)
+        startMainFrag()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -130,6 +134,46 @@ class MainActivity : AppCompatActivity(), UserProvider {
             val newPermissionRequestCode = nextPermissionRequestCode++
             permissionRequestCodeToResultCallback[newPermissionRequestCode] = callback
             return newPermissionRequestCode
+        }
+    }
+
+    override fun startProfileFrag() {
+        setVisibility(true)
+        startFragment(ProfileFragment())
+    }
+
+    override fun startWeatherFrag() {
+        setVisibility(true)
+        startFragment(WeatherFragment())
+    }
+
+    override fun startBMRFrag() {
+        setVisibility(true)
+        startFragment(BMRPage())
+    }
+
+    override fun startHikesFrag() {
+        setVisibility(true)
+        startFragment(MapFragment())
+    }
+
+    override fun startMainFrag() {
+        setVisibility(false)
+        startFragment(MainFragment())
+    }
+
+    private fun setVisibility(visible:Boolean) {
+        val navbar = findViewById<CardView>(R.id.bottom_navbar)
+        val backButton = findViewById<ImageView>(R.id.back_button)
+        if(visible)
+        {
+            navbar.visibility = View.VISIBLE
+            backButton.visibility = View.VISIBLE
+        }
+        else
+        {
+            navbar.visibility = View.GONE
+            backButton.visibility = View.GONE
         }
     }
 }

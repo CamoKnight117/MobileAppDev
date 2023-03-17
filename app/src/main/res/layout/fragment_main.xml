@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/grey">
 
         <androidx.cardview.widget.CardView
@@ -66,10 +66,11 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/activityLevelDataCard"
             android:layout_width="0dp"
-            android:layout_height="190dp"
+            android:layout_height="350dp"
             android:layout_marginTop="7dp"
             app:cardBackgroundColor="@color/light_gray"
             app:cardCornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bmrCard">
@@ -81,31 +82,32 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
                     <!-- Four square buttons -->
 
                     <Button
-                        android:id="@+id/prof_button"
+                        android:id="@+id/prof_main_button"
                         android:layout_width="match_parent"
-                        android:layout_height="94dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/buttonBlue"
                         android:contentDescription="@string/prof_button"
                         android:drawableTop="@drawable/profile_icon"
-                        android:text="Profile"
+                        android:text="@string/prof_button"
                         android:textSize="12sp"
                         tools:backgroundTint="@color/buttonBlue" />
 
                     <Button
-                        android:id="@+id/button_bmr"
+                        android:id="@+id/bmr_main_button"
                         android:layout_width="match_parent"
-                        android:layout_height="94dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/buttonGreen"
                         android:contentDescription="@string/bmr_button"
                         android:drawableTop="@drawable/bmr_icon"
-                        android:text="BMR"
+                        android:text="@string/bmr_button"
                         android:textSize="12sp"
                         tools:backgroundTint="@color/buttonGreen"
                         tools:iconGravity="textStart"
@@ -115,32 +117,33 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
                     <!-- Four square buttons -->
 
                     <Button
-                        android:id="@+id/weather_button"
+                        android:id="@+id/weather_main_button"
                         android:layout_width="match_parent"
-                        android:layout_height="94dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/buttonYellow"
                         android:contentDescription="@string/bmr_button"
                         android:drawableTop="@drawable/weather_icon"
-                        android:text="Weather"
+                        android:text="@string/weather_button"
                         android:textSize="12sp"
                         tools:backgroundTint="@color/buttonYellow"
                         tools:ignore="ButtonStyle" />
 
                     <Button
-                        android:id="@+id/hikes_button"
+                        android:id="@+id/hikes_main_button"
                         android:layout_width="match_parent"
-                        android:layout_height="94dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="@color/buttonRed"
                         android:contentDescription="@string/hikes_button"
                         android:drawableTop="@drawable/hiking_icon"
-                        android:text="Hikes"
+                        android:text="@string/hikes_button"
                         android:textSize="12sp"
                         tools:backgroundTint="@color/buttonRed"
                         tools:ignore="ButtonStyle" />

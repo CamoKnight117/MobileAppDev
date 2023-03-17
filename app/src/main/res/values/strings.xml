@@ -45,11 +45,11 @@
     <string name="veryActiveRowLabel">Very Active</string>
     <string name="hints">---</string>
     <string name="yourName">Your Name</string>
-    <string name="nav_button">-Navigation+</string>
-    <string name="prof_button">-Profile+</string>
-    <string name="bmr_button">+BMR-</string>
-    <string name="weather_button">+Weather-</string>
-    <string name="hikes_button">+Hikes-</string>
+    <string name="nav_button">Navigation</string>
+    <string name="prof_button">Profile</string>
+    <string name="bmr_button">BMR</string>
+    <string name="weather_button">Weather</string>
+    <string name="hikes_button">Hikes</string>
     <string name="years">years</string>
     <string name="yearsQuantity">%1$d yr.</string>
     <string name="weather">Weather</string>
@@ -70,5 +70,8 @@
     <string name="SubmitNewLocationButton">Submit Location Changes</string>
     <string name="TheLifestyleApp"><u>The Lifestyle App</u></string>
     <string name="Modules">Modules</string>
+    <string name="SetCaloriesPerHour">Set Calories Per Hour:</string>
+    <string name="cals">cals</string>
+
 
 </resources>

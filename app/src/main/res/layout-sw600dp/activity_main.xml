@@ -158,7 +158,7 @@
             <!-- Four square buttons -->
 
             <Button
-                android:id="@+id/prof_button"
+                android:id="@+id/prof_main_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -170,7 +170,7 @@
                 tools:backgroundTint="@color/buttonBlue" />
 
             <Button
-                android:id="@+id/button_bmr"
+                android:id="@+id/bmr_main_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -184,7 +184,7 @@
                 tools:ignore="ButtonStyle" />
 
             <Button
-                android:id="@+id/weather_button"
+                android:id="@+id/weather_main_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -197,7 +197,7 @@
                 tools:ignore="ButtonStyle" />
 
             <Button
-                android:id="@+id/hikes_button"
+                android:id="@+id/hikes_main_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

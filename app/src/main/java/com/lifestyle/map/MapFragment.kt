@@ -62,7 +62,7 @@ class MapFragment : Fragment() {
         streetEditText = view.findViewById<View>(R.id.StreetEditText) as EditText
         zipcodeEditText = view.findViewById<View>(R.id.ZipCodeEditText) as EditText
         gotoMapButton = view.findViewById<View>(R.id.gotoMapButton) as Button
-        useGPSLocationButton = view.findViewById<View>(R.id.useGPSLocationButton) as Button
+        useGPSLocationButton = view.findViewById<Button>(R.id.useGPSLocationButton)
         submitLocationButton = view.findViewById<View>(R.id.submitNewLocationButton) as Button
 
         onLocationUpdated()

@@ -1,15 +1,7 @@
 package com.lifestyle.weather
 
 import android.content.Context
-import android.view.InputDevice
-import android.view.MotionEvent
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.action.GeneralClickAction
-import androidx.test.espresso.action.GeneralLocation
-import androidx.test.espresso.action.Press
-import androidx.test.espresso.action.Tap
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -48,7 +40,7 @@ class WeatherFragmentTest {
 
         //Thread.sleep(3000)
 
-        onView(withId(R.id.weather_button)).perform(click())
+        onView(withId(R.id.weather_main_button)).perform(click())
     }
 
     @Test
