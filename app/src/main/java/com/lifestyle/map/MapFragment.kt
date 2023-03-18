@@ -134,6 +134,9 @@ class MapFragment : Fragment() {
                 val addresses = geocoder.getFromLocationName(stringLocation, 1)!!
                 if(addresses.size != 0)
                 {
+                    user.location?.latitude = addresses[0].latitude
+                    user.location?.longitude = addresses[0].longitude
+                    user.textLocation.state = addresses[0].adminArea
                     user.textLocation.city = addresses[0].locality
                     user.textLocation.state = addresses[0].adminArea
                     user.textLocation.country = addresses[0].countryName
