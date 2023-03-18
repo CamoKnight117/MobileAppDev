@@ -15,6 +15,10 @@ The app is written in Kotlin, and Android Studio was the primary developer envir
 - Silas Barber - Test Lead
 - Jacob Bullard - Java Wizard
 
+We utilized GitHub's Kanban for planning out and assigning tasks for the app throughout development, so all tasks and plans (and bugs) are documented there.
+
+We also created designs for some of the pages of the app before development began in addition to a class diagram and test diagram, each of which is contained in the "reference" folder in this repo.
+
 App Details
 -----------------------
 There are four primary modules (i.e. pages) in this app, namely the:
