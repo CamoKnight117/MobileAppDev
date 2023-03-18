@@ -39,10 +39,10 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main, container, false)
 
-        val profileButton = view.findViewById<Button>(R.id.prof_main_button)
-        val bmrButton = view.findViewById<Button>(R.id.bmr_main_button)
-        val weatherButton = view.findViewById<Button>(R.id.weather_main_button)
-        val hikesButton = view.findViewById<Button>(R.id.hikes_main_button)
+        val profileButton = view.findViewById<Button>(R.id.prof_main_fragment_button)
+        val bmrButton = view.findViewById<Button>(R.id.bmr_main_fragment_button)
+        val weatherButton = view.findViewById<Button>(R.id.weather_main_fragment_button)
+        val hikesButton = view.findViewById<Button>(R.id.hikes_main_fragment_button)
 
         profileButton.setOnClickListener{
             fragmentStarter?.startProfileFrag()

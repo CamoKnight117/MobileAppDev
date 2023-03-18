@@ -76,10 +76,6 @@ class NumberPickerFragment : DialogFragment() {
             numberPicker?.maxValue = maxNumber / step
             numberPicker?.value = currentNumber / step
 
-            /*numberPicker!!.setOnValueChangedListener { picker, oldVal, newVal ->
-                picker.value = if (newVal < oldVal) oldVal - step else oldVal + step
-            }*/
-
             val numbers = mutableListOf<String>()
 
             for (i in minNumber until maxNumber step step) {
