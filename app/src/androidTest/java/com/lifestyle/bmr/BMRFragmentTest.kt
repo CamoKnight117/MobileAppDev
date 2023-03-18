@@ -49,8 +49,6 @@ class BMRFragmentTest {
             )
         )
 
-    private fun onHeaderName() = onView(withId(R.id.nameTextValue))
-    private fun onHeaderAgeAndSex() = onView(withId(R.id.ageAndSexValue))
     private fun onWorkoutLength() = onView(withId(R.id.workoutLengthValue))
     private fun onWorkoutsPerWeek() = onView(withId(R.id.workoutsPerWeekValue))
     private fun onCaloriesPerHour() = onView(withId(R.id.caloriesPerHourValue))
@@ -76,56 +74,44 @@ class BMRFragmentTest {
 
     @Test
     fun changeWorkoutLength() {
-        val onEditText = onWorkoutLength()
-        editAndCheckText(onEditText, "0", true)
-        editAndCheckText(onEditText, "10", true)
-        editAndCheckText(onEditText, "100", true)
-        editAndCheckText(onEditText, "1000", true)
-        editAndCheckText(onEditText, "10000", true)
-        editAndCheckText(onEditText, "100000", false)
-        editAndCheckText(onEditText, ".5", true)
-        editAndCheckText(onEditText, "5.5", true)
-        editAndCheckText(onEditText, "50.5", true)
-        editAndCheckText(onEditText, "500.5", true)
-        editAndCheckText(onEditText, "5000.5", false)
+        onWorkoutLength().perform(click())
+        exploreNumberPicker(0, 5,120, true)
+
+        onWorkoutLength().perform(click())
+        setNumberPicker(0, 5,true)
+        onWorkoutLength().check(matches(withText("0")))
+
+        onWorkoutLength().perform(click())
+        setNumberPicker(30, 5,false)
+        onWorkoutLength().check(matches(not(withText("30"))))
     }
 
     @Test
     fun changeWorkoutsPerWeek() {
-        val onEditText = onWorkoutsPerWeek()
-        editAndCheckText(onEditText, "0", true)
-        editAndCheckText(onEditText, "10", true)
-        editAndCheckText(onEditText, "100", false)
-        editAndCheckText(onEditText, "1000", false)
-        editAndCheckText(onEditText, "10000", false)
-        editAndCheckText(onEditText, "100000", false)
-        //editAndCheckText(onEditText, ".5", false)
-        //editAndCheckText(onEditText, "5.5", false)
-        //editAndCheckText(onEditText, "50.5", false)
-        //editAndCheckText(onEditText, "500.5", false)
-        //editAndCheckText(onEditText, "5000.5", false)
+        onWorkoutsPerWeek().perform(click())
+        exploreNumberPicker(0, 120, 1,true)
+
+        onWorkoutsPerWeek().perform(click())
+        setNumberPicker(0, 1,true)
+        onWorkoutsPerWeek().check(matches(withText("0")))
+
+        onWorkoutsPerWeek().perform(click())
+        setNumberPicker(30, 1,false)
+        onWorkoutsPerWeek().check(matches(not(withText("30"))))
     }
 
     @Test
     fun changeCaloriesPerHour() {
-        val onEditText = onCaloriesPerHour()
-        editAndCheckText(onEditText, "0", true)
-        onWorkoutIntensitySpinner().check(matches(withSpinnerText(`is`(intensityLevelString(0))))) // < 300
-        editAndCheckText(onEditText, "10", true)
-        onWorkoutIntensitySpinner().check(matches(withSpinnerText(`is`(intensityLevelString(0))))) // < 300
-        editAndCheckText(onEditText, "100", true)
-        onWorkoutIntensitySpinner().check(matches(withSpinnerText(`is`(intensityLevelString(0))))) // < 300
-        editAndCheckText(onEditText, "500", true)
-        onWorkoutIntensitySpinner().check(matches(withSpinnerText(`is`(intensityLevelString(1))))) // < 600
-        editAndCheckText(onEditText, "1000", true)
-        onWorkoutIntensitySpinner().check(matches(withSpinnerText(`is`(intensityLevelString(2))))) // >= 600
-        editAndCheckText(onEditText, "10000", false)
-        editAndCheckText(onEditText, "100000", false)
-        //editAndCheckText(onEditText, ".5", false)
-        //editAndCheckText(onEditText, "5.5", false)
-        //editAndCheckText(onEditText, "50.5", false)
-        //editAndCheckText(onEditText, "500.5", false)
-        //editAndCheckText(onEditText, "5000.5", false)
+        onCaloriesPerHour().perform(click())
+        exploreNumberPicker(0, 120, 10,true)
+
+        onCaloriesPerHour().perform(click())
+        setNumberPicker(0, 10, true)
+        onCaloriesPerHour().check(matches(withText("0")))
+
+        onCaloriesPerHour().perform(click())
+        setNumberPicker(30, 10, false)
+        onCaloriesPerHour().check(matches(not(withText("30"))))
     }
 
     @Test
@@ -146,20 +132,47 @@ class BMRFragmentTest {
         onCaloriesPerHour().check(matches(withText("750")))
     }
 
-    companion object {
-        private fun editAndCheckText(onEditText: ViewInteraction, text: String, shouldSucceed: Boolean) {
-            try {
-                onEditText.perform(scrollTo(), click(), replaceText(text), pressImeActionButton(), closeSoftKeyboard())
+    private fun exploreNumberPicker(min: Int, max: Int, step: Int, shouldConfirm: Boolean) {
+        val realMin = min / step
+        val realMax = max / step
 
-                if(shouldSucceed)
-                    onEditText.check(matches(withText(text)))
-                else
-                    onEditText.check(matches(not(withText(text))))
-            } catch(e : java.lang.NumberFormatException) {
-                // The EditText interacted with does not accept the given String input.
-                assertFalse(shouldSucceed);
-            }
-        }
+        onNumberPicker().check(matches(isDisplayed()))
+
+        onNumberPickerEditText().perform(click())
+        Thread.sleep(500) // Wait for the keyboard to open.
+        onNumberPickerEditText().perform(clearText(), typeText(realMin.toString()))
+        onNumberPickerEditText().perform(pressImeActionButton())
+        onNumberPickerEditText().check(matches(withText(realMin.toString())))
+
+        onNumberPickerEditText().perform(click())
+        Thread.sleep(500) // Wait for the keyboard to open.
+        onNumberPickerEditText().perform(clearText(), typeText(realMax.toString()))
+        onNumberPickerEditText().perform(pressImeActionButton())
+        onNumberPickerEditText().check(matches(withText(realMax.toString())))
+
+        Thread.sleep(1000) // Wait for the keyboard to close.
+
+        onNumberPicker().perform(clickBottomCentre)
+        onNumberPickerEditText().check(matches(withText(realMin.toString())))
+
+        if(shouldConfirm)
+            onView(withText(R.string.submit)).perform(click())
+        else
+            onView(withText(R.string.cancel)).perform(click())
+    }
+
+    private fun setNumberPicker(value: Int, step: Int, shouldConfirm: Boolean = true) {
+        onNumberPickerEditText().perform(click())
+        Thread.sleep(500) // Wait for the keyboard to open.
+        onNumberPickerEditText().perform(clearText(), typeText((value / step).toString()))
+        onNumberPickerEditText().perform(pressImeActionButton())
+
+        Thread.sleep(500) // Wait for the keyboard to close.
+
+        if(shouldConfirm)
+            onView(withText(R.string.submit)).perform(click())
+        else
+            onView(withText(R.string.cancel)).perform(click())
     }
 
 }

@@ -86,15 +86,15 @@ class ProfileFragmentTest {
     @Test
     fun changeAge() {
         onAge().perform(click())
-        exploreNumberPicker(0, 120, true)
+        exploreNumberPicker(0, 120, 1, true)
 
         onAge().perform(click())
-        setNumberPicker(0, true)
+        setNumberPicker(0, 1,true)
         onAge().check(matches(withText("0 yr.")))
         onHeaderAgeAndSex().check(matches(withText("0 M")))
 
         onAge().perform(click())
-        setNumberPicker(30, false)
+        setNumberPicker(30, 1,false)
         onAge().check(matches(not(withText("30 yr."))))
         onHeaderAgeAndSex().check(matches(withText("0 M")))
     }
@@ -102,28 +102,28 @@ class ProfileFragmentTest {
     @Test
     fun changeHeight() {
         onHeight().perform(click())
-        exploreNumberPicker(12, 120, true)
+        exploreNumberPicker(12, 120, 1,true)
 
         onHeight().perform(click())
-        setNumberPicker(12, true)
+        setNumberPicker(12, 1,true)
         onHeight().check(matches(withText("12 in.")))
 
         onHeight().perform(click())
-        setNumberPicker(30, false)
+        setNumberPicker(30, 1,false)
         onHeight().check(matches(not(withText("30 in."))))
     }
 
     @Test
     fun changeWeight() {
         onWeight().perform(click())
-        exploreNumberPicker(10, 1000, true)
+        exploreNumberPicker(10, 1000, 5,true)
 
         onWeight().perform(click())
-        setNumberPicker(10, true)
+        setNumberPicker(10, 5,true)
         onWeight().check(matches(withText("10 lb.")))
 
         onWeight().perform(click())
-        setNumberPicker(30, false)
+        setNumberPicker(30, 5,false)
         onWeight().check(matches(not(withText("30 lb."))))
     }
 
@@ -146,25 +146,28 @@ class ProfileFragmentTest {
         })))
     }
 
-    private fun exploreNumberPicker(min: Int, max: Int, shouldConfirm: Boolean) {
+    private fun exploreNumberPicker(min: Int, max: Int, step: Int, shouldConfirm: Boolean) {
+        val realMin = min / step
+        val realMax = max / step
+
         onNumberPicker().check(matches(isDisplayed()))
 
         onNumberPickerEditText().perform(click())
         Thread.sleep(500) // Wait for the keyboard to open.
-        onNumberPickerEditText().perform(clearText(), typeText(min.toString()))
+        onNumberPickerEditText().perform(clearText(), typeText(realMin.toString()))
         onNumberPickerEditText().perform(pressImeActionButton())
-        onNumberPickerEditText().check(matches(withText(min.toString())))
+        onNumberPickerEditText().check(matches(withText(realMin.toString())))
 
         onNumberPickerEditText().perform(click())
         Thread.sleep(500) // Wait for the keyboard to open.
-        onNumberPickerEditText().perform(clearText(), typeText(max.toString()))
+        onNumberPickerEditText().perform(clearText(), typeText(realMax.toString()))
         onNumberPickerEditText().perform(pressImeActionButton())
-        onNumberPickerEditText().check(matches(withText(max.toString())))
+        onNumberPickerEditText().check(matches(withText(realMax.toString())))
 
         Thread.sleep(1000) // Wait for the keyboard to close.
 
         onNumberPicker().perform(clickBottomCentre)
-        onNumberPickerEditText().check(matches(withText(min.toString())))
+        onNumberPickerEditText().check(matches(withText(realMin.toString())))
 
         if(shouldConfirm)
             onView(withText(R.string.submit)).perform(click())
@@ -172,10 +175,10 @@ class ProfileFragmentTest {
             onView(withText(R.string.cancel)).perform(click())
     }
 
-    private fun setNumberPicker(value: Int, shouldConfirm: Boolean = true) {
+    private fun setNumberPicker(value: Int, step: Int, shouldConfirm: Boolean = true) {
         onNumberPickerEditText().perform(click())
         Thread.sleep(500) // Wait for the keyboard to open.
-        onNumberPickerEditText().perform(clearText(), typeText(value.toString()))
+        onNumberPickerEditText().perform(clearText(), typeText((value / step).toString()))
         onNumberPickerEditText().perform(pressImeActionButton())
 
         Thread.sleep(500) // Wait for the keyboard to close.
