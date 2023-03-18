@@ -624,7 +624,7 @@
                                 android:layout_column="0"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginBottom="4dp"
-                                android:text="hours"
+                                android:text="@string/minutes"
                                 android:textColor="@color/black"
                                 android:textSize="20sp"
                                 tools:ignore="TextContrastCheck" />

@@ -71,7 +71,10 @@
     <string name="TheLifestyleApp"><u>The Lifestyle App</u></string>
     <string name="Modules">Modules</string>
     <string name="SetCaloriesPerHour">Set Calories Per Hour:</string>
+    <string name="SetWorkoutsPerWeek">Set Workouts Per Week:</string>
+    <string name="SetWorkoutLength">Set Workout Length:</string>
     <string name="cals">cals</string>
-
+    <string name="workouts">workouts</string>
+    <string name="minutes">minutes</string>
 
 </resources>

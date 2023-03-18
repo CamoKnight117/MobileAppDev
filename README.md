@@ -59,14 +59,14 @@ There are a set of 11 design features detailed by the client (and 2 optional fea
   - Implemented: Yes
   - Details: Data is saved in the onSaveInstanceState method in the main activity, and loaded back in the onCreate method. This allows for data to remain consistent in the app no matter whether the device is rotated, exited, etc. Similarly, the screens are scrollable, which is very helpful when using the app after rotating. Overall, the app will still work as expected even after rotating the screen or leaving the app and re-entering.
 9. The app should be well-tested. It should not crash or be too annoying.
-  - Implemented: 
-  - Details: 
+  - Implemented: Yes
+  - Details: We did a lot of testing to make sure things weren't crashing or being too annoying. This included some unit testing as well as just using the app and fixing bugs that we came across. There are probably still a couple other minor bugs littered in the app that we didn't have time to fix, but they are few and have small impact, so we wouldn't classify them as "annoying."
 10. When entering the user's data, the user shouldn't be forced to type anything other than their name.
-  - Implemented: 
-  - Details: 
+  - Implemented: Yes
+  - Details: The user page and bmr page use only spinners for selecting items to make it more convenient for the user. The location page has an option to autofill based on the user's current location, so there is no need for them to type their information (only if they want to specify a location different than where they currently are). The name is the only one that the user is forced to type.
 11. The user should be able to view a summary of their entered data at any time.
-  - Implemented: 
-  - Details: 
+  - Implemented: Yes
+  - Details: The top navbar for the app contains a summary of the user's information all the time. This includes their name, age, sex, activity level, daily caloric intake, and their profile picture. Other more detailed/specific data like location, weather, weight, calories burned per workout, etc. can be easily viewed in their corresponding modules at any time.
 12. (optional) A custom icon should be design for each module button along with text below it.
   - Implemented: Yes
   - Details: As detailed above, each module has a button in both the main page and in the bottom navbar, each with their own icons and text (and color) to differentiate them.

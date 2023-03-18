@@ -94,7 +94,7 @@ class ProfileFragment : Fragment() {
             onAgeChanged()
         }
         ageButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, user.age, getString(R.string.years))
+            NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, user.age, 1, getString(R.string.years))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_AGE)
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_HEIGHT, this) { key, bundle ->
@@ -104,7 +104,7 @@ class ProfileFragment : Fragment() {
             onHeightChanged()
         }
         heightButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, user.height.roundToInt(), getString(R.string.inches))
+            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, user.height.roundToInt(), 1, getString(R.string.inches))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_HEIGHT)
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WEIGHT, this) { key, bundle ->
@@ -114,7 +114,7 @@ class ProfileFragment : Fragment() {
             onWeightChanged()
         }
         weightButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight.roundToInt(), getString(R.string.pounds))
+            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight.roundToInt(), 5, getString(R.string.pounds))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_WEIGHT)
         }
         sexSpinner?.onItemSelectedListener = sexSpinnerListener

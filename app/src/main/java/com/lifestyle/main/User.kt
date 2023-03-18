@@ -41,12 +41,18 @@ class User() {
     var weight = 0.0f
     var sex = Sex.UNASSIGNED
     var activityLevel = ActivityLevel()
+    var lastUsedModule = LastUsedModule.MAIN
     @Transient
     var profilePictureThumbnail : Bitmap? = null
 
     enum class Sex
     {
         MALE, FEMALE, UNASSIGNED
+    }
+
+    enum class LastUsedModule
+    {
+        MAIN, PROFILE, BMR, WEATHER, HIKES
     }
 
     fun getDailyCalorieIntake() : Float {

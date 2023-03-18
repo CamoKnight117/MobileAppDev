@@ -6,7 +6,7 @@ import com.lifestyle.R
 @kotlinx.serialization.Serializable
 class ActivityLevel {
     var workoutsPerWeek: Int = 0
-    var averageWorkoutLength: Float = 0f
+    var averageWorkoutLength: Int = 0
     var caloriesPerHour: Int = 0
         set(value) {
             field = value
@@ -20,7 +20,7 @@ class ActivityLevel {
     private var intensity: Intensity = Intensity.NONE
 
     fun getCaloriesBurnedPerWorkout(): Float {
-        return averageWorkoutLength * caloriesPerHour
+        return averageWorkoutLength * caloriesPerHour / 60.0f
     }
 
     fun workoutCaloriesPerWeek(): Float {

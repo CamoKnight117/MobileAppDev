@@ -1,18 +1,13 @@
 package com.lifestyle.fragment
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentResultListener
-import androidx.fragment.app.FragmentResultOwner
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.Fragment
 import com.lifestyle.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -20,6 +15,7 @@ import com.lifestyle.R
 private const val ARG_MIN = "min"
 private const val ARG_MAX = "max"
 private const val ARG_CURRENT = "current"
+private const val ARG_STEP = "step"
 private const val ARG_UNITS = "units"
 private const val ARG_TITLE = "title"
 private const val RESULT_KEY = "number"
@@ -33,6 +29,7 @@ class NumberPickerFragment : DialogFragment() {
     private var minNumber: Int = 0
     private var maxNumber: Int = 0
     private var currentNumber: Int = 0
+    private var step: Int = 0
     private var unitsName: String? = null
     private var title: String? = null
     private var unitsLabel: TextView? = null
@@ -43,6 +40,7 @@ class NumberPickerFragment : DialogFragment() {
             minNumber = it.getInt(ARG_MIN)
             maxNumber = it.getInt(ARG_MAX)
             currentNumber = it.getInt(ARG_CURRENT)
+            step = it.getInt(ARG_STEP)
             unitsName = it.getString(ARG_UNITS)
             title = it.getString(ARG_TITLE)
         }
@@ -56,6 +54,7 @@ class NumberPickerFragment : DialogFragment() {
             putInt(ARG_MIN, minNumber)
             putInt(ARG_MAX, maxNumber)
             putInt(ARG_CURRENT, currentNumber)
+            putInt(ARG_STEP, step)
             putString(ARG_UNITS, unitsName)
             putString(ARG_TITLE, title)
         }
@@ -73,9 +72,21 @@ class NumberPickerFragment : DialogFragment() {
             unitsLabel?.text = arguments?.getString(ARG_UNITS)
 
             var numberPicker: NumberPicker? = newView.findViewById<NumberPicker>(R.id.numberPickerNumberPicker)
-            numberPicker?.minValue = minNumber
-            numberPicker?.maxValue = maxNumber
-            numberPicker?.value = currentNumber
+            numberPicker?.minValue = minNumber / step
+            numberPicker?.maxValue = maxNumber / step
+            numberPicker?.value = currentNumber / step
+
+            /*numberPicker!!.setOnValueChangedListener { picker, oldVal, newVal ->
+                picker.value = if (newVal < oldVal) oldVal - step else oldVal + step
+            }*/
+
+            val numbers = mutableListOf<String>()
+
+            for (i in minNumber until maxNumber step step) {
+                numbers.add(i.toString())
+            }
+
+            numberPicker?.displayedValues = numbers.toTypedArray()
 
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
@@ -84,7 +95,7 @@ class NumberPickerFragment : DialogFragment() {
                     DialogInterface.OnClickListener { dialog, id ->
                         if(numberPicker != null)
                             parentFragmentManager.setFragmentResult(this.tag ?: "", Bundle().apply {
-                                putInt(RESULT_KEY, numberPicker.value)
+                                putInt(RESULT_KEY, numberPicker.value * step)
                             })
                     })
                 .setNegativeButton(R.string.cancel,
@@ -107,12 +118,13 @@ class NumberPickerFragment : DialogFragment() {
          */
         @JvmStatic
         //fun newInstance(min: Int, max: Int, current: Int, requestKey: String) =
-        fun newInstance(title: String, min: Int, max: Int, current: Int, unitsName: String) =
+        fun newInstance(title: String, min: Int, max: Int, current: Int, step: Int, unitsName: String) =
             NumberPickerFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_MIN, min)
                     putInt(ARG_MAX, max)
                     putInt(ARG_CURRENT, current)
+                    putInt(ARG_STEP, step)
                     putString(ARG_UNITS, unitsName)
                     putString(ARG_TITLE, title)
                 }

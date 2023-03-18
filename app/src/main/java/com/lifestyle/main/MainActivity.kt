@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
+import com.lifestyle.bmr.Level
 import com.lifestyle.map.MapFragment
 import com.lifestyle.profile.ProfileFragment
 import com.lifestyle.util.Helpers
@@ -39,11 +40,10 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
         // Load any saved [User] from storage.
         user = User.loadFromDevice(this) ?: user
 
-        val backButton = findViewById<ImageView>(R.id.back_button)
-        val navBar = findViewById<CardView>(R.id.bottom_navbar)
-
         if(user == null)
             initUser()
+
+        val backButton = findViewById<ImageView>(R.id.back_button)
 
         backButton.setOnClickListener {
             startMainFrag()
@@ -70,7 +70,13 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
         }
 
         Helpers.updateNavBar(this, user!!)
-        startMainFrag()
+        when (user!!.lastUsedModule) {
+            User.LastUsedModule.MAIN -> startMainFrag()
+            User.LastUsedModule.PROFILE -> startProfileFrag()
+            User.LastUsedModule.BMR -> startBMRFrag()
+            User.LastUsedModule.WEATHER -> startWeatherFrag()
+            User.LastUsedModule.HIKES -> startHikesFrag()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -89,7 +95,7 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
         user!!.sex = User.Sex.MALE
         user!!.activityLevel.caloriesPerHour = 210
         user!!.activityLevel.workoutsPerWeek = 3
-        user!!.activityLevel.averageWorkoutLength = 0.5f
+        user!!.activityLevel.averageWorkoutLength = 30
     }
 
     private fun startFragment(fragment: Fragment) {
@@ -139,26 +145,31 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
 
     override fun startProfileFrag() {
         setVisibility(true)
+        user!!.lastUsedModule = User.LastUsedModule.PROFILE
         startFragment(ProfileFragment())
     }
 
     override fun startWeatherFrag() {
         setVisibility(true)
+        user!!.lastUsedModule = User.LastUsedModule.WEATHER
         startFragment(WeatherFragment())
     }
 
     override fun startBMRFrag() {
         setVisibility(true)
+        user!!.lastUsedModule = User.LastUsedModule.BMR
         startFragment(BMRPage())
     }
 
     override fun startHikesFrag() {
         setVisibility(true)
+        user!!.lastUsedModule = User.LastUsedModule.HIKES
         startFragment(MapFragment())
     }
 
     override fun startMainFrag() {
         setVisibility(false)
+        user!!.lastUsedModule = User.LastUsedModule.MAIN
         startFragment(MainFragment())
     }
 

@@ -6,10 +6,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -66,6 +66,26 @@ class BMRPage : Fragment() {
         //Setup spinner
         Helpers.setUpSpinner(view.context, view.findViewById(R.id.intensitySpinner), resources.getStringArray(R.array.spinnerItems), false)
 
+        //Setup other listeners
+        view.findViewById<TextView>(R.id.caloriesPerHourValue)?.setOnClickListener(caloriesPerHourClickListener)
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_CALPERHOUR, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.activityLevel?.caloriesPerHour = result
+            updateBMRPage(view, true, false)
+        }
+        view.findViewById<TextView>(R.id.workoutsPerWeekValue)?.setOnClickListener(workoutsPerWeekClickListener)
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WORKOUTSPERWEEK, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.activityLevel?.workoutsPerWeek = result
+            updateBMRPage(view, true, false)
+        }
+        view.findViewById<TextView>(R.id.workoutLengthValue)?.setOnClickListener(workoutLengthClickListener)
+        childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WORKOUTLENGTH, this) { key, bundle ->
+            val result = NumberPickerFragment.getResultNumber(bundle)
+            userProvider?.getUser()?.activityLevel?.averageWorkoutLength = result
+            updateBMRPage(view, true, false)
+        }
+
         //Setup page
         updateBMRPage(view, true, true)
 
@@ -73,14 +93,7 @@ class BMRPage : Fragment() {
     }
 
     private fun addListeners(view: View) {
-        val user = userProvider!!.getUser()
         view.findViewById<TextView>(R.id.caloriesPerHourValue).addTextChangedListener(textChangeListener)
-
-        view.findViewById<TextView>(R.id.caloriesPerHourValue)?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.SetCaloriesPerHour), 0, 1000, user.activityLevel.caloriesPerHour, getString(R.string.cals))
-                .show(childFragmentManager, NUMBER_PICKER_TAG_CALPERHOUR)
-        }
-
         view.findViewById<TextView>(R.id.workoutsPerWeekValue).addTextChangedListener(textChangeListener)
         view.findViewById<TextView>(R.id.workoutLengthValue).addTextChangedListener(textChangeListener)
         view.findViewById<Spinner>(R.id.intensitySpinner).onItemSelectedListener = itemSelectListener
@@ -101,61 +114,26 @@ class BMRPage : Fragment() {
         val intensitySpinner = view.findViewById<Spinner>(R.id.intensitySpinner)
 
         //Calories per hour
-        val calPerHourEditText = view.findViewById<TextView>(R.id.caloriesPerHourValue)
-        val capPerHourText = calPerHourEditText.text.toString()
-        if (capPerHourText == "") {
-            user.activityLevel.caloriesPerHour = 0
-            calPerHourEditText.setText("0")
-        } else {
-            //If spinner is updated, first update calories per hour accordingly
-            if (!setSpinner) {
-                user.activityLevel.caloriesPerHour = if (intensitySpinner.selectedItemPosition == 0) {
-                    150
-                } else if (intensitySpinner.selectedItemPosition == 1) {
-                    450
-                } else {
-                    750
-                }
-                calPerHourEditText.setText(user.activityLevel.caloriesPerHour.toString())
-            } else if (!isFirst) {
-                user.activityLevel.caloriesPerHour = capPerHourText.toInt()
-                if (!calPerHourEditText.hasFocus()) {
-                    calPerHourEditText.setText(capPerHourText)
-                }
+        //If spinner is updated, first update calories per hour accordingly
+        if (!setSpinner) {
+            user.activityLevel.caloriesPerHour = if (intensitySpinner.selectedItemPosition == 0) {
+                150
+            } else if (intensitySpinner.selectedItemPosition == 1) {
+                450
             } else {
-                calPerHourEditText.setText(user.activityLevel.caloriesPerHour.toString())
+                750
             }
         }
+        val calPerHourEditText = view.findViewById<TextView>(R.id.caloriesPerHourValue)
+        calPerHourEditText.setText(user.activityLevel.caloriesPerHour.toString())
 
         //Workouts per week
         val workoutsPerWeekEditText = view.findViewById<TextView>(R.id.workoutsPerWeekValue)
-        val workoutsPerWeekText = workoutsPerWeekEditText.text.toString()
-        if (workoutsPerWeekText == "") {
-            user.activityLevel.workoutsPerWeek = 0
-            workoutsPerWeekEditText.setText("0")
-        } else if (!isFirst) {
-            user.activityLevel.workoutsPerWeek = workoutsPerWeekText.toInt()
-            if (!workoutsPerWeekEditText.hasFocus()) {
-                workoutsPerWeekEditText.setText(workoutsPerWeekText)
-            }
-        } else {
-            workoutsPerWeekEditText.setText(user.activityLevel.workoutsPerWeek.toString())
-        }
+        workoutsPerWeekEditText.setText(user.activityLevel.workoutsPerWeek.toString())
 
         //Workout length
         val workoutLengthEditText = view.findViewById<TextView>(R.id.workoutLengthValue)
-        val workoutLengthText = workoutLengthEditText.text.toString()
-        if (workoutLengthText == "" || workoutLengthText == ".") {
-            user.activityLevel.averageWorkoutLength = 0f
-            workoutLengthEditText.setText("0.0")
-        } else if (!isFirst) {
-            user.activityLevel.averageWorkoutLength = workoutLengthText.toFloat()
-            if (!workoutLengthEditText.hasFocus()) {
-                workoutLengthEditText.setText(workoutLengthText)
-            }
-        } else {
-            workoutLengthEditText.setText(user.activityLevel.averageWorkoutLength.toString())
-        }
+        workoutLengthEditText.setText(user.activityLevel.averageWorkoutLength.toString())
 
         //Intensity spinner
         if (setSpinner) {
@@ -170,11 +148,11 @@ class BMRPage : Fragment() {
 
         //Calories burned per workout
         val caloriesBurnedPerWorkoutText = view.findViewById<TextView>(R.id.caloriesBurnedPerWorkoutValue)
-        caloriesBurnedPerWorkoutText.text = user.activityLevel.getCaloriesBurnedPerWorkout().toString()
+        caloriesBurnedPerWorkoutText.text = user.activityLevel.getCaloriesBurnedPerWorkout().roundToInt().toString()
 
         //Workout calories per week
         val workoutCaloriesPerWeekText = view.findViewById<TextView>(R.id.workoutCaloriesPerWeekValue)
-        workoutCaloriesPerWeekText.text = user.activityLevel.workoutCaloriesPerWeek().toString()
+        workoutCaloriesPerWeekText.text = user.activityLevel.workoutCaloriesPerWeek().roundToInt().toString()
 
         //Daily calorie needs
         val dailyCalorieNeedsText = view.findViewById<TextView>(R.id.dailyCalorieNeedsValue)
@@ -215,6 +193,21 @@ class BMRPage : Fragment() {
 
         //Add back listeners
         addListeners(view)
+    }
+
+    private val caloriesPerHourClickListener = OnClickListener {
+        NumberPickerFragment.newInstance(getString(R.string.SetCaloriesPerHour), 0, 1000, userProvider!!.getUser().activityLevel.caloriesPerHour, 10, getString(R.string.cals))
+            .show(childFragmentManager, NUMBER_PICKER_TAG_CALPERHOUR)
+    }
+
+    private val workoutsPerWeekClickListener = OnClickListener {
+        NumberPickerFragment.newInstance(getString(R.string.SetWorkoutsPerWeek), 0, 50, userProvider!!.getUser().activityLevel.workoutsPerWeek, 1, getString(R.string.workouts))
+            .show(childFragmentManager, NUMBER_PICKER_TAG_WORKOUTSPERWEEK)
+    }
+
+    private val workoutLengthClickListener = OnClickListener {
+        NumberPickerFragment.newInstance(getString(R.string.SetWorkoutLength), 0, 1440, userProvider!!.getUser().activityLevel.averageWorkoutLength, 5, getString(R.string.minutes))
+            .show(childFragmentManager, NUMBER_PICKER_TAG_WORKOUTLENGTH)
     }
 
     private val textChangeListener = object : TextWatcher {
