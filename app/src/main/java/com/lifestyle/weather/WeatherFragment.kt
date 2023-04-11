@@ -18,8 +18,6 @@ import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.main.MainActivity
 import com.lifestyle.main.UserProvider
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -43,38 +41,6 @@ class WeatherFragment : Fragment() {
     private var weatherTextView: TextView? = null
     private var temperatureTextView: TextView? = null
     private var handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
-
-    /** A response from https://api.openweathermap.org/data/2.5/weather, minus "internal parameter"s, parsed from JSON.
-     * See https://openweathermap.org/current#parameter for details.
-     */
-    @Serializable
-    private class OpenWeatherCurrentWeatherReply(
-        val coord: Coord? = null,
-        val weather: List<Weather>? = null,
-        val main: Main? = null,
-        val visibility: Double? = null,
-        val wind: Wind? = null,
-        val rain: Rain? = null,
-        val snow: Snow? = null,
-        val dt: Double? = null,
-        val sys: Sys? = null,
-        val timezone: Double? = null
-    ) {
-        @Serializable
-        public class Coord(val lon: Double? = null, val lat: Double? = null) { }
-        @Serializable
-        public class Weather(val id: Double? = null, val main: String? = null, val description: String? = null, val icon: String? = null) { }
-        @Serializable
-        public class Main(val temp: Double? = null, val feels_like: Double? = null, val temp_min: Double? = null, val temp_max: Double? = null, val pressure: Double? = null, val humidity: Double? = null, val sea_level: Double? = null, val grnd_level: Double? = null)
-        @Serializable
-        public class Wind(val speed: Double? = null, val deg: Double? = null, val gust: Double? = null) { }
-        @Serializable
-        public class Rain(@SerialName("1h") val oneH: Double? = null, @SerialName("3h") val threeH: Double? = null) { }
-        @Serializable
-        public class Snow(@SerialName("1h") val oneH: Double? = null, @SerialName("3h") val threeH: Double? = null) { }
-        @Serializable
-        public class Sys(val country: String? = null, val sunrise: Double? = null, val sunset: Double? = null) { }
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -173,7 +139,7 @@ class WeatherFragment : Fragment() {
             }
             val response: String = URL("https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=cd31a8658a4169b5b89342953b4f940b").readText() // .openConnection() as HttpURLConnection //URL("https", "api.openweathermap.org", -1, "/data/2.5/weather?lat=0&lon=0&appid=${INSECURE_OPENWEATHER_KEY}").openConnection()
             try {
-                val weather = Json{ignoreUnknownKeys=true}.decodeFromString<OpenWeatherCurrentWeatherReply>(response)
+                val weather = Json{ignoreUnknownKeys=true}.decodeFromString<WeatherData>(response)
                 handler.post {
                     timestampLastWeatherReply = System.currentTimeMillis()
                     lastWeatherReply = weather
@@ -220,7 +186,7 @@ class WeatherFragment : Fragment() {
         private var lastWeatherCallThread: Thread? = null
         private var timestampLastWeatherReply: Long = 0
         private var locationOnLastWeatherReply : Location? = null
-        private var lastWeatherReply: OpenWeatherCurrentWeatherReply? = null
+        private var lastWeatherReply: WeatherData? = null
 
         /**
          * Use this factory method to create a new instance of
