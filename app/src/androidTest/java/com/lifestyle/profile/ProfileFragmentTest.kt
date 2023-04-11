@@ -68,7 +68,7 @@ class ProfileFragmentTest {
 
     @Before
     fun setUp() {
-        onView(withId(R.id.prof_main_button)).perform(click())
+        onView(withId(R.id.prof_main_fragment_button)).perform(click())
     }
 
     @Test
