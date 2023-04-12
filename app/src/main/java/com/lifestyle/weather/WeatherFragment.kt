@@ -15,6 +15,8 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.os.HandlerCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.lifestyle.R
 import com.lifestyle.main.MainActivity
 import com.lifestyle.main.UserProvider
@@ -24,6 +26,7 @@ import kotlinx.serialization.json.Json
 import java.net.URL
 import kotlin.concurrent.thread
 import kotlin.math.roundToInt
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,6 +44,7 @@ class WeatherFragment : Fragment() {
     private var weatherTextView: TextView? = null
     private var temperatureTextView: TextView? = null
     private var handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
+    private lateinit var weatherViewModel : WeatherViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -83,35 +87,13 @@ class WeatherFragment : Fragment() {
             }
         }
 
-        // Start a weather API request if needed.
-        sendWeatherRequestIfNeeded()
-
-        return newView
-    }
-
-    private fun sendWeatherRequestIfNeeded() {
-        // The minimum distance in meters a user's location must change before the weather should be re-queried.
-        val minWeatherRefreshDistance : Float = 10000f
-        val activity = requireActivity()
-        val location = userProvider?.getUser()?.location
-        val isLocationDifferent = (locationOnLastWeatherReply==null && location!=null)
-                || (locationOnLastWeatherReply!=null && location!=null && location.distanceTo(locationOnLastWeatherReply!!) > minWeatherRefreshDistance+locationOnLastWeatherReply!!.accuracy+location.accuracy)
-        if((lastWeatherCallThread?.isAlive != true)
-            || System.currentTimeMillis() - timestampLastWeatherReply >= weatherRefreshIntervalMillis
-            || isLocationDifferent
-        ) {
-            if(ActivityCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
-                sendWeatherRequest(handler)
-            } else {
-                val requestCode = MainActivity.registerPermissionRequestCallback(object : MainActivity.Companion.PermissionRequestCallback {
-                    override fun invoke(activity: Activity, permissions: Array<out String>, grantResults: IntArray) {
-                        sendWeatherRequest(handler)
-                    }
-                })
-                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.INTERNET), requestCode)
-            }
+        // Initialize the viewmodel and set an observer.
+        weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
+        weatherViewModel.data.observe(this.viewLifecycleOwner) { weatherData : WeatherData ->
+            timestampLastWeatherReply = System.currentTimeMillis()
+            lastWeatherReply = weatherData
+            putWeatherOnUI()
         }
-    }
 
     private fun sendWeatherRequest(handler: Handler) {
         // Do not create more than one weather request thread at once.
@@ -157,30 +139,32 @@ class WeatherFragment : Fragment() {
                 }
             }
         }
+        putWeatherOnUI()
+        return newView
     }
 
     private fun putWeatherOnUI() {
-        val weatherText     = lastWeatherReply?.weather?.getOrNull(0)?.main ?: getString(R.string.weatherErrorMessage)
-        val temperatureKelvin = lastWeatherReply?.main?.temp
-        val temperatureText: String? = if(temperatureKelvin != null) {
-            val temperatureFarenheit: Double = (temperatureKelvin - 273.15) * 9.0/5.0 + 32.0
-            getString(R.string.temperatureFarenheit, temperatureFarenheit.roundToInt())
-        } else
-            getString(R.string.temperatureErrorMessage)
+        var weatherText     = ""
+        var temperatureText = ""
+        lastWeatherReply?.apply{
+            weatherText = weather?.getOrNull(0)?.main ?: getString(R.string.weatherErrorMessage)
+            val temperatureKelvin = lastWeatherReply?.main?.temp
+            temperatureText = if(temperatureKelvin != null) {
+                val temperatureFarenheit: Double = (temperatureKelvin - 273.15) * 9.0/5.0 + 32.0
+                getString(R.string.temperatureFarenheit, temperatureFarenheit.roundToInt())
+            } else
+                getString(R.string.temperatureErrorMessage)
+        }
         this.weatherTextView?.text     = weatherText
         this.temperatureTextView?.text = temperatureText
     }
 
     private fun onLocationUpdated() {
         locationTextView?.text = userProvider?.getUser()?.locationName ?: getString(R.string.none)
-        sendWeatherRequestIfNeeded()
+        userProvider?.getUser()?.location?.let { weatherViewModel.setLocation(it) }
     }
 
     companion object {
-        /** The unsecured key to our team's OpenWeather API access. This key provides API access, not account access.
-         * Our account is free-tier; it has no billing info attached.
-         * Our account has access to 60 calls per minute, to a maximum of 1,000,000 calls per month. */
-        private const val INSECURE_OPENWEATHER_KEY = "cd31a8658a4169b5b89342953b4f940b"
         // Weather query rate limiting is managed over the lifetime of the app by static fields:
         private const val weatherRefreshIntervalMillis = 1000 * 60 * 60
         private var lastWeatherCallThread: Thread? = null
