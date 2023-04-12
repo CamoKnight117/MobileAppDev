@@ -28,12 +28,13 @@ import com.lifestyle.weather.WeatherFragment
     This activity could be stored in a single table database design
  */
 class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface {
-    private val mUserViewModel: UserViewModel
-    get() = {
-    UserViewModel.UserViewModelFactory((application as LifestyleApplication).repository)
-    }
+    private lateinit var mUserViewModel: UserViewModel
+    private val user : UserData?
+        get() = mUserViewModel.data.value
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        mUserViewModel = UserViewModel.UserViewModelFactory((application as LifestyleApplication).repository).create(UserViewModel::class.java)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -65,38 +66,36 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
             startHikesFrag()
         }
 
-        Helpers.updateNavBar(this, user!!)
-        when (user!!.lastUsedModule) {
-            User.LastUsedModule.MAIN -> startMainFrag()
-            User.LastUsedModule.PROFILE -> startProfileFrag()
-            User.LastUsedModule.BMR -> startBMRFrag()
-            User.LastUsedModule.WEATHER -> startWeatherFrag()
-            User.LastUsedModule.HIKES -> startHikesFrag()
+        Helpers.updateNavBar(this, mUserViewModel)
+        when (user!!.lastUsedModule!!) {
+            LastUsedModule.MAIN -> startMainFrag()
+            LastUsedModule.PROFILE -> startProfileFrag()
+            LastUsedModule.BMR -> startBMRFrag()
+            LastUsedModule.WEATHER -> startWeatherFrag()
+            LastUsedModule.HIKES -> startHikesFrag()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        user?.saveToDevice(this)
     }
     
 
     private fun initUser() {
-        user = User()
+        //user = User()
         user!!.name = "Bob Ross"
         user!!.age = 23
         user!!.height = 72.0f
         user!!.weight = 145.0f
-        user!!.sex = User.Sex.MALE
-        user!!.activityLevel.caloriesPerHour = 210
-        user!!.activityLevel.workoutsPerWeek = 3
-        user!!.activityLevel.averageWorkoutLength = 30
+        user!!.sex = Sex.MALE
+        user!!.activityLevel?.caloriesPerHour = 210
+        user!!.activityLevel?.workoutsPerWeek = 3
+        user!!.activityLevel?.averageWorkoutLength = 30
     }
 
     private fun startFragment(fragment: Fragment) {
         //Save any changes to user before switching fragments
-        user?.saveToDevice(this)
+        //user?.saveToDevice(this)
         //Set up fragment
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_view, fragment)
@@ -104,7 +103,7 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
         fragmentTransaction.commit()
     }
 
-    override fun getUser(): User {
+    override fun getUser(): UserData {
         return user!!
     }
 
@@ -141,31 +140,31 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
 
     override fun startProfileFrag() {
         setVisibility(true)
-        user!!.lastUsedModule = User.LastUsedModule.PROFILE
+        user!!.lastUsedModule = LastUsedModule.PROFILE
         startFragment(ProfileFragment())
     }
 
     override fun startWeatherFrag() {
         setVisibility(true)
-        user!!.lastUsedModule = User.LastUsedModule.WEATHER
+        user!!.lastUsedModule = LastUsedModule.WEATHER
         startFragment(WeatherFragment())
     }
 
     override fun startBMRFrag() {
         setVisibility(true)
-        user!!.lastUsedModule = User.LastUsedModule.BMR
+        user!!.lastUsedModule = LastUsedModule.BMR
         startFragment(BMRPage())
     }
 
     override fun startHikesFrag() {
         setVisibility(true)
-        user!!.lastUsedModule = User.LastUsedModule.HIKES
+        user!!.lastUsedModule = LastUsedModule.HIKES
         startFragment(MapFragment())
     }
 
     override fun startMainFrag() {
         setVisibility(false)
-        user!!.lastUsedModule = User.LastUsedModule.MAIN
+        user!!.lastUsedModule = LastUsedModule.MAIN
         startFragment(MainFragment())
     }
 

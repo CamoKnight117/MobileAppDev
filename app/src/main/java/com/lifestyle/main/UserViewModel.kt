@@ -94,30 +94,7 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
      * @param activity The Activity context that should be responsible for the location permission and request.
      */
     public fun refreshLocation(activity: Activity, successCallback: (Location)->Unit) {
-        if (ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            val requestCode = MainActivity.registerPermissionRequestCallback(object : MainActivity.Companion.PermissionRequestCallback {
-                override fun invoke(activity: Activity, permissions: Array<out String>, grantResults: IntArray) {
-                    setLocationToLastDeviceLocation(activity, successCallback)
-                }
-            })
-            // Calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), requestCode)
-            return
-        }
-        setLocationToLastDeviceLocation(activity, successCallback)
+
     }
 
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

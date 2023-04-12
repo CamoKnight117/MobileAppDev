@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import com.lifestyle.R
 import com.lifestyle.bmr.Level
 import com.lifestyle.main.User
+import com.lifestyle.main.UserViewModel
 import kotlin.math.roundToInt
 
 class Helpers {
@@ -20,20 +21,21 @@ class Helpers {
             spinner.adapter = arrayAdapter
         }
 
-        fun updateNavBar(mainActivity: ComponentActivity, user: User) {
+        fun updateNavBar(mainActivity: ComponentActivity, user: UserViewModel) {
             mainActivity.findViewById<TextView>(R.id.recommendedCalorieIntakeValue).text =
                 mainActivity.getString(R.string.calPerDayShort, user.getDailyCalorieIntake().roundToInt().toString())
-            mainActivity.findViewById<TextView>(R.id.ageAndSexValue).text = mainActivity.getString(R.string.ageAndSex, user.age.toString(),  user.sex.toString().substring(0, 1))
-            val activityLevel = when(user.activityLevel.getLevel())
+            mainActivity.findViewById<TextView>(R.id.ageAndSexValue).text = mainActivity.getString(R.string.ageAndSex, user.data.value?.age.toString(),  user.data.value?.sex.toString().substring(0, 1))
+            val activityLevel = when(user.data.value?.activityLevel?.getLevel())
             {
                 Level.SEDENTARY -> "Sedentary"
                 Level.LIGHTLY_ACTIVE -> "Lightly Active"
                 Level.ACTIVE -> "Active"
                 Level.VERY_ACTIVE -> "Very Active"
+                else -> ""
             }
-            mainActivity.findViewById<TextView>(R.id.nameTextValue).text = user.name
+            mainActivity.findViewById<TextView>(R.id.nameTextValue).text = user.data.value?.name
             mainActivity.findViewById<TextView>(R.id.activityLevelValue).text = activityLevel
-            mainActivity.findViewById<ImageButton>(R.id.imageButton).setImageBitmap(user.profilePictureThumbnail)
+            mainActivity.findViewById<ImageButton>(R.id.imageButton).setImageBitmap(user.data.value?.profilePictureThumbnail)
         }
     }
 }
