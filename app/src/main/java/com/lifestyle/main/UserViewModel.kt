@@ -6,11 +6,20 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.os.HandlerCompat
 import androidx.lifecycle.*
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.lifestyle.weather.WeatherData
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import java.net.URL
+import java.util.concurrent.Executors
 
 class UserViewModel(repository: UserRepository) : ViewModel() {
     private val jsonData: LiveData<UserData> = repository.data
@@ -109,34 +118,6 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
             return
         }
         setLocationToLastDeviceLocation(activity, successCallback)
-    }
-
-    private fun setLocationToLastDeviceLocation(context: Context, successCallback: (Location) -> Unit) {
-        try {
-            LocationServices.getFusedLocationProviderClient(context).getCurrentLocation(Priority.PRIORITY_LOW_POWER, null).addOnSuccessListener { newLocation ->
-                if(newLocation != null) {
-                    location = newLocation
-
-                    val geocoder: Geocoder = Geocoder(context)
-                    val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)!!
-                    if(addresses.size >= 1) {
-                        locationName = addresses[0].let {
-                            it.locality + ", " + it.adminArea + ", " + it.countryName
-                        }
-                        textLocation.city = addresses[0].locality
-                        textLocation.state = addresses[0].adminArea
-                        textLocation.country = addresses[0].countryName
-                        textLocation.zipCode = addresses[0].postalCode
-                        textLocation.streetAddress = addresses[0].thoroughfare
-                    }
-
-
-                    successCallback(newLocation)
-                } else
-                    Toast.makeText(context, "Couldn't find your location!", Toast.LENGTH_LONG).show()
-            }
-        } catch(e : SecurityException){}
-        catch(e: java.io.IOException) {}
     }
 
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

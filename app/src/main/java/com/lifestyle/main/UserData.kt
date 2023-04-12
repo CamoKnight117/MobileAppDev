@@ -9,17 +9,25 @@ import kotlinx.serialization.Serializable
 import java.util.UUID
 
 class UserData (
-    val name: String? = null,
-    val age: Int? = 0,
-    val location: Location? = null,
-    val locationName: String? = null,
-    val textLocation: TextLocation? = null,
-    val height: Float? = 0.0f,
-    val weight: Float? = 0.0f,
-    val sex: Sex? = null,
-    val activityLevel: ActivityLevel? = null,
-    val lastUsedModule: LastUsedModule? = null,
-    val profilePictureThumbnail: Bitmap? = null,
-    val uuid : UUID? = null
+    private val uuid : UUID,
+    var name: String? = null,
+    var age: Int? = 0,
+    private var serializableLocation: SerializableLocation? = null,
+    var locationName: String? = null,
+    var textLocation: TextLocation? = null,
+    var height: Float? = 0.0f,
+    var weight: Float? = 0.0f,
+    var sex: Sex? = null,
+    var activityLevel: ActivityLevel? = null,
+    var lastUsedModule: LastUsedModule? = null,
+    var profilePictureThumbnail: Bitmap? = null,
 ) {
+    public var location: Location?
+        get() = serializableLocation?.location
+        set(value) {
+            serializableLocation = if(value == null)
+                null;
+            else
+                SerializableLocation(value)
+        }
 }
