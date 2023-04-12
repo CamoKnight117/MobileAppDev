@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * See https://openweathermap.org/current#parameter for details.
  */
 @Serializable
-class WeatherData(
+class WeatherData (
     val coord: Coord? = null,
     val weather: List<Weather>? = null,
     val main: Main? = null,

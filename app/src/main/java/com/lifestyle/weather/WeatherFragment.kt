@@ -95,8 +95,51 @@ class WeatherFragment : Fragment() {
             putWeatherOnUI()
         }
 
+    private fun sendWeatherRequest(handler: Handler) {
+        // Do not create more than one weather request thread at once.
+        if(lastWeatherCallThread?.isAlive == true)
+            return
+        lastWeatherCallThread = thread() {
+            var weatherText: String?
+            var temperatureText: String?
+            val userProviderVal = userProvider
+            if(userProviderVal == null) {
+                handler.post {
+                    this.weatherTextView?.text     = getString(R.string.weatherErrorMessage)
+                    this.temperatureTextView?.text = null
+                }
+                return@thread
+            }
+            val user = userProviderVal.getUser()
+            val location = user.location
+            if(location == null) {
+                handler.post {
+                    this.weatherTextView?.text     = null
+                    this.temperatureTextView?.text = null
+                }
+                return@thread
+            }
+            val response: String = URL("https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=cd31a8658a4169b5b89342953b4f940b").readText() // .openConnection() as HttpURLConnection //URL("https", "api.openweathermap.org", -1, "/data/2.5/weather?lat=0&lon=0&appid=${INSECURE_OPENWEATHER_KEY}").openConnection()
+            try {
+                val weather = Json{ignoreUnknownKeys=true}.decodeFromString<WeatherData>(response)
+                handler.post {
+                    timestampLastWeatherReply = System.currentTimeMillis()
+                    lastWeatherReply = weather
+                    putWeatherOnUI()
+                }
+            } catch(e: SerializationException) {
+                handler.post {
+                    this.weatherTextView?.text     = getString(R.string.weatherErrorMessage)
+                    this.temperatureTextView?.text = null
+                }
+            } catch(e: java.lang.IllegalArgumentException) {
+                handler.post {
+                    this.weatherTextView?.text     = getString(R.string.weatherErrorMessage)
+                    this.temperatureTextView?.text = null
+                }
+            }
+        }
         putWeatherOnUI()
-
         return newView
     }
 
