@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
+import com.lifestyle.database.WeatherDao
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -13,7 +14,7 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 
-class WeatherRepository(application: Application) {
+class WeatherRepository(weatherDao: WeatherDao) {
     public val data : MutableLiveData<WeatherData> = MutableLiveData<WeatherData>()
     private var location : Location? = null
 
@@ -42,7 +43,7 @@ class WeatherRepository(application: Application) {
         private var instance : WeatherRepository? = null
 
         @Synchronized
-        public fun getInstance(application: Application) : WeatherRepository {
+        public fun getInstance(application: WeatherDao) : WeatherRepository {
             if(instance==null)
                 instance = WeatherRepository(application)
             return instance!!

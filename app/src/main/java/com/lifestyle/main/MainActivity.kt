@@ -1,7 +1,6 @@
 package com.lifestyle.main
 
 import android.app.Activity
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -12,12 +11,10 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
-import com.lifestyle.bmr.Level
 import com.lifestyle.map.MapFragment
 import com.lifestyle.profile.ProfileFragment
 import com.lifestyle.util.Helpers
 import com.lifestyle.weather.WeatherFragment
-
 /*
     This is the heart of our mobile application
     We should structure it in a way that allows
@@ -31,17 +28,16 @@ import com.lifestyle.weather.WeatherFragment
     This activity could be stored in a single table database design
  */
 class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface {
-    private var user: User? = null
+    private val mUserViewModel: UserViewModel
+    get() = {
+    UserViewModel.UserViewModelFactory((application as LifestyleApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Load any saved [User] from storage.
-        user = User.loadFromDevice(this) ?: user
 
-        if(user == null)
-            initUser()
 
         val backButton = findViewById<ImageView>(R.id.back_button)
 
