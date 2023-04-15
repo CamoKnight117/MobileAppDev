@@ -13,6 +13,7 @@ import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.map.MapFragment
 import com.lifestyle.profile.ProfileFragment
+import com.lifestyle.user.*
 import com.lifestyle.util.Helpers
 import com.lifestyle.weather.WeatherFragment
 /*
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
         get() = mUserViewModel.data.value
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mUserViewModel = UserViewModel.UserViewModelFactory((application as LifestyleApplication).repository).create(UserViewModel::class.java)
+        mUserViewModel = UserViewModel.UserViewModelFactory((application as LifestyleApplication).repository).create(
+            UserViewModel::class.java)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

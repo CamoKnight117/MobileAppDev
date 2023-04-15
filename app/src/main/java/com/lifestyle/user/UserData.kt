@@ -1,11 +1,10 @@
-package com.lifestyle.main
+package com.lifestyle.user
 
 import android.graphics.Bitmap
 import android.location.Location
 import com.lifestyle.bmr.ActivityLevel
+import com.lifestyle.main.SerializableLocation
 import com.lifestyle.map.TextLocation
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import java.util.UUID
 
 class UserData (

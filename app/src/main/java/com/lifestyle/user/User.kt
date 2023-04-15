@@ -1,4 +1,4 @@
-package com.lifestyle.main
+package com.lifestyle.user
 
 import android.graphics.Bitmap
 import android.Manifest
@@ -13,6 +13,8 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.lifestyle.bmr.ActivityLevel
+import com.lifestyle.main.MainActivity
+import com.lifestyle.main.SerializableLocation
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlinx.serialization.decodeFromString
@@ -115,8 +117,13 @@ class User() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            val requestCode = MainActivity.registerPermissionRequestCallback(object : MainActivity.Companion.PermissionRequestCallback {
-                override fun invoke(activity: Activity, permissions: Array<out String>, grantResults: IntArray) {
+            val requestCode = MainActivity.registerPermissionRequestCallback(object :
+                MainActivity.Companion.PermissionRequestCallback {
+                override fun invoke(
+                    activity: Activity,
+                    permissions: Array<out String>,
+                    grantResults: IntArray
+                ) {
                     setLocationToLastDeviceLocation(activity, successCallback)
                 }
             })

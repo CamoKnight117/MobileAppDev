@@ -8,8 +8,7 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import com.lifestyle.R
 import com.lifestyle.bmr.Level
-import com.lifestyle.main.User
-import com.lifestyle.main.UserViewModel
+import com.lifestyle.user.UserViewModel
 import kotlin.math.roundToInt
 
 class Helpers {
