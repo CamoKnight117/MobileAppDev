@@ -2,7 +2,6 @@ package com.lifestyle.user
 
 import android.Manifest
 import android.app.Activity
-import android.app.Application
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
@@ -14,11 +13,12 @@ import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.lifestyle.database.UserDao
 import com.lifestyle.main.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import java.util.concurrent.Executors
 
-class UserRepository(application: Application) {
+class UserRepository(userDao: UserDao) {
     // Live data object notified when we've gotten the location
     public val data : MutableLiveData<UserData> = MutableLiveData<UserData>()
 
@@ -29,13 +29,16 @@ class UserRepository(application: Application) {
     companion object {
 
         @Volatile
-        private var instance : UserRepository? = null
+        private var mInstance : UserRepository? = null
         private lateinit var mScope: CoroutineScope
         @Synchronized
-        public fun getInstance(application: Application) : UserRepository {
-            if(instance ==null)
-                instance = UserRepository(application)
-            return instance!!
+        fun getInstance(userDao: UserDao, scope: CoroutineScope) : UserRepository {
+            mScope = scope
+            return mInstance?: synchronized(this) {
+                val instance = UserRepository(userDao)
+                mInstance = instance
+                instance
+            }
         }
     }
 

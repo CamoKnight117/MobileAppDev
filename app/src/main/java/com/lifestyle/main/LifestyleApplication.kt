@@ -1,7 +1,10 @@
 package com.lifestyle.main
 
 import android.app.Application
+import androidx.room.Database
+import com.lifestyle.database.LifestyleDatabase
 import com.lifestyle.user.UserRepository
+import com.lifestyle.weather.WeatherRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -10,11 +13,8 @@ class LifestyleApplication : Application() {
     val applicationScope = CoroutineScope(SupervisorJob())
 
     //Inject scope and application context into database
-    val database by lazy{WeatherDatabase.getDatabase(this, applicationScope)}
+    val database by lazy{ LifestyleDatabase.getDatabase(this, applicationScope)}
 
-    //TODO: Inject scope and application into User database
-
-    //TODO: refactor to be similar to example 35
-    val repository by lazy{ UserRepository.getInstance(database.weatherDao())}
-
+    val userRepository by lazy{ UserRepository.getInstance(database.userDao(), applicationScope)}
+    val weatherRepository by lazy{ WeatherRepository.getInstance(database.weatherDao(), applicationScope)}
 }

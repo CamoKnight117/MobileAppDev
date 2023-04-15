@@ -6,7 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
+import com.lifestyle.database.UserDao
 import com.lifestyle.database.WeatherDao
+import com.lifestyle.user.UserRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -40,13 +43,16 @@ class WeatherRepository(weatherDao: WeatherDao) {
         private const val INSECURE_OPENWEATHER_KEY = "cd31a8658a4169b5b89342953b4f940b"
 
         @Volatile
-        private var instance : WeatherRepository? = null
-
+        private var mInstance : WeatherRepository? = null
+        private lateinit var mScope: CoroutineScope
         @Synchronized
-        public fun getInstance(application: WeatherDao) : WeatherRepository {
-            if(instance==null)
-                instance = WeatherRepository(application)
-            return instance!!
+        fun getInstance(weatherDao: WeatherDao, scope: CoroutineScope) : WeatherRepository {
+            mScope = scope
+            return mInstance ?: synchronized(this) {
+                val instance = WeatherRepository(weatherDao)
+                mInstance = instance
+                instance
+            }
         }
     }
 
