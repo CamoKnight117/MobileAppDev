@@ -40,7 +40,7 @@ class WeatherFragmentTest {
 
         //Thread.sleep(3000)
 
-        onView(withId(R.id.weather_main_button)).perform(click())
+        onView(withId(R.id.weather_main_fragment_button)).perform(click())
     }
 
     @Test

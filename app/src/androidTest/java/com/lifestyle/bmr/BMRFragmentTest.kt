@@ -19,11 +19,13 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.lifestyle.R
 import com.lifestyle.main.MainActivity
 import org.hamcrest.Matchers.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class BMRFragmentTest {
@@ -69,7 +71,17 @@ class BMRFragmentTest {
 
     @Before
     fun setUp() {
-        onView(withId(R.id.bmr_main_button)).perform(click())
+        onView(withId(R.id.bmr_main_fragment_button)).perform(click())
+    }
+
+    @After
+    fun tearDown() {
+        val files: Array<File> = InstrumentationRegistry.getInstrumentation().targetContext.getFilesDir().listFiles()
+        if (files != null) {
+            for (file in files) {
+                file.delete()
+            }
+        }
     }
 
     @Test
