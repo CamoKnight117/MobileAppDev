@@ -1,4 +1,4 @@
-package com.lifestyle.main
+package com.lifestyle.user
 
 import kotlinx.serialization.Serializable
 

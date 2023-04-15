@@ -1,8 +1,7 @@
 package com.lifestyle.main
 
 import android.app.Application
-import com.lifestyle.database.WeatherDatabase
-import com.lifestyle.weather.WeatherRepository
+import com.lifestyle.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 

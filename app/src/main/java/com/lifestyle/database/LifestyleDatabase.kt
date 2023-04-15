@@ -9,21 +9,22 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [WeatherTable::class], version = 1, exportSchema = false)
-abstract class WeatherDatabase : RoomDatabase(){
+@Database(entities = [UserTable::class, WeatherTable::class], version = 1, exportSchema = false)
+abstract class LifestyleDatabase : RoomDatabase(){
+    abstract fun userDao(): UserDao
     abstract fun weatherDao(): WeatherDao
 
     companion object {
         @Volatile
-        private var mInstance: WeatherDatabase? = null
+        private var mInstance: LifestyleDatabase? = null
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
-        ): WeatherDatabase {
+        ): LifestyleDatabase {
             return mInstance ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    WeatherDatabase::class.java, "weather.db"
+                    LifestyleDatabase::class.java, "LifestyleDatabase.db"
                 )
                     .addCallback(RoomDatabaseCallback(scope))
                     .fallbackToDestructiveMigration()

@@ -1,9 +1,8 @@
-package com.lifestyle.main
+package com.lifestyle.user
 
 import android.Manifest
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
@@ -15,11 +14,8 @@ import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.lifestyle.main.MainActivity
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import java.net.URL
 import java.util.concurrent.Executors
 
 class UserRepository(application: Application) {
@@ -37,7 +33,7 @@ class UserRepository(application: Application) {
         private lateinit var mScope: CoroutineScope
         @Synchronized
         public fun getInstance(application: Application) : UserRepository {
-            if(instance==null)
+            if(instance ==null)
                 instance = UserRepository(application)
             return instance!!
         }
@@ -57,8 +53,13 @@ class UserRepository(application: Application) {
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    val requestCode = MainActivity.registerPermissionRequestCallback(object : MainActivity.Companion.PermissionRequestCallback {
-                        override fun invoke(activity: Activity, permissions: Array<out String>, grantResults: IntArray) {
+                    val requestCode = MainActivity.registerPermissionRequestCallback(object :
+                        MainActivity.Companion.PermissionRequestCallback {
+                        override fun invoke(
+                            activity: Activity,
+                            permissions: Array<out String>,
+                            grantResults: IntArray
+                        ) {
                             setLocationToLastDeviceLocation()
                         }
                     })

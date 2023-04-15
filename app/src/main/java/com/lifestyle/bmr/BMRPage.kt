@@ -15,7 +15,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.fragment.NumberPickerFragment
-import com.lifestyle.main.UserProvider
+import com.lifestyle.user.UserProvider
 import com.lifestyle.util.Helpers
 import kotlin.math.roundToInt
 
