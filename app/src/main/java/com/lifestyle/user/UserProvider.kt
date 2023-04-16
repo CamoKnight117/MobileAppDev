@@ -5,4 +5,6 @@ package com.lifestyle.user
  */
 interface UserProvider {
     fun getUser(): UserData
+
+    fun getUserViewModel(): UserViewModel
 }

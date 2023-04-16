@@ -70,27 +70,27 @@ class MapFragment : Fragment() {
         //Set up handlers for text changes
         countryEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation.country = text?.toString()
+                user.textLocation!!.country = text?.toString()
             }
         }
         stateEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation.state = text?.toString()
+                user.textLocation!!.state = text?.toString()
             }
         }
         cityEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation.city = text?.toString()
+                user.textLocation!!.city = text?.toString()
             }
         }
         streetEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation.streetAddress = text?.toString()
+                user.textLocation!!.streetAddress = text?.toString()
             }
         }
         zipcodeEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation.zipCode = text?.toString()
+                user.textLocation!!.zipCode = text?.toString()
             }
         }
 
@@ -121,7 +121,7 @@ class MapFragment : Fragment() {
         //Set use gps location button handler
         useGPSLocationButton?.setOnClickListener { view ->
             activity?.let {
-                user.refreshLocation(it) { newLocation ->
+                userProvider!!.getUserViewModel().refreshLocation(it) { newLocation ->
                     onLocationUpdated()
                 }
             }
@@ -136,12 +136,12 @@ class MapFragment : Fragment() {
                 {
                     user.location?.latitude = addresses[0].latitude
                     user.location?.longitude = addresses[0].longitude
-                    user.textLocation.state = addresses[0].adminArea
-                    user.textLocation.city = addresses[0].locality
-                    user.textLocation.state = addresses[0].adminArea
-                    user.textLocation.country = addresses[0].countryName
-                    user.textLocation.zipCode = addresses[0].postalCode
-                    user.textLocation.streetAddress = addresses[0].thoroughfare
+                    user.textLocation!!.state = addresses[0].adminArea
+                    user.textLocation!!.city = addresses[0].locality
+                    user.textLocation!!.state = addresses[0].adminArea
+                    user.textLocation!!.country = addresses[0].countryName
+                    user.textLocation!!.zipCode = addresses[0].postalCode
+                    user.textLocation!!.streetAddress = addresses[0].thoroughfare
                     onLocationUpdated()
                     setUserLocationFromTextLocation()
                 }

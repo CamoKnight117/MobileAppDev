@@ -69,13 +69,13 @@ class WeatherFragment : Fragment() {
 
         // Populate Views with data.
         onLocationUpdated()
-        if(lastWeatherReply != null)
+        if (lastWeatherReply != null)
             putWeatherOnUI()
 
         // Set up event handlers.
         locationTextView?.setOnClickListener { view ->
             activity?.let {
-                user?.refreshLocation(it) { newLocation ->
+                userProvider!!.getUserViewModel().refreshLocation(it) { newLocation ->
                     onLocationUpdated()
                 }
             }
@@ -83,11 +83,14 @@ class WeatherFragment : Fragment() {
 
         // Initialize the viewmodel and set an observer.
         weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
-        weatherViewModel.data.observe(this.viewLifecycleOwner) { weatherData : WeatherData ->
+        weatherViewModel.data.observe(this.viewLifecycleOwner) { weatherData: WeatherData ->
             timestampLastWeatherReply = System.currentTimeMillis()
             lastWeatherReply = weatherData
             putWeatherOnUI()
         }
+
+        return newView
+    }
 
     private fun sendWeatherRequest(handler: Handler) {
         // Do not create more than one weather request thread at once.
@@ -134,7 +137,6 @@ class WeatherFragment : Fragment() {
             }
         }
         putWeatherOnUI()
-        return newView
     }
 
     private fun putWeatherOnUI() {

@@ -3,6 +3,7 @@ package com.lifestyle.user
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Geocoder
 import android.location.Location
 import android.os.Handler
@@ -13,17 +14,45 @@ import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.lifestyle.bmr.ActivityLevel
 import com.lifestyle.database.UserDao
+import com.lifestyle.database.UserTable
 import com.lifestyle.main.MainActivity
+import com.lifestyle.main.SerializableLocation
+import com.lifestyle.map.TextLocation
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.util.UUID
 import java.util.concurrent.Executors
 
 class UserRepository(userDao: UserDao) {
     // Live data object notified when we've gotten the location
-    public val data : MutableLiveData<UserData> = MutableLiveData<UserData>()
+    val data : MutableLiveData<UserData> = MutableLiveData<UserData>()
+    val userDao = userDao
 
-    public fun update() {
+    fun update() {
         //TODO: put update code here
+    }
+
+    fun fetchUserData(name: String) = runBlocking {
+        launch {
+            val row = userDao.getUser(name)
+            data.postValue(UserData(
+                row.uuid,
+                row.name,
+                row.age,
+                /*TODO: serializablelocation*/ null,
+                /*TODO: locationname*/ null,
+                /*TODO: textlocation*/ null,
+                row.height,
+                row.weight,
+                row.sex,
+                /*TODO: activityLevel*/ null,
+                /*TODO: lastUsedModule*/ null,
+                /*TODO: profilePictureThumbnail*/ null
+            ))
+        }
     }
 
     companion object {

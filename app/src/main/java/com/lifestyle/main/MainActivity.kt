@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.activity.viewModels
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.map.MapFragment
@@ -29,16 +30,15 @@ import com.lifestyle.weather.WeatherFragment
     This activity could be stored in a single table database design
  */
 class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface {
-    private lateinit var mUserViewModel: UserViewModel
-    private val user : UserData?
-        get() = mUserViewModel.data.value
+    private val mUserViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((application as LifestyleApplication).userRepository)
+    }
+    private var user : UserData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mUserViewModel = UserViewModel.UserViewModelFactory((application as LifestyleApplication).repository).create(
-            UserViewModel::class.java)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        user = mUserViewModel.data.value
 
 
 
@@ -81,19 +81,6 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
     }
-    
-
-    private fun initUser() {
-        //user = User()
-        user!!.name = "Bob Ross"
-        user!!.age = 23
-        user!!.height = 72.0f
-        user!!.weight = 145.0f
-        user!!.sex = Sex.MALE
-        user!!.activityLevel?.caloriesPerHour = 210
-        user!!.activityLevel?.workoutsPerWeek = 3
-        user!!.activityLevel?.averageWorkoutLength = 30
-    }
 
     private fun startFragment(fragment: Fragment) {
         //Save any changes to user before switching fragments
@@ -103,6 +90,10 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
         fragmentTransaction.replace(R.id.fragment_view, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+    }
+
+    override fun getUserViewModel(): UserViewModel {
+        return mUserViewModel!!
     }
 
     override fun getUser(): UserData {
