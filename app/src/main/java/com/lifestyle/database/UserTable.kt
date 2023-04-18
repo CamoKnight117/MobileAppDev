@@ -11,14 +11,8 @@ data class UserTable(
     @field:ColumnInfo(name = "uuid")
     @field:PrimaryKey
     var uuid : UUID,
-    @field:ColumnInfo(name = "name")
-    var name: String,
-    @field:ColumnInfo(name = "age")
-    var age: Int,
-    @field:ColumnInfo(name = "height")
-    var height: Float,
-    @field:ColumnInfo(name = "weight")
-    var weight: Float,
-    @field:ColumnInfo(name = "sex")
-    var sex: Sex,
+    @field:ColumnInfo(name = "userJson")
+    var userJson: String,
+    @field:ColumnInfo(name = "profilePic", typeAffinity = ColumnInfo.BLOB)
+    private byte[] profilePic;
 )

@@ -52,7 +52,17 @@ abstract class LifestyleDatabase : RoomDatabase(){
         }
 
         suspend fun populateDbTask (userDao: UserDao) {
-            userDao.insert(UserTable(UUID.randomUUID(), "Bob Ross", 23, 72.0f, 145.0f, Sex.MALE))
+            user = UserData()
+            user!!.name = "Bob Ross"
+            user!!.age = 23
+            user!!.height = 72.0f
+            user!!.weight = 145.0f
+            user!!.sex = Sex.MALE
+            user!!.activityLevel?.caloriesPerHour = 210
+            user!!.activityLevel?.workoutsPerWeek = 3
+            user!!.activityLevel?.averageWorkoutLength = 30
+
+            userDao.insert(convertToJson(user))
         }
     }
 }

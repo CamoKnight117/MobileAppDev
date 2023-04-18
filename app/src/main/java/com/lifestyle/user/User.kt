@@ -23,6 +23,9 @@ import kotlinx.serialization.encodeToString
 import java.io.FileNotFoundException
 import com.lifestyle.map.TextLocation
 
+/*
+    Deprecated class, see UserData and UserViewModel
+ */
 @Serializable
 class User() {
     var name: String? = null

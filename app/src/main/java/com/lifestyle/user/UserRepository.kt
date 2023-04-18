@@ -38,19 +38,7 @@ class UserRepository(userDao: UserDao) {
     fun fetchUserData(name: String) = runBlocking {
         launch {
             val row = userDao.getUser(name)
-            data.postValue(UserData(
-                row.uuid,
-                row.name,
-                row.age,
-                /*TODO: serializablelocation*/ null,
-                /*TODO: locationname*/ null,
-                /*TODO: textlocation*/ null,
-                row.height,
-                row.weight,
-                row.sex,
-                /*TODO: activityLevel*/ null,
-                /*TODO: lastUsedModule*/ null,
-                /*TODO: profilePictureThumbnail*/ null
+            data.postValue(convertToUserObject(row)
             ))
         }
     }
