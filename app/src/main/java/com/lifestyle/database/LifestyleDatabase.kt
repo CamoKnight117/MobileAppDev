@@ -4,12 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import kotlinx.coroutines.CoroutineScope
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.lifestyle.user.Sex
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Database(entities = [UserTable::class, WeatherTable::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class LifestyleDatabase : RoomDatabase(){
     abstract fun userDao(): UserDao
     abstract fun weatherDao(): WeatherDao
@@ -41,10 +45,14 @@ abstract class LifestyleDatabase : RoomDatabase(){
                 super.onCreate(db)
                 mInstance?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        //TODO: Do stuff to create database
+                        populateDbTask(database.userDao())
                     }
                 }
             }
+        }
+
+        suspend fun populateDbTask (userDao: UserDao) {
+            userDao.insert(UserTable(UUID.randomUUID(), "Bob Ross", 23, 72.0f, 145.0f, Sex.MALE))
         }
     }
 }

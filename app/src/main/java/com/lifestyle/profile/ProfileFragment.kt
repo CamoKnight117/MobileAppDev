@@ -16,7 +16,9 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.lifestyle.R
 import com.lifestyle.fragment.NumberPickerFragment
+import com.lifestyle.user.Sex
 import com.lifestyle.user.User
+import com.lifestyle.user.UserData
 import com.lifestyle.user.UserProvider
 import com.lifestyle.util.Helpers
 import com.lifestyle.util.Helpers.Companion.updateNavBar
@@ -76,7 +78,7 @@ class ProfileFragment : Fragment() {
         onHeightChanged()
         // Setup spinner
         Helpers.setUpSpinner(view.context, sexSpinner!!, resources.getStringArray(R.array.sex), true)
-        sexSpinner?.setSelection(user.sex.ordinal)
+        sexSpinner?.setSelection(user.sex!!.ordinal)
         onLocationUpdated()
         portraitButton?.setImageBitmap(user.profilePictureThumbnail)
 
@@ -84,37 +86,37 @@ class ProfileFragment : Fragment() {
         nameEditText?.doOnTextChanged { text, _, _, _ ->
             run {
                 user.name = text?.toString()
-                updateNavBar(requireActivity(), user)
+                updateNavBar(requireActivity(), userProvider!!.getUserViewModel())
             }
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_AGE, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
             userProvider?.getUser()?.age = result
-            updateNavBar(requireActivity(), user)
+            updateNavBar(requireActivity(), userProvider!!.getUserViewModel())
             onAgeChanged()
         }
         ageButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, user.age, 1, getString(R.string.years))
+            NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, user.age!!, 1, getString(R.string.years))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_AGE)
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_HEIGHT, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
             userProvider?.getUser()?.height = result.toFloat()
-            updateNavBar(requireActivity(), user)
+            updateNavBar(requireActivity(), userProvider!!.getUserViewModel())
             onHeightChanged()
         }
         heightButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, user.height.roundToInt(), 1, getString(R.string.inches))
+            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, user.height!!.roundToInt(), 1, getString(R.string.inches))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_HEIGHT)
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WEIGHT, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
             userProvider?.getUser()?.weight = result.toFloat()
-            updateNavBar(requireActivity(), user)
+            updateNavBar(requireActivity(), userProvider!!.getUserViewModel())
             onWeightChanged()
         }
         weightButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight.roundToInt(), 5, getString(R.string.pounds))
+            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, user.weight!!.roundToInt(), 5, getString(R.string.pounds))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_WEIGHT)
         }
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
@@ -129,12 +131,12 @@ class ProfileFragment : Fragment() {
         }
         locationTextView?.setOnClickListener { view ->
             activity?.let {
-                user?.refreshLocation(it) { newLocation ->
+                userProvider!!.getUserViewModel().refreshLocation(it) { newLocation ->
                     onLocationUpdated()
                 }
             }
         }
-        updateNavBar(requireActivity(), user)
+        updateNavBar(requireActivity(), userProvider!!.getUserViewModel())
         return view
     }
 
@@ -156,14 +158,14 @@ class ProfileFragment : Fragment() {
 
     private var sexSpinnerListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-            val user: User? = userProvider?.getUser()
+            val user: UserData? = userProvider?.getUser()
             if(pos==0)
-                user?.sex = User.Sex.MALE
+                user?.sex = Sex.MALE
             else if(pos==1)
-                user?.sex = User.Sex.FEMALE
-            else if(user != null && user.sex != User.Sex.UNASSIGNED)
-                sexSpinner?.setSelection(user.sex.ordinal)
-            updateNavBar(requireActivity(), user!!)
+                user?.sex = Sex.FEMALE
+            else if(user != null && user.sex != Sex.UNASSIGNED)
+                sexSpinner?.setSelection(user.sex!!.ordinal)
+            updateNavBar(requireActivity(), userProvider!!.getUserViewModel())
         }
 
         override fun onNothingSelected(parent: AdapterView<*>) { }

@@ -3,13 +3,14 @@ package com.lifestyle.user
 import android.app.Activity
 import android.location.Location
 import androidx.lifecycle.*
+import java.util.*
 
 class UserViewModel(repository: UserRepository) : ViewModel() {
-    private val jsonData: LiveData<UserData> = repository.data
+    private val userData: LiveData<UserData> = repository.data
     private val userRepository : UserRepository = repository
 
     val data: LiveData<UserData>
-        get() = jsonData
+        get() = userData
 
     fun getDailyCalorieIntake() : Float {
         val bmrVal = calculateBMR()
@@ -83,6 +84,7 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {
         override fun <T: ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
+                repository.fetchUserData("Bob Ross")
                 @Suppress("UNCHECKED_CAST")
                 return UserViewModel(repository) as T
             }

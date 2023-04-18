@@ -1,20 +1,17 @@
 package com.lifestyle.weather
 
-import android.app.Application
 import android.location.Location
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 
-class WeatherViewModel(application: Application) : AndroidViewModel(application) {
-    public val data : LiveData<WeatherData>
-        get() = repository.data
-    private var repository : WeatherRepository
+class WeatherViewModel(repository: WeatherRepository) : ViewModel() {
+    private val weatherData : LiveData<WeatherData> = repository.data
+    private var weatherRepository : WeatherRepository = repository
 
-    init {
-        repository = WeatherRepository.getInstance(application)
-    }
+    val data: LiveData<WeatherData>
+        get() = weatherData
 
     public fun setLocation(location: Location) {
-        repository.setLocation(location)
+        weatherRepository.setLocation(location)
     }
 }
