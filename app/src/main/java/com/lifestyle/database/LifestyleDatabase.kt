@@ -8,11 +8,13 @@ import androidx.room.TypeConverters
 import kotlinx.coroutines.CoroutineScope
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.lifestyle.user.Sex
+import com.lifestyle.user.UserData
+import com.lifestyle.user.UserData.Companion.convertToJson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-@Database(entities = [UserTable::class, WeatherTable::class], version = 1, exportSchema = false)
+@Database(entities = [UserTable::class, WeatherTable::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class LifestyleDatabase : RoomDatabase(){
     abstract fun userDao(): UserDao
@@ -52,16 +54,16 @@ abstract class LifestyleDatabase : RoomDatabase(){
         }
 
         suspend fun populateDbTask (userDao: UserDao) {
-            user = UserData()
-            user!!.name = "Bob Ross"
-            user!!.age = 23
-            user!!.height = 72.0f
-            user!!.weight = 145.0f
-            user!!.sex = Sex.MALE
-            user!!.activityLevel?.caloriesPerHour = 210
-            user!!.activityLevel?.workoutsPerWeek = 3
-            user!!.activityLevel?.averageWorkoutLength = 30
-
+            val user = UserData()
+            user.uuid = UUID.fromString("00000000-0000-0000-0000-000000000000")
+            user.name = "Bob Ross"
+            user.age = 23
+            user.height = 72.0f
+            user.weight = 145.0f
+            user.sex = Sex.MALE
+            user.activityLevel?.caloriesPerHour = 210
+            user.activityLevel?.workoutsPerWeek = 3
+            user.activityLevel?.averageWorkoutLength = 30
             userDao.insert(convertToJson(user))
         }
     }

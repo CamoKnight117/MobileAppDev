@@ -11,13 +11,18 @@ import java.util.UUID
 import android.graphics.Bitmap.CompressFormat
 
 import android.R.attr.bitmap
-
-
+import com.lifestyle.database.UserTable
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 
 @Serializable
 class UserData (
-    private val uuid : UUID,
+    @Transient
+    var uuid : UUID? = null,
     var name: String? = null,
     var age: Int? = 0,
     private var serializableLocation: SerializableLocation? = null,
@@ -28,6 +33,7 @@ class UserData (
     var sex: Sex? = null,
     var activityLevel: ActivityLevel? = null,
     var lastUsedModule: LastUsedModule? = null,
+    @Transient
     var profilePictureThumbnail: Bitmap? = null,
 ) {
     public var location: Location?
@@ -40,37 +46,42 @@ class UserData (
         }
 
     companion object {
-        public fun convertToUserObject(UserTable table)
+        fun convertToUserObject(table: UserTable): UserData?
         {
             val userJson = table.userJson
-            val profilePic = table.profilePic
-            var result: UserData = null
+            val profilePic: ByteArray? = table.profilePic
+            var result: UserData? = null
             try {
                 result = Json {
                     ignoreUnknownKeys = true
                 }.decodeFromString<UserData>(userJson)
             } catch (ignore: Exception) {}
-            Bitmap bitmap = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.length)
-            result.profilePictureThumbnail = bitmap
+            if (profilePic != null && result != null) {
+                val bitmap = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.size)
+                result.profilePictureThumbnail = bitmap
+            }
 
             return result
         }
 
-        public fun convertToJson(UserData userData)
+        fun convertToJson(userData: UserData): UserTable
         {
-            Bitmap tempProfileThumbnail = userData.profilePictureThumbnail;
+            val tempProfileThumbnail = userData.profilePictureThumbnail
             userData.profilePictureThumbnail = null;
-            String userJson = Json.encodeToString(userData)
+            val userJson = Json.encodeToString(userData)
 
-            var blob = ByteArrayOutputStream()
-            tempProfileThumbnail.compress(CompressFormat.PNG, 0 /* Ignored for PNGs */, blob)
-            var bitmapdata: ByteArray = blob.toByteArray()
+            val blob = ByteArrayOutputStream()
+            var bitmapdata: ByteArray? = null
+            if (tempProfileThumbnail != null) {
+                tempProfileThumbnail.compress(CompressFormat.PNG, 0, blob)
+                bitmapdata = blob.toByteArray()
+            }
 
             userData.profilePictureThumbnail = tempProfileThumbnail
             
-            var uuid = userData.uuid
+            val uuid = userData.uuid
 
-            return userTable(uuid, userJson, bitmapdata)
+            return UserTable(uuid!!, userJson, bitmapdata)
         }
     }
 }
