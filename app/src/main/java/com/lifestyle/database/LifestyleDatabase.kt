@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-@Database(entities = [UserTable::class, WeatherTable::class], version = 2, exportSchema = false)
+@Database(entities = [UserTable::class, WeatherTable::class], version = 4, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class LifestyleDatabase : RoomDatabase(){
     abstract fun userDao(): UserDao
@@ -55,7 +55,6 @@ abstract class LifestyleDatabase : RoomDatabase(){
 
         suspend fun populateDbTask (userDao: UserDao) {
             val user = UserData()
-            user.uuid = UUID.fromString("00000000-0000-0000-0000-000000000000")
             user.name = "Bob Ross"
             user.age = 23
             user.height = 72.0f
@@ -64,7 +63,8 @@ abstract class LifestyleDatabase : RoomDatabase(){
             user.activityLevel?.caloriesPerHour = 210
             user.activityLevel?.workoutsPerWeek = 3
             user.activityLevel?.averageWorkoutLength = 30
-            userDao.insert(convertToJson(user))
+            val table = convertToJson(user)
+            userDao.insert(table)
         }
     }
 }

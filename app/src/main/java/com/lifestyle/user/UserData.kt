@@ -21,8 +21,6 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 class UserData (
-    @Transient
-    var uuid : UUID? = null,
     var name: String? = null,
     var age: Int? = 0,
     private var serializableLocation: SerializableLocation? = null,
@@ -46,8 +44,11 @@ class UserData (
         }
 
     companion object {
-        fun convertToUserObject(table: UserTable): UserData?
+        fun convertToUserObject(table: UserTable?): UserData?
         {
+            if (table == null) {
+                return null
+            }
             val userJson = table.userJson
             val profilePic: ByteArray? = table.profilePic
             var result: UserData? = null
@@ -78,10 +79,8 @@ class UserData (
             }
 
             userData.profilePictureThumbnail = tempProfileThumbnail
-            
-            val uuid = userData.uuid
 
-            return UserTable(uuid!!, userJson, bitmapdata)
+            return UserTable(userData.name!!, userJson, bitmapdata)
         }
     }
 }

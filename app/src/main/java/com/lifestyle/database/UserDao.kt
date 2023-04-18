@@ -15,8 +15,8 @@ interface UserDao {
     @Query("DELETE FROM user_table")
     suspend fun clearTable()
 
-    @Query("SELECT * FROM user_table WHERE :uuid = uuid limit 1")
-    suspend fun getUser(uuid: UUID): UserTable
+    @Query("SELECT * FROM user_table WHERE :name = name limit 1")
+    suspend fun getUser(name: String): UserTable
 
     @Query("SELECT * FROM user_table")
     fun getAllUsers(): Flow<List<UserTable>>

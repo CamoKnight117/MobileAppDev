@@ -32,9 +32,9 @@ class UserRepository(userDao: UserDao) {
         //TODO: put update code here
     }
 
-    fun fetchUserData(uuid: UUID) = runBlocking {
+    fun fetchUserData(name: String) = runBlocking {
         launch {
-            val row = userDao.getUser(uuid)
+            val row = userDao.getUser(name)
             val obj = convertToUserObject(row)
             if (obj != null) {
                 data.postValue(obj!!)

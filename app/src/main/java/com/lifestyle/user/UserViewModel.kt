@@ -84,7 +84,7 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {
         override fun <T: ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-                repository.fetchUserData(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+                repository.fetchUserData("Bob Ross")
                 @Suppress("UNCHECKED_CAST")
                 return UserViewModel(repository) as T
             }
