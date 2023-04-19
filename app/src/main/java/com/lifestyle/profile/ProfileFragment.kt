@@ -14,17 +14,35 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.lifestyle.R
 import com.lifestyle.fragment.NumberPickerFragment
-import com.lifestyle.user.Sex
-import com.lifestyle.user.User
-import com.lifestyle.user.UserData
-import com.lifestyle.user.UserProvider
+import com.lifestyle.main.LifestyleApplication
+import com.lifestyle.user.*
 import com.lifestyle.util.Helpers
 import com.lifestyle.util.Helpers.Companion.updateNavBar
 import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
+    private val mUserViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
+    }
+
+    private var user : UserData? = null
+
+
+    //create an observer that watches the LiveData<UserData> object
+    private val liveDataObserver: Observer<UserData> =
+        Observer { userData -> // Update the UI if this data variable changes
+            if (userData != null) {
+                Helpers.updateNavBar(this, mUserViewModel)
+                when (user?.lastUsedModule!!) {
+
+                }
+            }
+        }
+
     private var userProvider: UserProvider? = null
     private var nameEditText: EditText? = null
     private var ageButton: TextView? = null

@@ -12,10 +12,14 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.lifestyle.R
 import com.lifestyle.fragment.NumberPickerFragment
+import com.lifestyle.main.LifestyleApplication
 import com.lifestyle.user.UserProvider
+import com.lifestyle.user.UserViewModel
 import com.lifestyle.util.Helpers
 import kotlin.math.roundToInt
 
@@ -34,6 +38,9 @@ private const val NUMBER_PICKER_TAG_WORKOUTLENGTH = "WorkoutLength"
  * create an instance of this fragment.
  */
 class BMRPage : Fragment() {
+    private val mUserViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
+    }
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null

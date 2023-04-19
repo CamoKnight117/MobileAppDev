@@ -11,9 +11,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.HandlerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.lifestyle.R
+import com.lifestyle.main.LifestyleApplication
 import com.lifestyle.user.UserProvider
+import com.lifestyle.user.UserViewModel
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -33,6 +36,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class WeatherFragment : Fragment() {
+    private val mUserViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
+    }
+
     private var userProvider: UserProvider? = null
     private var locationTextView: TextView? = null
     private var weatherTextView: TextView? = null

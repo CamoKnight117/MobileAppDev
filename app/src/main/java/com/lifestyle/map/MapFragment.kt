@@ -14,13 +14,20 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.lifestyle.R
+import com.lifestyle.main.LifestyleApplication
 import com.lifestyle.user.UserProvider
+import com.lifestyle.user.UserViewModel
 
 /**
  * Fragment used to set location data, and also go to the maps to search for hikes
  */
 class MapFragment : Fragment() {
+    private val mUserViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
+    }
+
     //variables used to get user info
     private var userProvider: UserProvider? = null
     private var location : TextLocation? = null
