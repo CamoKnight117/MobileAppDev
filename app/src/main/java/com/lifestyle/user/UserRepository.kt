@@ -14,16 +14,13 @@ import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.lifestyle.bmr.ActivityLevel
 import com.lifestyle.database.UserDao
-import com.lifestyle.database.UserTable
 import com.lifestyle.main.MainActivity
-import com.lifestyle.main.SerializableLocation
-import com.lifestyle.map.TextLocation
+import com.lifestyle.user.UserData.Companion.convertToUserObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.UUID
+import java.util.*
 import java.util.concurrent.Executors
 
 class UserRepository(userDao: UserDao) {
@@ -38,20 +35,10 @@ class UserRepository(userDao: UserDao) {
     fun fetchUserData(name: String) = runBlocking {
         launch {
             val row = userDao.getUser(name)
-            data.postValue(UserData(
-                row.uuid,
-                row.name,
-                row.age,
-                /*TODO: serializablelocation*/ null,
-                /*TODO: locationname*/ null,
-                /*TODO: textlocation*/ null,
-                row.height,
-                row.weight,
-                row.sex,
-                /*TODO: activityLevel*/ null,
-                /*TODO: lastUsedModule*/ null,
-                /*TODO: profilePictureThumbnail*/ null
-            ))
+            val obj = convertToUserObject(row)
+            if (obj != null) {
+                data.postValue(obj!!)
+            }
         }
     }
 
