@@ -12,10 +12,11 @@ import android.widget.TextView
 import androidx.core.os.HandlerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.lifestyle.R
 import com.lifestyle.main.LifestyleApplication
-import com.lifestyle.user.UserProvider
+import com.lifestyle.user.UserData
 import com.lifestyle.user.UserViewModel
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
@@ -40,21 +41,16 @@ class WeatherFragment : Fragment() {
         UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
     }
 
-    private var userProvider: UserProvider? = null
+    private val liveDataObserver: Observer<UserData> =
+        Observer { userData ->
+
+        }
+
     private var locationTextView: TextView? = null
     private var weatherTextView: TextView? = null
     private var temperatureTextView: TextView? = null
     private var handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
     private lateinit var weatherViewModel : WeatherViewModel
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        userProvider = try {
-            context as UserProvider
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement ${UserProvider::class}")
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +68,7 @@ class WeatherFragment : Fragment() {
         weatherTextView = newView.findViewById(R.id.weatherWeatherTextView)
         temperatureTextView = newView.findViewById(R.id.weatherTemperatureTextView)
 
-        val user = userProvider?.getUser()
+        val user = mUserViewModel.data.value!!
 
         // Populate Views with data.
         onLocationUpdated()
@@ -82,7 +78,7 @@ class WeatherFragment : Fragment() {
         // Set up event handlers.
         locationTextView?.setOnClickListener { view ->
             activity?.let {
-                userProvider!!.getUserViewModel().refreshLocation(it) { newLocation ->
+                mUserViewModel.refreshLocation(it) { newLocation ->
                     onLocationUpdated()
                 }
             }
@@ -106,15 +102,7 @@ class WeatherFragment : Fragment() {
         lastWeatherCallThread = thread() {
             var weatherText: String?
             var temperatureText: String?
-            val userProviderVal = userProvider
-            if(userProviderVal == null) {
-                handler.post {
-                    this.weatherTextView?.text     = getString(R.string.weatherErrorMessage)
-                    this.temperatureTextView?.text = null
-                }
-                return@thread
-            }
-            val user = userProviderVal.getUser()
+            val user = mUserViewModel.data.value!!
             val location = user.location
             if(location == null) {
                 handler.post {
@@ -163,8 +151,8 @@ class WeatherFragment : Fragment() {
     }
 
     private fun onLocationUpdated() {
-        locationTextView?.text = userProvider?.getUser()?.locationName ?: getString(R.string.none)
-        userProvider?.getUser()?.location?.let { weatherViewModel.setLocation(it) }
+        locationTextView?.text = mUserViewModel.data.value!!.locationName ?: getString(R.string.none)
+        mUserViewModel.data.value!!.location?.let { weatherViewModel.setLocation(it) }
     }
 
     companion object {

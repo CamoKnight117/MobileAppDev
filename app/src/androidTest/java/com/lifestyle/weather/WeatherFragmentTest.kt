@@ -11,7 +11,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import com.lifestyle.R
 import com.lifestyle.main.MainActivity
-import com.lifestyle.user.UserProvider
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Before

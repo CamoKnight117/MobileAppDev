@@ -12,13 +12,13 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.lifestyle.R
 import com.lifestyle.fragment.NumberPickerFragment
 import com.lifestyle.main.LifestyleApplication
-import com.lifestyle.user.UserProvider
+import com.lifestyle.user.UserData
 import com.lifestyle.user.UserViewModel
 import com.lifestyle.util.Helpers
 import kotlin.math.roundToInt
@@ -42,25 +42,20 @@ class BMRPage : Fragment() {
         UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
     }
 
+    private val liveDataObserver: Observer<UserData> =
+        Observer { userData ->
+
+        }
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var userProvider: UserProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        userProvider = try {
-            context as UserProvider
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement ${UserProvider::class}")
         }
     }
 
@@ -77,19 +72,19 @@ class BMRPage : Fragment() {
         view.findViewById<TextView>(R.id.caloriesPerHourValue)?.setOnClickListener(caloriesPerHourClickListener)
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_CALPERHOUR, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
-            userProvider?.getUser()?.activityLevel?.caloriesPerHour = result
+            mUserViewModel.data.value!!.activityLevel?.caloriesPerHour = result
             updateBMRPage(view, true, false)
         }
         view.findViewById<TextView>(R.id.workoutsPerWeekValue)?.setOnClickListener(workoutsPerWeekClickListener)
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WORKOUTSPERWEEK, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
-            userProvider?.getUser()?.activityLevel?.workoutsPerWeek = result
+            mUserViewModel.data.value!!.activityLevel?.workoutsPerWeek = result
             updateBMRPage(view, true, false)
         }
         view.findViewById<TextView>(R.id.workoutLengthValue)?.setOnClickListener(workoutLengthClickListener)
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WORKOUTLENGTH, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
-            userProvider?.getUser()?.activityLevel?.averageWorkoutLength = result
+            mUserViewModel.data.value!!.activityLevel?.averageWorkoutLength = result
             updateBMRPage(view, true, false)
         }
 
@@ -117,7 +112,7 @@ class BMRPage : Fragment() {
         //Remove listeners before updating
         removeListeners(view)
 
-        val user = userProvider!!.getUser()
+        val user = mUserViewModel.data.value!!
         val intensitySpinner = view.findViewById<Spinner>(R.id.intensitySpinner)
 
         //Calories per hour
@@ -163,27 +158,27 @@ class BMRPage : Fragment() {
 
         //Daily calorie needs
         val dailyCalorieNeedsText = view.findViewById<TextView>(R.id.dailyCalorieNeedsValue)
-        dailyCalorieNeedsText.text = userProvider!!.getUserViewModel().getDailyCalorieIntake().toString()
+        dailyCalorieNeedsText.text = mUserViewModel.getDailyCalorieIntake().toString()
 
         //BMR
         val bmrText = view.findViewById<TextView>(R.id.bmrValue)
-        bmrText.text = userProvider!!.getUserViewModel().calculateBMR().toString()
+        bmrText.text = mUserViewModel.calculateBMR().toString()
 
         //Sedentary
         val sedentaryRowText = view.findViewById<TextView>(R.id.sedentaryRowValue)
-        sedentaryRowText.text = userProvider!!.getUserViewModel().calculateSedentaryCalNeed().toString()
+        sedentaryRowText.text = mUserViewModel.calculateSedentaryCalNeed().toString()
 
         //Lightly active
         val lightlyActiveRowText = view.findViewById<TextView>(R.id.lightlyActiveRowValue)
-        lightlyActiveRowText.text = userProvider!!.getUserViewModel().calculateLightlyActiveCalNeed().toString()
+        lightlyActiveRowText.text = mUserViewModel.calculateLightlyActiveCalNeed().toString()
 
         //Active
         val activeRowText = view.findViewById<TextView>(R.id.activeRowValue)
-        activeRowText.text = userProvider!!.getUserViewModel().calculateActiveCalNeed().toString()
+        activeRowText.text = mUserViewModel.calculateActiveCalNeed().toString()
 
         //Very Active
         val veryActiveRowText = view.findViewById<TextView>(R.id.veryActiveRowValue)
-        veryActiveRowText.text = userProvider!!.getUserViewModel().calculateVeryActiveCalNeed().toString()
+        veryActiveRowText.text = mUserViewModel.calculateVeryActiveCalNeed().toString()
 
         //Activity level
         val activityLevelText = view.findViewById<TextView>(R.id.LocationTextView)
@@ -196,24 +191,24 @@ class BMRPage : Fragment() {
         }
 
         //Top navbar
-        Helpers.updateNavBar(requireActivity(), userProvider!!.getUserViewModel())
+        Helpers.updateNavBar(requireActivity(), mUserViewModel)
 
         //Add back listeners
         addListeners(view)
     }
 
     private val caloriesPerHourClickListener = OnClickListener {
-        NumberPickerFragment.newInstance(getString(R.string.SetCaloriesPerHour), 0, 1000, userProvider!!.getUser().activityLevel!!.caloriesPerHour, 10, getString(R.string.cals))
+        NumberPickerFragment.newInstance(getString(R.string.SetCaloriesPerHour), 0, 1000, mUserViewModel.data.value!!.activityLevel!!.caloriesPerHour, 10, getString(R.string.cals))
             .show(childFragmentManager, NUMBER_PICKER_TAG_CALPERHOUR)
     }
 
     private val workoutsPerWeekClickListener = OnClickListener {
-        NumberPickerFragment.newInstance(getString(R.string.SetWorkoutsPerWeek), 0, 50, userProvider!!.getUser().activityLevel!!.workoutsPerWeek, 1, getString(R.string.workouts))
+        NumberPickerFragment.newInstance(getString(R.string.SetWorkoutsPerWeek), 0, 50, mUserViewModel.data.value!!.activityLevel!!.workoutsPerWeek, 1, getString(R.string.workouts))
             .show(childFragmentManager, NUMBER_PICKER_TAG_WORKOUTSPERWEEK)
     }
 
     private val workoutLengthClickListener = OnClickListener {
-        NumberPickerFragment.newInstance(getString(R.string.SetWorkoutLength), 0, 1440, userProvider!!.getUser().activityLevel!!.averageWorkoutLength, 5, getString(R.string.minutes))
+        NumberPickerFragment.newInstance(getString(R.string.SetWorkoutLength), 0, 1440, mUserViewModel.data.value!!.activityLevel!!.averageWorkoutLength, 5, getString(R.string.minutes))
             .show(childFragmentManager, NUMBER_PICKER_TAG_WORKOUTLENGTH)
     }
 
