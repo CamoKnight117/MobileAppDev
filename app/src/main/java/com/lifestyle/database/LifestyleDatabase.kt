@@ -5,12 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import kotlinx.coroutines.CoroutineScope
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.lifestyle.user.Sex
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 @Database(entities = [UserTable::class, WeatherTable::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)

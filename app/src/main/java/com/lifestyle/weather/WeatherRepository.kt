@@ -4,35 +4,66 @@ import android.app.Application
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.WorkerThread
 import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
+import com.lifestyle.database.LifestyleDatabase
 import com.lifestyle.database.UserDao
 import com.lifestyle.database.WeatherDao
+import com.lifestyle.database.WeatherTable
+import com.lifestyle.main.LifestyleApplication
 import com.lifestyle.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.encodeToString
 import java.net.URL
 import java.util.concurrent.Executors
 
 
-class WeatherRepository(weatherDao: WeatherDao) {
+class WeatherRepository(val weatherDao: WeatherDao) {
     public val data : MutableLiveData<WeatherData> = MutableLiveData<WeatherData>()
     private var location : Location? = null
+    private var jsonData : String? = null
 
     public fun setLocation(location : Location) {
         this.location = location
-        loadData()
+        update()
     }
 
     public fun update() {
-        loadData()
+        location?.let {
+            mScope.launch(Dispatchers.IO){
+                fetchAndParseWeatherData(it)
+            }
+        }
     }
 
-    private fun loadData() {
-        location?.let {
-            FetchWeatherTask().execute(it)
+    @WorkerThread
+    private suspend fun insert() {
+        data.value?.let { weatherData ->
+            weatherData.coord?.let { coord ->
+                val weatherTable = WeatherTable(weatherData.coord, Json.encodeToString(weatherData))
+                weatherDao.insert(weatherTable)
+            }
+        }
+    }
+
+    @WorkerThread
+    suspend fun fetchAndParseWeatherData(location: Location) {
+        try {
+            jsonData = URL("https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=cd31a8658a4169b5b89342953b4f940b").readText()
+        } catch (e : Exception) {
+            e.printStackTrace()
+        }
+        jsonData?.let {
+            data.postValue(Json{ignoreUnknownKeys=true}.decodeFromString<WeatherData>(it))
+            insert()
         }
     }
 
