@@ -29,9 +29,6 @@ class ProfileFragment : Fragment() {
         UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
     }
 
-    //private var user : UserData? = null
-
-
     //create an observer that watches the LiveData<UserData> object
     private val liveDataObserver: Observer<UserData> =
         Observer { userData -> // Update the UI if this data variable changes
@@ -67,10 +64,11 @@ class ProfileFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
+        mUserViewModel.data.observe(viewLifecycleOwner, liveDataObserver)
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        Helpers.setUpSpinner(view!!.context, sexSpinner!!, resources.getStringArray(R.array.sex), true)
         //Get the views
         nameEditText = view.findViewById(R.id.profileName)
         ageButton = view.findViewById(R.id.profileAge)
@@ -79,6 +77,9 @@ class ProfileFragment : Fragment() {
         sexSpinner = view.findViewById(R.id.profileSex)
         locationTextView = view.findViewById(R.id.profileLocation)
         portraitButton = view.findViewById(R.id.profilePortrait)
+
+        Helpers.setUpSpinner(view!!.context, sexSpinner!!, resources.getStringArray(R.array.sex), true)
+
 
         // Set up handlers to change the data.
         nameEditText?.doOnTextChanged { text, _, _, _ ->

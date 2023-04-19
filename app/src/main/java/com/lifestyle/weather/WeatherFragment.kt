@@ -60,6 +60,8 @@ class WeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mUserViewModel.data.observe(viewLifecycleOwner, liveDataObserver)
+
         // Inflate the layout for this fragment
         val newView = inflater.inflate(R.layout.fragment_weather, container, false)
 

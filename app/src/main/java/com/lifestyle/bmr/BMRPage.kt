@@ -63,6 +63,9 @@ class BMRPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        mUserViewModel.data.observe(viewLifecycleOwner, liveDataObserver)
+
         val view: View = inflater.inflate(R.layout.fragment_bmr_page, container, false)
 
         //Setup spinner
