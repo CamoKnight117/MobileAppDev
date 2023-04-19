@@ -14,15 +14,27 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.lifestyle.R
-import com.lifestyle.user.UserProvider
+import com.lifestyle.main.LifestyleApplication
+import com.lifestyle.user.UserData
+import com.lifestyle.user.UserViewModel
 
 /**
  * Fragment used to set location data, and also go to the maps to search for hikes
  */
 class MapFragment : Fragment() {
+    private val mUserViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
+    }
+
+    private val liveDataObserver: Observer<UserData> =
+        Observer { userData ->
+
+        }
+
     //variables used to get user info
-    private var userProvider: UserProvider? = null
     private var location : TextLocation? = null
     //UI element variables
     private var countryEditText : EditText? = null
@@ -34,26 +46,17 @@ class MapFragment : Fragment() {
     private var submitLocationButton : Button? = null
     private var useGPSLocationButton : Button? = null
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        userProvider = try {
-            context as UserProvider
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement ${UserProvider::class}")
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        mUserViewModel.data.observe(viewLifecycleOwner, liveDataObserver)
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
 
-        val user = userProvider!!.getUser()
+        val user = mUserViewModel.data.value!!
         location = user.textLocation
 
         countryEditText = view.findViewById<View>(R.id.CountryEditText) as EditText
@@ -121,7 +124,7 @@ class MapFragment : Fragment() {
         //Set use gps location button handler
         useGPSLocationButton?.setOnClickListener { view ->
             activity?.let {
-                userProvider!!.getUserViewModel().refreshLocation(it) { newLocation ->
+                mUserViewModel.refreshLocation(it) { newLocation ->
                     onLocationUpdated()
                 }
             }
@@ -225,7 +228,7 @@ class MapFragment : Fragment() {
     }
 
     private fun setUserLocationFromTextLocation(){
-        val user = userProvider!!.getUser()
+        val user = mUserViewModel.data.value!!
         user.locationName = parseShortStringLocation()
         user.location = Location(parseShortStringLocation()) //Not sure if this works
     }
