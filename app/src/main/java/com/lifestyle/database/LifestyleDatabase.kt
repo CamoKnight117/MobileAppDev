@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.lifestyle.bmr.ActivityLevel
+import com.lifestyle.user.LastUsedModule
 import com.lifestyle.user.Sex
 import com.lifestyle.user.UserData
 import com.lifestyle.user.UserData.Companion.convertToJson
@@ -16,7 +18,7 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-@Database(entities = [UserTable::class, WeatherTable::class], version = 4, exportSchema = false)
+@Database(entities = [UserTable::class, WeatherTable::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class LifestyleDatabase : RoomDatabase(){
     abstract fun userDao(): UserDao
@@ -62,9 +64,11 @@ abstract class LifestyleDatabase : RoomDatabase(){
             user.height = 72.0f
             user.weight = 145.0f
             user.sex = Sex.MALE
+            user.activityLevel = ActivityLevel()
             user.activityLevel?.caloriesPerHour = 210
             user.activityLevel?.workoutsPerWeek = 3
             user.activityLevel?.averageWorkoutLength = 30
+            user.lastUsedModule = LastUsedModule.MAIN
             val table = convertToJson(user)
             userDao.insert(table)
         }

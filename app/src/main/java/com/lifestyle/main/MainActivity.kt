@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.map.MapFragment
@@ -29,18 +30,34 @@ import com.lifestyle.weather.WeatherFragment
 
     This activity could be stored in a single table database design
  */
-class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface {
+class MainActivity : AppCompatActivity(), fragmentStarterInterface {
     private val mUserViewModel: UserViewModel by viewModels {
         UserViewModel.UserViewModelFactory((application as LifestyleApplication).userRepository)
     }
-    private var user : UserData? = UserData("Bob Ross", 33)
+
+    private var isFirstTime = false
+
+    //create an observer that watches the LiveData<UserData> object
+    private val liveDataObserver: Observer<UserData> =
+        Observer { userData -> // Update the UI if this data variable changes
+            Helpers.updateNavBar(this, mUserViewModel)
+            if (!isFirstTime && userData.lastUsedModule != null) {
+                isFirstTime = true
+                when (userData.lastUsedModule!!) {
+                    LastUsedModule.MAIN -> startMainFrag()
+                    LastUsedModule.PROFILE -> startProfileFrag()
+                    LastUsedModule.BMR -> startBMRFrag()
+                    LastUsedModule.WEATHER -> startWeatherFrag()
+                    LastUsedModule.HIKES -> startHikesFrag()
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //user = mUserViewModel.data.value
 
-
+        mUserViewModel.data.observe(this, liveDataObserver)
 
         val backButton = findViewById<ImageView>(R.id.back_button)
 
@@ -68,14 +85,6 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
             startHikesFrag()
         }
 
-        Helpers.updateNavBar(this, mUserViewModel)
-        when (user!!.lastUsedModule) {
-            null, LastUsedModule.MAIN -> startMainFrag()
-            LastUsedModule.PROFILE -> startProfileFrag()
-            LastUsedModule.BMR -> startBMRFrag()
-            LastUsedModule.WEATHER -> startWeatherFrag()
-            LastUsedModule.HIKES -> startHikesFrag()
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -90,14 +99,6 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
         fragmentTransaction.replace(R.id.fragment_view, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-    }
-
-    override fun getUserViewModel(): UserViewModel {
-        return mUserViewModel!!
-    }
-
-    override fun getUser(): UserData {
-        return user!!
     }
 
     override fun onRequestPermissionsResult(
@@ -132,33 +133,43 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
     }
 
     override fun startProfileFrag() {
-        setVisibility(true)
-        user!!.lastUsedModule = LastUsedModule.PROFILE
-        startFragment(ProfileFragment())
+        if (mUserViewModel.data.value != null) {
+            setVisibility(true)
+            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.PROFILE
+            startFragment(ProfileFragment())
+        }
     }
 
     override fun startWeatherFrag() {
-        setVisibility(true)
-        user!!.lastUsedModule = LastUsedModule.WEATHER
-        startFragment(WeatherFragment())
+        if (mUserViewModel.data.value != null) {
+            setVisibility(true)
+            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.WEATHER
+            startFragment(WeatherFragment())
+        }
     }
 
     override fun startBMRFrag() {
-        setVisibility(true)
-        user!!.lastUsedModule = LastUsedModule.BMR
-        startFragment(BMRPage())
+        if (mUserViewModel.data.value != null) {
+            setVisibility(true)
+            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.BMR
+            startFragment(BMRPage())
+        }
     }
 
     override fun startHikesFrag() {
-        setVisibility(true)
-        user!!.lastUsedModule = LastUsedModule.HIKES
-        startFragment(MapFragment())
+        if (mUserViewModel.data.value != null) {
+            setVisibility(true)
+            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.HIKES
+            startFragment(MapFragment())
+        }
     }
 
     override fun startMainFrag() {
-        setVisibility(false)
-        user!!.lastUsedModule = LastUsedModule.MAIN
-        startFragment(MainFragment())
+        if (mUserViewModel.data.value != null) {
+            setVisibility(false)
+            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.MAIN
+            startFragment(MainFragment())
+        }
     }
 
     private fun setVisibility(visible:Boolean) {
