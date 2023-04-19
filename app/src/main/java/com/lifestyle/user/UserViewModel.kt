@@ -29,10 +29,11 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
      */
     fun calculateBMR() : Float {
         return if(data.value?.age != 0 && data.value?.height != 0.0f && data.value?.weight != 0.0f && data.value?.sex != Sex.UNASSIGNED) {
-            when (data.value?.sex!!) {
+            when (data.value?.sex) {
                 Sex.MALE -> 88.362f + (29.535f * data.value?.weight!!) + (1.889f*data.value?.height!!)-(5.677f*data.value?.age!!)
                 Sex.FEMALE -> (447.593f + (20.386f * data.value?.weight!!) + (1.220f * data.value?.height!!)-(4.330f * data.value?.age!!))
                 Sex.UNASSIGNED -> 0f
+                null -> 0f
             }
         } else {
             0f

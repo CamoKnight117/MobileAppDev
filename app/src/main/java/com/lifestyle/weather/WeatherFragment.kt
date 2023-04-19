@@ -11,9 +11,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.HandlerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.lifestyle.R
+import com.lifestyle.main.LifestyleApplication
 import com.lifestyle.user.UserProvider
+import com.lifestyle.user.UserViewModel
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -38,7 +41,12 @@ class WeatherFragment : Fragment() {
     private var weatherTextView: TextView? = null
     private var temperatureTextView: TextView? = null
     private var handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
-    private lateinit var weatherViewModel : WeatherViewModel
+    private val userViewModel : UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((activity?.application as LifestyleApplication).userRepository)
+    }
+    private val weatherViewModel : WeatherViewModel by viewModels {
+        WeatherViewModelFactory((activity?.application as LifestyleApplication).weatherRepository)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -75,14 +83,13 @@ class WeatherFragment : Fragment() {
         // Set up event handlers.
         locationTextView?.setOnClickListener { view ->
             activity?.let {
-                userProvider!!.getUserViewModel().refreshLocation(it) { newLocation ->
+                userViewModel.refreshLocation(it) { newLocation ->
                     onLocationUpdated()
                 }
             }
         }
 
-        // Initialize the viewmodel and set an observer.
-        weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
+        // Set an observer on the viewmodel.
         weatherViewModel.data.observe(this.viewLifecycleOwner) { weatherData: WeatherData ->
             timestampLastWeatherReply = System.currentTimeMillis()
             lastWeatherReply = weatherData

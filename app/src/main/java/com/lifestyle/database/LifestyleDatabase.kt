@@ -9,6 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.lifestyle.user.Sex
 import com.lifestyle.user.UserData
 import com.lifestyle.user.UserData.Companion.convertToJson
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*

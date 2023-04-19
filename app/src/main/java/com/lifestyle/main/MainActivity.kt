@@ -33,12 +33,12 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
     private val mUserViewModel: UserViewModel by viewModels {
         UserViewModel.UserViewModelFactory((application as LifestyleApplication).userRepository)
     }
-    private var user : UserData? = null
+    private var user : UserData? = UserData("Bob Ross", 33)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        user = mUserViewModel.data.value
+        //user = mUserViewModel.data.value
 
 
 
@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity(), UserProvider, fragmentStarterInterface
         }
 
         Helpers.updateNavBar(this, mUserViewModel)
-        when (user!!.lastUsedModule!!) {
-            LastUsedModule.MAIN -> startMainFrag()
+        when (user!!.lastUsedModule) {
+            null, LastUsedModule.MAIN -> startMainFrag()
             LastUsedModule.PROFILE -> startProfileFrag()
             LastUsedModule.BMR -> startBMRFrag()
             LastUsedModule.WEATHER -> startWeatherFrag()
