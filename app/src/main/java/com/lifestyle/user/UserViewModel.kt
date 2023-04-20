@@ -91,6 +91,9 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
     fun setSex(sex : Sex) {
         userRepository.setSex(sex)
     }
+    fun setLastUsedModule(lastUsedModule: LastUsedModule) {
+        userRepository.setLastUsedModule(lastUsedModule)
+    }
     fun setProfilePictureThumbnail(thumbnail : Bitmap) {
         userRepository.setProfilePictureThumbnail(thumbnail)
     }

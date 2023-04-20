@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
     override fun startProfileFrag() {
         setVisibility(true)
         if (mUserViewModel.data.value != null) {
-            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.PROFILE
+            mUserViewModel.setLastUsedModule(LastUsedModule.PROFILE)
         }
         startFragment(ProfileFragment())
     }
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
     override fun startWeatherFrag() {
         setVisibility(true)
         if (mUserViewModel.data.value != null) {
-            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.WEATHER
+            mUserViewModel.setLastUsedModule(LastUsedModule.WEATHER)
         }
         startFragment(WeatherFragment())
     }
@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
     override fun startBMRFrag() {
         setVisibility(true)
         if (mUserViewModel.data.value != null) {
-            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.BMR
+            mUserViewModel.setLastUsedModule(LastUsedModule.BMR)
         }
         startFragment(BMRPage())
     }
@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
     override fun startHikesFrag() {
         setVisibility(true)
         if (mUserViewModel.data.value != null) {
-            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.HIKES
+            mUserViewModel.setLastUsedModule(LastUsedModule.HIKES)
         }
         startFragment(MapFragment())
     }
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
     override fun startMainFrag() {
         setVisibility(false)
         if (mUserViewModel.data.value != null) {
-            mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.MAIN
+            mUserViewModel.setLastUsedModule(LastUsedModule.MAIN)
         }
         startFragment(MainFragment())
     }

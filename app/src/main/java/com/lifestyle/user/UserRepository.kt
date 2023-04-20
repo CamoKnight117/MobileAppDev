@@ -69,6 +69,14 @@ class UserRepository(userDao: UserDao) {
         updateUserData(data.value)
     }
 
+    fun setLastUsedModule(lastUsedModule: LastUsedModule) {
+        data.value?.let {
+            it.lastUsedModule = lastUsedModule
+            data.postValue(it)
+        }
+        updateUserData(data.value)
+    }
+
     fun setProfilePictureThumbnail(thumbnail : Bitmap) {
         data.value?.let {
             it.profilePictureThumbnail = thumbnail
