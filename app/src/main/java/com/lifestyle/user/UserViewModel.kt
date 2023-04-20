@@ -1,6 +1,7 @@
 package com.lifestyle.user
 
 import android.app.Activity
+import android.graphics.Bitmap
 import android.location.Location
 import androidx.lifecycle.*
 import java.util.*
@@ -73,6 +74,13 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
         s.appendLine("WorkoutsPerWeek: ${data.value?.activityLevel?.workoutsPerWeek}")
         return s.toString()
     }
+
+    public fun setName(name : String) = userRepository.setName(name)
+    public fun setAge(age : Int) = userRepository.setAge(age)
+    public fun setHeight(height : Float) = userRepository.setHeight(height)
+    public fun setWeight(weight : Float) = userRepository.setWeight(weight)
+    public fun setSex(sex : Sex) = userRepository.setSex(sex)
+    public fun setProfilePictureThumbnail(thumbnail : Bitmap) = userRepository.setProfilePictureThumbnail(thumbnail)
 
     /**
      * Sets this User's location to the device's most recent coarse location. Asks for coarse location permissions if needed.

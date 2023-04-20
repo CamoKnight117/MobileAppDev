@@ -83,13 +83,13 @@ class ProfileFragment : Fragment() {
 
         // Set up handlers to change the data.
         nameEditText?.doOnTextChanged { text, _, _, _ ->
-            run {
-                mUserViewModel.data.value!!.name = text?.toString()
+            text?.let{
+                mUserViewModel.setName(it.toString())
             }
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_AGE, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
-            mUserViewModel.data.value!!.age = result
+            mUserViewModel.setAge(result)
         }
         ageButton?.setOnClickListener { _ ->
             NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, mUserViewModel.data.value!!.age!!, 1, getString(R.string.years))
@@ -97,7 +97,7 @@ class ProfileFragment : Fragment() {
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_HEIGHT, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
-            mUserViewModel.data.value!!.height = result.toFloat()
+            mUserViewModel.setHeight(result.toFloat())
         }
         heightButton?.setOnClickListener { _ ->
             NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, mUserViewModel.data.value!!.height!!.roundToInt(), 1, getString(R.string.inches))
@@ -105,7 +105,7 @@ class ProfileFragment : Fragment() {
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WEIGHT, this) { key, bundle ->
             val result = NumberPickerFragment.getResultNumber(bundle)
-            mUserViewModel.data.value!!.weight = result.toFloat()
+            mUserViewModel.setWeight(result.toFloat())
         }
         weightButton?.setOnClickListener { _ ->
             NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, mUserViewModel.data.value!!.weight!!.roundToInt(), 5, getString(R.string.pounds))
@@ -154,13 +154,13 @@ class ProfileFragment : Fragment() {
 
     private var sexSpinnerListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-            val user: UserData? = mUserViewModel.data.value!!
+            val currentSex = mUserViewModel.data.value?.sex
             if(pos==0)
-                user?.sex = Sex.MALE
+                mUserViewModel.setSex(Sex.MALE)
             else if(pos==1)
-                user?.sex = Sex.FEMALE
-            else if(user != null && user.sex != Sex.UNASSIGNED)
-                sexSpinner?.setSelection(user.sex!!.ordinal)
+                mUserViewModel.setSex(Sex.FEMALE)
+            else if(currentSex==Sex.MALE || currentSex==Sex.FEMALE)
+                sexSpinner?.setSelection(currentSex.ordinal)
             updateNavBar(requireActivity(), mUserViewModel)
         }
 
@@ -175,9 +175,8 @@ class ProfileFragment : Fragment() {
             val thumbnailImage = result.data!!.getParcelableExtra<Bitmap>("data")
             if(thumbnailImage != null) {
                 portraitButton?.setImageBitmap(thumbnailImage)
-                mUserViewModel.data.value!!.profilePictureThumbnail = thumbnailImage
+                mUserViewModel.setProfilePictureThumbnail(thumbnailImage)
                 requireActivity().findViewById<ImageButton>(R.id.imageButton).setImageBitmap(thumbnailImage)
-                // TODO: Set userProvider.getUser()'s profile picture.
             }
         }
     }

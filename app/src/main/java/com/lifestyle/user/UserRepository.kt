@@ -3,6 +3,7 @@ package com.lifestyle.user
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Geocoder
 import android.location.Location
 import android.os.Handler
@@ -26,6 +27,48 @@ class UserRepository(userDao: UserDao) {
     // Live data object notified when we've gotten the location
     val data : MutableLiveData<UserData> = MutableLiveData<UserData>()
     val userDao = userDao
+
+    public fun setName(name : String) {
+        data.value?.let {
+            it.name = name
+            data.postValue(it)
+        }
+    }
+
+    public fun setAge(age : Int) {
+        data.value?.let {
+            it.age = age
+            data.postValue(it)
+        }
+    }
+
+    public fun setHeight(height : Float) {
+        data.value?.let {
+            it.height = height
+            data.postValue(it)
+        }
+    }
+
+    public fun setWeight(weight : Float) {
+        data.value?.let {
+            it.weight = weight
+            data.postValue(it)
+        }
+    }
+
+    public fun setSex(sex : Sex) {
+        data.value?.let {
+            it.sex = sex
+            data.postValue(it)
+        }
+    }
+
+    public fun setProfilePictureThumbnail(thumbnail : Bitmap) {
+        data.value?.let {
+            it.profilePictureThumbnail = thumbnail
+            data.postValue(it)
+        }
+    }
 
     fun update(activity: Activity) {
         mScope.launch(Dispatchers.IO) {
