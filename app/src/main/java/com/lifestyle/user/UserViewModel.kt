@@ -4,7 +4,6 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.location.Location
 import androidx.lifecycle.*
-import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lifestyle.main.MainActivity
 import java.util.*
 

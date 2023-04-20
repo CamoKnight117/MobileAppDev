@@ -32,8 +32,10 @@ class WeatherRepository(val weatherDao: WeatherDao) {
     private var jsonData : String? = null
 
     public fun setLocation(location : Location) {
+        val shouldUpdate = this.location != location
         this.location = location
-        update()
+        if(shouldUpdate)
+            update()
     }
 
     public fun update() {

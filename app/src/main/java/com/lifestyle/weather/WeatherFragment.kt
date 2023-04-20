@@ -41,11 +41,6 @@ class WeatherFragment : Fragment() {
         UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
     }
 
-    private val liveDataObserver: Observer<UserData> =
-        Observer { userData ->
-
-        }
-
     private var locationTextView: TextView? = null
     private var weatherTextView: TextView? = null
     private var temperatureTextView: TextView? = null
@@ -62,7 +57,16 @@ class WeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mUserViewModel.data.observe(viewLifecycleOwner, liveDataObserver)
+        // Set viewmodel observers.
+        weatherViewModel.data.observe(this.viewLifecycleOwner) { weatherData: WeatherData ->
+            timestampLastWeatherReply = System.currentTimeMillis()
+            lastWeatherReply = weatherData
+            putWeatherOnUI()
+        }
+        mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
+            onLocationUpdated(userData.location, userData.locationName)
+            locationOnLastWeatherReply = userData.location
+        }
 
         // Inflate the layout for this fragment
         val newView = inflater.inflate(R.layout.fragment_weather, container, false)
@@ -73,7 +77,7 @@ class WeatherFragment : Fragment() {
         temperatureTextView = newView.findViewById(R.id.weatherTemperatureTextView)
 
         // Populate Views with data.
-        onLocationUpdated()
+        //onLocationUpdated()
         if (lastWeatherReply != null)
             putWeatherOnUI()
 
@@ -82,18 +86,6 @@ class WeatherFragment : Fragment() {
             activity?.let {
                 mUserViewModel.update(it)
             }
-        }
-
-        // Set an observer on the viewmodel.
-        weatherViewModel.data.observe(this.viewLifecycleOwner) { weatherData: WeatherData ->
-            timestampLastWeatherReply = System.currentTimeMillis()
-            lastWeatherReply = weatherData
-            putWeatherOnUI()
-        }
-        mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
-            if(userData.location != locationOnLastWeatherReply)
-                onLocationUpdated()
-            locationOnLastWeatherReply = userData.location
         }
 
         return newView
@@ -115,13 +107,9 @@ class WeatherFragment : Fragment() {
         this.temperatureTextView?.text = temperatureText
     }
 
-    private fun onLocationUpdated() {
-        mUserViewModel.data.value?.let { userData ->
-            locationTextView?.text = userData.locationName ?: getString(R.string.none)
-            userData.location?.let { weatherViewModel.setLocation(it) }
-        } ?: run {
-            locationTextView?.text = resources.getString(R.string.none)
-        }
+    private fun onLocationUpdated(location: Location?, locationName: String?) {
+        locationTextView?.text = locationName ?: getString(R.string.none)
+        location?.let { weatherViewModel.setLocation(it) }
     }
 
     companion object {
