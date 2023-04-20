@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
+import android.location.Location
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -48,16 +49,16 @@ class ProfileFragment : Fragment() {
             if(userData.profilePictureThumbnail != null)
                 portraitButton?.setImageBitmap(userData.profilePictureThumbnail)
             // Update the age, weight, height views.
-            onAgeChanged()
-            onWeightChanged()
-            onHeightChanged()
+            onAgeChanged(userData.age)
+            onWeightChanged(userData.weight)
+            onHeightChanged(userData.height)
             // Setup spinner
             if (isFirst) {
                 isFirst = false
                 nameEditText?.setText(userData.name)
-                sexSpinner?.setSelection(userData.sex!!.ordinal)
+                sexSpinner?.setSelection(userData.sex?.ordinal ?: Sex.MALE.ordinal)
             }
-            onLocationUpdated()
+            onLocationUpdated(userData.location, userData.locationName)
             portraitButton?.setImageBitmap(userData.profilePictureThumbnail)
             updateNavBar(requireActivity(), mUserViewModel)
         }
@@ -83,7 +84,9 @@ class ProfileFragment : Fragment() {
         locationTextView = view.findViewById(R.id.profileLocation)
         portraitButton = view.findViewById(R.id.profilePortrait)
 
-        Helpers.setUpSpinner(view!!.context, sexSpinner!!, resources.getStringArray(R.array.sex), true)
+        sexSpinner?.let {
+            Helpers.setUpSpinner(view.context, it, resources.getStringArray(R.array.sex), true)
+        }
 
 
         // Set up handlers to change the data.
@@ -97,7 +100,7 @@ class ProfileFragment : Fragment() {
             mUserViewModel.setAge(result)
         }
         ageButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, mUserViewModel.data.value!!.age!!, 1, getString(R.string.years))
+            NumberPickerFragment.newInstance(getString(R.string.setAge), 0, 120, mUserViewModel.data.value?.age ?: 30, 1, getString(R.string.years))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_AGE)
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_HEIGHT, this) { key, bundle ->
@@ -105,7 +108,7 @@ class ProfileFragment : Fragment() {
             mUserViewModel.setHeight(result.toFloat())
         }
         heightButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, mUserViewModel.data.value!!.height!!.roundToInt(), 1, getString(R.string.inches))
+            NumberPickerFragment.newInstance(getString(R.string.setHeight), 12, 120, mUserViewModel.data.value?.height?.roundToInt() ?: (5*12 + 4), 1, getString(R.string.inches))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_HEIGHT)
         }
         childFragmentManager.setFragmentResultListener(NUMBER_PICKER_TAG_WEIGHT, this) { key, bundle ->
@@ -113,7 +116,7 @@ class ProfileFragment : Fragment() {
             mUserViewModel.setWeight(result.toFloat())
         }
         weightButton?.setOnClickListener { _ ->
-            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, mUserViewModel.data.value!!.weight!!.roundToInt(), 5, getString(R.string.pounds))
+            NumberPickerFragment.newInstance(getString(R.string.setWeight), 10, 1000, mUserViewModel.data.value?.weight?.roundToInt() ?: 140, 5, getString(R.string.pounds))
                 .show(childFragmentManager, NUMBER_PICKER_TAG_WEIGHT)
         }
         sexSpinner?.onItemSelectedListener = sexSpinnerListener
@@ -132,27 +135,26 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // Set up viewmodel observers.
-        mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
-            onLocationUpdated()
-        }
         return view
     }
 
-    private fun onAgeChanged() {
-        ageButton?.text = getString(R.string.yearsQuantity, mUserViewModel.data.value!!.age)
+    private fun onAgeChanged(age : Int?) {
+        ageButton?.text = if(age!=null) getString(R.string.yearsQuantity, age)
+            else getString(R.string.none)
     }
 
-    private fun onHeightChanged() {
-        heightButton?.text = getString(R.string.inchesQuantity, mUserViewModel.data.value!!.height?.roundToInt())
+    private fun onHeightChanged(height : Float?) {
+        heightButton?.text = if(height!=null) getString(R.string.inchesQuantity, height?.roundToInt())
+            else getString(R.string.none)
     }
 
-    private fun onWeightChanged() {
-        weightButton?.text = getString(R.string.poundsQuantity, mUserViewModel.data.value!!.weight?.roundToInt())
+    private fun onWeightChanged(weight : Float?) {
+        weightButton?.text = if(weight!=null) getString(R.string.poundsQuantity, weight?.roundToInt())
+            else getString(R.string.none)
     }
 
-    private fun onLocationUpdated() {
-        locationTextView?.text = mUserViewModel.data.value!!.locationName ?: getString(R.string.none)
+    private fun onLocationUpdated(location : Location?, locationName : String?) {
+        locationTextView?.text = locationName ?: getString(R.string.none)
     }
 
     private var sexSpinnerListener = object : AdapterView.OnItemSelectedListener {

@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-@Database(entities = [UserTable::class, WeatherTable::class], version = 1, exportSchema = false)
+@Database(entities = [UserTable::class, WeatherTable::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class LifestyleDatabase : RoomDatabase(){
     abstract fun userDao(): UserDao
