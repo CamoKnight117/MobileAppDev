@@ -4,6 +4,8 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.location.Location
 import androidx.lifecycle.*
+import com.google.android.gms.ads.identifier.AdvertisingIdClient
+import com.lifestyle.main.MainActivity
 import java.util.*
 
 class UserViewModel(repository: UserRepository) : ViewModel() {
@@ -75,25 +77,37 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
         return s.toString()
     }
 
-    public fun setName(name : String) = userRepository.setName(name)
-    public fun setAge(age : Int) = userRepository.setAge(age)
-    public fun setHeight(height : Float) = userRepository.setHeight(height)
-    public fun setWeight(weight : Float) = userRepository.setWeight(weight)
-    public fun setSex(sex : Sex) = userRepository.setSex(sex)
-    public fun setProfilePictureThumbnail(thumbnail : Bitmap) = userRepository.setProfilePictureThumbnail(thumbnail)
+    fun setName(name : String) {
+        userRepository.setName(name)
+    }
+    fun setAge(age : Int) {
+        userRepository.setAge(age)
+    }
+    fun setHeight(height : Float) {
+        userRepository.setHeight(height)
+    }
+    fun setWeight(weight : Float) {
+        userRepository.setWeight(weight)
+    }
+    fun setSex(sex : Sex) {
+        userRepository.setSex(sex)
+    }
+    fun setProfilePictureThumbnail(thumbnail : Bitmap) {
+        userRepository.setProfilePictureThumbnail(thumbnail)
+    }
 
     /**
      * Sets this User's location to the device's most recent coarse location. Asks for coarse location permissions if needed.
      * @param activity The Activity context that should be responsible for the location permission and request.
      */
-    public fun update(activity: Activity) {
+    fun update(activity: Activity) {
         userRepository.update(activity)
     }
 
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {
         override fun <T: ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
-                repository.fetchUserData("Bob Ross")
+                repository.fetchUserData("0")
                 @Suppress("UNCHECKED_CAST")
                 return UserViewModel(repository) as T
             }

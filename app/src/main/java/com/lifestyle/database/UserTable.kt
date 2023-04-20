@@ -9,8 +9,8 @@ import java.util.*
 @Entity(tableName = "user_table")
 data class UserTable(
     @field:PrimaryKey
-    @field:ColumnInfo(name = "name")
-    var name : String,
+    @field:ColumnInfo(name = "id")
+    var id : String,
     @field:ColumnInfo(name = "userJson")
     var userJson: String,
     @field:ColumnInfo(name = "profilePic", typeAffinity = ColumnInfo.BLOB)

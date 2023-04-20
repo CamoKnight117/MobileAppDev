@@ -25,27 +25,7 @@ import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
 
-    private val mUserViewModel: UserViewModel by viewModels {
-        UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
-    }
-
-    //create an observer that watches the LiveData<UserData> object
-    private val liveDataObserver: Observer<UserData> =
-        Observer { userData -> // Update the UI if this data variable changes
-            // Set view contents based on the data.
-            if(userData.profilePictureThumbnail != null)
-                portraitButton?.setImageBitmap(userData.profilePictureThumbnail)
-            nameEditText?.setText(userData.name)
-            // Update the age, weight, height views.
-            onAgeChanged()
-            onWeightChanged()
-            onHeightChanged()
-            // Setup spinner
-            sexSpinner?.setSelection(userData.sex!!.ordinal)
-            onLocationUpdated()
-            portraitButton?.setImageBitmap(userData.profilePictureThumbnail)
-        }
-
+    private var isFirst: Boolean = true
     private var nameEditText: EditText? = null
     private var ageButton: TextView? = null
     private var weightButton: TextView? = null
@@ -56,6 +36,31 @@ class ProfileFragment : Fragment() {
     private val NUMBER_PICKER_TAG_AGE = "profileAge"
     private val NUMBER_PICKER_TAG_HEIGHT = "profileHeight"
     private val NUMBER_PICKER_TAG_WEIGHT = "profileWeight"
+
+    private val mUserViewModel: UserViewModel by viewModels {
+        UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
+    }
+
+    //create an observer that watches the LiveData<UserData> object
+    private val liveDataObserver: Observer<UserData> =
+        Observer { userData -> // Update the UI if this data variable changes
+            // Set view contents based on the data.
+            if(userData.profilePictureThumbnail != null)
+                portraitButton?.setImageBitmap(userData.profilePictureThumbnail)
+            // Update the age, weight, height views.
+            onAgeChanged()
+            onWeightChanged()
+            onHeightChanged()
+            // Setup spinner
+            if (isFirst) {
+                isFirst = false
+                nameEditText?.setText(userData.name)
+                sexSpinner?.setSelection(userData.sex!!.ordinal)
+            }
+            onLocationUpdated()
+            portraitButton?.setImageBitmap(userData.profilePictureThumbnail)
+            updateNavBar(requireActivity(), mUserViewModel)
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -131,8 +136,6 @@ class ProfileFragment : Fragment() {
         mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
             onLocationUpdated()
         }
-
-        updateNavBar(requireActivity(), mUserViewModel)
         return view
     }
 
@@ -161,10 +164,11 @@ class ProfileFragment : Fragment() {
                 mUserViewModel.setSex(Sex.FEMALE)
             else if(currentSex==Sex.MALE || currentSex==Sex.FEMALE)
                 sexSpinner?.setSelection(currentSex.ordinal)
-            updateNavBar(requireActivity(), mUserViewModel)
         }
 
-        override fun onNothingSelected(parent: AdapterView<*>) { }
+        override fun onNothingSelected(parent: AdapterView<*>) {
+
+        }
     }
 
     private val cameraActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->

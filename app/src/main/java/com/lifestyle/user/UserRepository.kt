@@ -17,6 +17,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.lifestyle.database.UserDao
 import com.lifestyle.main.MainActivity
+import com.lifestyle.user.UserData.Companion.convertToJson
 import com.lifestyle.user.UserData.Companion.convertToUserObject
 import kotlinx.coroutines.*
 import java.util.concurrent.Executors
@@ -28,46 +29,52 @@ class UserRepository(userDao: UserDao) {
     val data : MutableLiveData<UserData> = MutableLiveData<UserData>()
     val userDao = userDao
 
-    public fun setName(name : String) {
+    fun setName(name : String) {
         data.value?.let {
             it.name = name
             data.postValue(it)
         }
+        updateUserData(data.value)
     }
 
-    public fun setAge(age : Int) {
+    fun setAge(age : Int) {
         data.value?.let {
             it.age = age
             data.postValue(it)
         }
+        updateUserData(data.value)
     }
 
-    public fun setHeight(height : Float) {
+    fun setHeight(height : Float) {
         data.value?.let {
             it.height = height
             data.postValue(it)
         }
+        updateUserData(data.value)
     }
 
-    public fun setWeight(weight : Float) {
+    fun setWeight(weight : Float) {
         data.value?.let {
             it.weight = weight
             data.postValue(it)
         }
+        updateUserData(data.value)
     }
 
-    public fun setSex(sex : Sex) {
+    fun setSex(sex : Sex) {
         data.value?.let {
             it.sex = sex
             data.postValue(it)
         }
+        updateUserData(data.value)
     }
 
-    public fun setProfilePictureThumbnail(thumbnail : Bitmap) {
+    fun setProfilePictureThumbnail(thumbnail : Bitmap) {
         data.value?.let {
             it.profilePictureThumbnail = thumbnail
             data.postValue(it)
         }
+        updateUserData(data.value)
     }
 
     fun update(activity: Activity) {
@@ -101,12 +108,21 @@ class UserRepository(userDao: UserDao) {
         }
     }
 
-    fun fetchUserData(name: String) = runBlocking {
+    fun fetchUserData(id: String) = runBlocking {
         launch {
-            val row = userDao.getUser(name)
+            val row = userDao.getUser(id)
             val obj = convertToUserObject(row)
             if (obj != null) {
                 data.postValue(obj!!)
+            }
+        }
+    }
+
+    fun updateUserData(userData: UserData?) = runBlocking {
+        launch {
+            if (userData != null) {
+                val userTable = convertToJson(userData)
+                userDao.insert(userTable)
             }
         }
     }

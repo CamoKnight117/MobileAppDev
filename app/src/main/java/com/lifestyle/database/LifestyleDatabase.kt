@@ -15,8 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 @Database(entities = [UserTable::class, WeatherTable::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
@@ -59,6 +57,7 @@ abstract class LifestyleDatabase : RoomDatabase(){
 
         suspend fun populateDbTask (userDao: UserDao) {
             val user = UserData()
+            user.id = "0"
             user.name = "Bob Ross"
             user.age = 23
             user.height = 72.0f

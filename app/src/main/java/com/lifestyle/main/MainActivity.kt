@@ -1,6 +1,8 @@
 package com.lifestyle.main
 
 import android.app.Activity
+import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -11,6 +13,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.map.MapFragment
@@ -31,6 +34,7 @@ import com.lifestyle.weather.WeatherFragment
     This activity could be stored in a single table database design
  */
 class MainActivity : AppCompatActivity(), fragmentStarterInterface {
+
     private val mUserViewModel: UserViewModel by viewModels {
         UserViewModel.UserViewModelFactory((application as LifestyleApplication).userRepository)
     }
@@ -87,10 +91,6 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
 
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
-
     private fun startFragment(fragment: Fragment) {
         //Save any changes to user before switching fragments
         //user?.saveToDevice(this)
@@ -117,8 +117,7 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
     companion object {
         private var permissionRequestCodeToResultCallback = HashMap<Int, PermissionRequestCallback>()
         private var nextPermissionRequestCode = 0
-
-        public interface PermissionRequestCallback {
+        interface PermissionRequestCallback {
             fun invoke(activity: Activity, permissions: Array<out String>, grantResults: IntArray);
         }
 

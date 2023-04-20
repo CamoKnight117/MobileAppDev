@@ -21,6 +21,7 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 class UserData (
+    var id: String? = null,
     var name: String? = null,
     var age: Int? = 0,
     private var serializableLocation: SerializableLocation? = null,
@@ -80,7 +81,7 @@ class UserData (
 
             userData.profilePictureThumbnail = tempProfileThumbnail
 
-            return UserTable(userData.name!!, userJson, bitmapdata)
+            return UserTable(userData.id!!, userJson, bitmapdata)
         }
     }
 }
