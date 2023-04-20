@@ -78,8 +78,8 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
      * Sets this User's location to the device's most recent coarse location. Asks for coarse location permissions if needed.
      * @param activity The Activity context that should be responsible for the location permission and request.
      */
-    public fun refreshLocation(activity: Activity, successCallback: (Location)->Unit) {
-
+    public fun update(activity: Activity) {
+        userRepository.update(activity)
     }
 
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

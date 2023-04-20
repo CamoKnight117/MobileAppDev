@@ -124,9 +124,7 @@ class MapFragment : Fragment() {
         //Set use gps location button handler
         useGPSLocationButton?.setOnClickListener { view ->
             activity?.let {
-                mUserViewModel.refreshLocation(it) { newLocation ->
-                    onLocationUpdated()
-                }
+                mUserViewModel.update(it)
             }
         }
         //Set the click handler for the submit button
@@ -153,6 +151,11 @@ class MapFragment : Fragment() {
             {
                 //This occurs if there are no text inputs. Just do nothing in this case and carry on
             }
+        }
+
+        // Set up viewmodel observers.
+        mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
+            onLocationUpdated()
         }
 
         return view

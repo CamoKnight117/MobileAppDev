@@ -72,8 +72,6 @@ class WeatherFragment : Fragment() {
         weatherTextView = newView.findViewById(R.id.weatherWeatherTextView)
         temperatureTextView = newView.findViewById(R.id.weatherTemperatureTextView)
 
-        val user = mUserViewModel.data.value!!
-
         // Populate Views with data.
         onLocationUpdated()
         if (lastWeatherReply != null)
@@ -82,9 +80,7 @@ class WeatherFragment : Fragment() {
         // Set up event handlers.
         locationTextView?.setOnClickListener { view ->
             activity?.let {
-                mUserViewModel.refreshLocation(it) { newLocation ->
-                    onLocationUpdated()
-                }
+                mUserViewModel.update(it)
             }
         }
 
@@ -94,47 +90,13 @@ class WeatherFragment : Fragment() {
             lastWeatherReply = weatherData
             putWeatherOnUI()
         }
+        mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
+            if(userData.location != locationOnLastWeatherReply)
+                onLocationUpdated()
+            locationOnLastWeatherReply = userData.location
+        }
 
         return newView
-    }
-
-    private fun sendWeatherRequest(handler: Handler) {
-        // Do not create more than one weather request thread at once.
-        if(lastWeatherCallThread?.isAlive == true)
-            return
-        lastWeatherCallThread = thread() {
-            var weatherText: String?
-            var temperatureText: String?
-            val user = mUserViewModel.data.value!!
-            val location = user.location
-            if(location == null) {
-                handler.post {
-                    this.weatherTextView?.text     = null
-                    this.temperatureTextView?.text = null
-                }
-                return@thread
-            }
-            val response: String = URL("https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=cd31a8658a4169b5b89342953b4f940b").readText() // .openConnection() as HttpURLConnection //URL("https", "api.openweathermap.org", -1, "/data/2.5/weather?lat=0&lon=0&appid=${INSECURE_OPENWEATHER_KEY}").openConnection()
-            try {
-                val weather = Json{ignoreUnknownKeys=true}.decodeFromString<WeatherData>(response)
-                handler.post {
-                    timestampLastWeatherReply = System.currentTimeMillis()
-                    lastWeatherReply = weather
-                    putWeatherOnUI()
-                }
-            } catch(e: SerializationException) {
-                handler.post {
-                    this.weatherTextView?.text     = getString(R.string.weatherErrorMessage)
-                    this.temperatureTextView?.text = null
-                }
-            } catch(e: java.lang.IllegalArgumentException) {
-                handler.post {
-                    this.weatherTextView?.text     = getString(R.string.weatherErrorMessage)
-                    this.temperatureTextView?.text = null
-                }
-            }
-        }
-        putWeatherOnUI()
     }
 
     private fun putWeatherOnUI() {
@@ -154,8 +116,12 @@ class WeatherFragment : Fragment() {
     }
 
     private fun onLocationUpdated() {
-        locationTextView?.text = mUserViewModel.data.value!!.locationName ?: getString(R.string.none)
-        mUserViewModel.data.value!!.location?.let { weatherViewModel.setLocation(it) }
+        mUserViewModel.data.value?.let { userData ->
+            locationTextView?.text = userData.locationName ?: getString(R.string.none)
+            userData.location?.let { weatherViewModel.setLocation(it) }
+        } ?: run {
+            locationTextView?.text = resources.getString(R.string.none)
+        }
     }
 
     companion object {

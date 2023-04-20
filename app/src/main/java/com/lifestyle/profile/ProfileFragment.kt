@@ -123,11 +123,15 @@ class ProfileFragment : Fragment() {
         }
         locationTextView?.setOnClickListener { view ->
             activity?.let {
-                mUserViewModel.refreshLocation(it) { newLocation ->
-                    onLocationUpdated()
-                }
+                mUserViewModel.update(it)
             }
         }
+
+        // Set up viewmodel observers.
+        mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
+            onLocationUpdated()
+        }
+
         updateNavBar(requireActivity(), mUserViewModel)
         return view
     }

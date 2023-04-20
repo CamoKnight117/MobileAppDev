@@ -133,43 +133,43 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
     }
 
     override fun startProfileFrag() {
+        setVisibility(true)
         if (mUserViewModel.data.value != null) {
-            setVisibility(true)
             mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.PROFILE
-            startFragment(ProfileFragment())
         }
+        startFragment(ProfileFragment())
     }
 
     override fun startWeatherFrag() {
+        setVisibility(true)
         if (mUserViewModel.data.value != null) {
-            setVisibility(true)
             mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.WEATHER
-            startFragment(WeatherFragment())
         }
+        startFragment(WeatherFragment())
     }
 
     override fun startBMRFrag() {
+        setVisibility(true)
         if (mUserViewModel.data.value != null) {
-            setVisibility(true)
             mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.BMR
-            startFragment(BMRPage())
         }
+        startFragment(BMRPage())
     }
 
     override fun startHikesFrag() {
+        setVisibility(true)
         if (mUserViewModel.data.value != null) {
-            setVisibility(true)
             mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.HIKES
-            startFragment(MapFragment())
         }
+        startFragment(MapFragment())
     }
 
     override fun startMainFrag() {
+        setVisibility(false)
         if (mUserViewModel.data.value != null) {
-            setVisibility(false)
             mUserViewModel.data.value!!.lastUsedModule = LastUsedModule.MAIN
-            startFragment(MainFragment())
         }
+        startFragment(MainFragment())
     }
 
     private fun setVisibility(visible:Boolean) {
