@@ -115,13 +115,13 @@ class BMRPage : Fragment() {
         //Remove listeners before updating
         removeListeners(view)
 
-        val user = mUserViewModel.data.value!!
+        val user = mUserViewModel.data.value
         val intensitySpinner = view.findViewById<Spinner>(R.id.intensitySpinner)
 
         //Calories per hour
         //If spinner is updated, first update calories per hour accordingly
         if (!setSpinner) {
-            user.activityLevel!!.caloriesPerHour = if (intensitySpinner.selectedItemPosition == 0) {
+            user?.activityLevel!!.caloriesPerHour = if (intensitySpinner.selectedItemPosition == 0) {
                 150
             } else if (intensitySpinner.selectedItemPosition == 1) {
                 450
@@ -130,21 +130,21 @@ class BMRPage : Fragment() {
             }
         }
         val calPerHourEditText = view.findViewById<TextView>(R.id.caloriesPerHourValue)
-        calPerHourEditText.setText(user.activityLevel!!.caloriesPerHour.toString())
+        calPerHourEditText.setText(user?.activityLevel!!.caloriesPerHour.toString())
 
         //Workouts per week
         val workoutsPerWeekEditText = view.findViewById<TextView>(R.id.workoutsPerWeekValue)
-        workoutsPerWeekEditText.setText(user.activityLevel!!.workoutsPerWeek.toString())
+        workoutsPerWeekEditText.setText(user?.activityLevel!!.workoutsPerWeek.toString())
 
         //Workout length
         val workoutLengthEditText = view.findViewById<TextView>(R.id.workoutLengthValue)
-        workoutLengthEditText.setText(user.activityLevel!!.averageWorkoutLength.toString())
+        workoutLengthEditText.setText(user?.activityLevel!!.averageWorkoutLength.toString())
 
         //Intensity spinner
         if (setSpinner) {
-            if (user.activityLevel!!.caloriesPerHour < 300) {
+            if (user?.activityLevel!!.caloriesPerHour < 300) {
                 intensitySpinner.setSelection(0, false)
-            } else if (user.activityLevel!!.caloriesPerHour < 600) {
+            } else if (user?.activityLevel!!.caloriesPerHour < 600) {
                 intensitySpinner.setSelection(1, false)
             } else {
                 intensitySpinner.setSelection(2, false)
@@ -153,11 +153,11 @@ class BMRPage : Fragment() {
 
         //Calories burned per workout
         val caloriesBurnedPerWorkoutText = view.findViewById<TextView>(R.id.caloriesBurnedPerWorkoutValue)
-        caloriesBurnedPerWorkoutText.text = user.activityLevel!!.getCaloriesBurnedPerWorkout().roundToInt().toString()
+        caloriesBurnedPerWorkoutText.text = user?.activityLevel!!.getCaloriesBurnedPerWorkout().roundToInt().toString()
 
         //Workout calories per week
         val workoutCaloriesPerWeekText = view.findViewById<TextView>(R.id.workoutCaloriesPerWeekValue)
-        workoutCaloriesPerWeekText.text = user.activityLevel!!.workoutCaloriesPerWeek().roundToInt().toString()
+        workoutCaloriesPerWeekText.text = user?.activityLevel!!.workoutCaloriesPerWeek().roundToInt().toString()
 
         //Daily calorie needs
         val dailyCalorieNeedsText = view.findViewById<TextView>(R.id.dailyCalorieNeedsValue)
@@ -185,7 +185,7 @@ class BMRPage : Fragment() {
 
         //Activity level
         val activityLevelText = view.findViewById<TextView>(R.id.LocationTextView)
-        activityLevelText.text = when(user.activityLevel!!.getLevel())
+        activityLevelText.text = when(user?.activityLevel!!.getLevel())
         {
             Level.SEDENTARY -> "Sedentary"
             Level.LIGHTLY_ACTIVE -> "Lightly Active"

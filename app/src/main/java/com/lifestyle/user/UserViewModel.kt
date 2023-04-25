@@ -98,7 +98,7 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
         userRepository.setProfilePictureThumbnail(thumbnail)
     }
 
-    fun setTextLocation(location: TextLocation) {
+    fun setTextLocation(location: TextLocation?) {
         userRepository.setTextLocation(location)
     }
 
@@ -110,6 +110,11 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
         userRepository.setLocationDirect(location)
     }
 
+    fun setLocationFromText(activity: Activity, stringLocation: String, shortStringLocation: String)
+    {
+        userRepository.setLocationFromText(activity, stringLocation, shortStringLocation)
+    }
+
 
     /**
      * Sets this User's location to the device's most recent coarse location. Asks for coarse location permissions if needed.
@@ -117,11 +122,6 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
      */
     fun updateLocation(activity: Activity) {
         userRepository.updateLocation(activity)
-    }
-
-    fun setLocationByText(location: TextLocation)
-    {
-        userRepository
     }
 
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

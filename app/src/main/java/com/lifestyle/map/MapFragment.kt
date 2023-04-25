@@ -30,11 +30,6 @@ class MapFragment : Fragment() {
         UserViewModel.UserViewModelFactory((requireContext().applicationContext as LifestyleApplication).userRepository)
     }
 
-    private val liveDataObserver: Observer<UserData> =
-        Observer { userData ->
-            onLocationUpdated(mUserViewModel.data.value?.textLocation)
-        }
-
     //variables used to temp store info before sending it to the UserViewModel
     private var textLocationLocal : TextLocation? = null
     private var locationLocal : Location? = null
@@ -54,7 +49,7 @@ class MapFragment : Fragment() {
     ): View? {
         //Set up view model observer
         mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
-            onLocationUpdated(userData.textLocation)
+            onLocationUpdated(userData.textLocation, userData.locationName)
         }
 
         // Inflate the layout for this fragment
@@ -68,8 +63,6 @@ class MapFragment : Fragment() {
         gotoMapButton = view.findViewById<View>(R.id.gotoMapButton) as Button
         useGPSLocationButton = view.findViewById<Button>(R.id.useGPSLocationButton)
         submitLocationButton = view.findViewById<View>(R.id.submitNewLocationButton) as Button
-
-        onLocationUpdated(mUserViewModel.data.value?.textLocation)
 
         //Set up handlers for text changes
         countryEditText?.doOnTextChanged { text, _, _, _ ->
@@ -129,33 +122,18 @@ class MapFragment : Fragment() {
         }
         //Set the click handler for the submit button
         submitLocationButton?.setOnClickListener { _ ->
-            val geocoder: Geocoder = Geocoder(requireContext())
-            val stringLocation = parseStringLocation()
-            try {
-                val addresses = geocoder.getFromLocationName(stringLocation, 1)!!
-                if(addresses.size != 0)
-                {
-                    locationLocal?.latitude = addresses[0].latitude
-                    locationLocal?.longitude = addresses[0].longitude
-                    textLocationLocal?.state = addresses[0].adminArea
-                    textLocationLocal?.city = addresses[0].locality
-                    textLocationLocal?.state = addresses[0].adminArea
-                    textLocationLocal?.country = addresses[0].countryName
-                    textLocationLocal?.zipCode = addresses[0].postalCode
-                    textLocationLocal?.streetAddress = addresses[0].thoroughfare
-                    setUserLocationFromTextLocation()
-                }
-            }
-            catch (e: java.io.IOException)
-            {
-                //This occurs if there are no text inputs. Just do nothing in this case and carry on
+            activity?.let {
+                mUserViewModel.setLocationFromText(it, parseStringLocation(), parseShortStringLocation())
             }
         }
 
         return view
     }
 
-    private fun onLocationUpdated(location: TextLocation?) {
+    private fun onLocationUpdated(location: TextLocation?, locationName: String?) {
+        if(locationName != null) {
+            countryEditText?.setText(locationName)
+        }
         if(location?.country != null) {
             countryEditText?.setText(location?.country.toString())
         }
@@ -171,6 +149,7 @@ class MapFragment : Fragment() {
         if(location?.zipCode != null) {
             zipcodeEditText?.setText(location?.zipCode.toString())
         }
+
     }
 
     private fun parseStringLocation() : String {
@@ -221,13 +200,6 @@ class MapFragment : Fragment() {
             }
         }
         return retval
-    }
-
-    //Interacts with the user view model
-    private fun setUserLocationFromTextLocation(){
-        textLocationLocal?.let { mUserViewModel.setTextLocation(it) }
-        mUserViewModel.setLocationName(parseShortStringLocation())
-        mUserViewModel.setLocationDirect(Location(parseShortStringLocation()))
     }
 
 }

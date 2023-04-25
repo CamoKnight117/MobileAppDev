@@ -1,8 +1,6 @@
 package com.lifestyle.main
 
 import android.app.Activity
-import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -13,7 +11,6 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.lifestyle.R
 import com.lifestyle.bmr.BMRPage
 import com.lifestyle.map.MapFragment

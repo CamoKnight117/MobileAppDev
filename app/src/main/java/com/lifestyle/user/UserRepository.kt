@@ -11,6 +11,7 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.annotation.WorkerThread
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.LocationServices
@@ -147,6 +148,51 @@ class UserRepository(userDao: UserDao) {
                     }
                 } else
                     Toast.makeText(activity, "Couldn't find your location!", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun setLocationFromText(activity: Activity, stringLocation: String, shortStringLocation: String)
+    {
+        mScope.launch(Dispatchers.IO) {
+            try {
+                val geocoder: Geocoder = Geocoder(activity)
+                val addresses = geocoder.getFromLocationName(stringLocation, 1)!!
+                if(addresses.size != 0)
+                {
+                    var newUserData = data.value
+                    newUserData?.apply {
+                        if (addresses.size >= 1) {
+                            locationName = addresses[0].let {
+                                it.locality + ", " + it.adminArea + ", " + it.countryName
+                            }
+                            textLocation?.city = addresses[0].let {
+                                it.locality
+                            }
+                            textLocation?.state = addresses[0].let {
+                                it.adminArea
+                            }
+                            textLocation?.country = addresses[0].let {
+                                it.countryName
+                            }
+                            textLocation?.zipCode = addresses[0].let {
+                                it.postalCode
+                            }
+                            textLocation?.streetAddress = addresses[0].let {
+                                it.thoroughfare
+                            }
+                            location = Location(locationName) //Attempt to set location this way
+                            location?.latitude = addresses[0].latitude
+                            location?.longitude = addresses[0].longitude
+                            locationName = shortStringLocation
+                        }
+                        data.postValue(this)
+                    }
+                }
+            }
+            catch (e: java.io.IOException)
+            {
+                //This occurs if there are no text inputs. Just do nothing in this case and carry on
             }
         }
     }
