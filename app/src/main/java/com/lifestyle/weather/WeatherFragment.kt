@@ -84,7 +84,7 @@ class WeatherFragment : Fragment() {
         // Set up event handlers.
         locationTextView?.setOnClickListener { view ->
             activity?.let {
-                mUserViewModel.update(it)
+                mUserViewModel.updateLocation(it)
             }
         }
 

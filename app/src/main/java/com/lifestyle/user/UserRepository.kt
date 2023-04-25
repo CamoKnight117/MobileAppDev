@@ -17,6 +17,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.lifestyle.database.UserDao
 import com.lifestyle.main.MainActivity
+import com.lifestyle.map.TextLocation
 import com.lifestyle.user.UserData.Companion.convertToJson
 import com.lifestyle.user.UserData.Companion.convertToUserObject
 import kotlinx.coroutines.*
@@ -69,6 +70,30 @@ class UserRepository(userDao: UserDao) {
         updateUserData(data.value)
     }
 
+    fun setTextLocation(location: TextLocation?) {
+        data.value?.let {
+            it.textLocation = location
+            data.postValue(it)
+        }
+        updateUserData(data.value)
+    }
+
+    fun setLocationName(locationName: String) {
+        data.value?.let {
+            it.locationName = locationName
+            data.postValue(it)
+        }
+        updateUserData(data.value)
+    }
+
+    fun setLocationDirect(location: Location) {
+        data.value?.let {
+            it.location = location
+            data.postValue(it)
+        }
+        updateUserData(data.value)
+    }
+
     fun setLastUsedModule(lastUsedModule: LastUsedModule) {
         data.value?.let {
             it.lastUsedModule = lastUsedModule
@@ -85,7 +110,7 @@ class UserRepository(userDao: UserDao) {
         updateUserData(data.value)
     }
 
-    fun update(activity: Activity) {
+    fun updateLocation(activity: Activity) {
         mScope.launch(Dispatchers.IO) {
             if(trySecureLocationPermission(activity)) {
                 val newLocation = fetchLocation(activity)
@@ -101,11 +126,21 @@ class UserRepository(userDao: UserDao) {
                             locationName = addresses[0].let {
                                 it.locality + ", " + it.adminArea + ", " + it.countryName
                             }
-                            textLocation?.city = addresses[0].locality
-                            textLocation?.state = addresses[0].adminArea
-                            textLocation?.country = addresses[0].countryName
-                            textLocation?.zipCode = addresses[0].postalCode
-                            textLocation?.streetAddress = addresses[0].thoroughfare
+                            textLocation?.city = addresses[0].let {
+                                it.locality
+                            }
+                            textLocation?.state = addresses[0].let {
+                                it.adminArea
+                            }
+                            textLocation?.country = addresses[0].let {
+                                it.countryName
+                            }
+                            textLocation?.zipCode = addresses[0].let {
+                                it.postalCode
+                            }
+                            textLocation?.streetAddress = addresses[0].let {
+                                it.thoroughfare
+                            }
                         }
 
                         data.postValue(this)
@@ -189,6 +224,8 @@ class UserRepository(userDao: UserDao) {
     }
 
 
+
+
     companion object {
 
         @Volatile
@@ -204,18 +241,5 @@ class UserRepository(userDao: UserDao) {
             }
         }
     }
-
-    inner class FetchLocationTask(var activity : Activity) {
-        var executorService = Executors.newSingleThreadExecutor()
-        var mainThreadHandler : Handler = HandlerCompat.createAsync(Looper.getMainLooper())
-
-        public fun execute(location: Location) {
-        }
-
-
-
-
-    }
-
 
 }

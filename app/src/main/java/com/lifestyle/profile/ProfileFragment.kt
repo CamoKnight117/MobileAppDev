@@ -131,7 +131,7 @@ class ProfileFragment : Fragment() {
         }
         locationTextView?.setOnClickListener { view ->
             activity?.let {
-                mUserViewModel.update(it)
+                mUserViewModel.updateLocation(it)
             }
         }
 

@@ -4,7 +4,7 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.location.Location
 import androidx.lifecycle.*
-import com.lifestyle.main.MainActivity
+import com.lifestyle.map.TextLocation
 import java.util.*
 
 class UserViewModel(repository: UserRepository) : ViewModel() {
@@ -98,12 +98,30 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
         userRepository.setProfilePictureThumbnail(thumbnail)
     }
 
+    fun setTextLocation(location: TextLocation) {
+        userRepository.setTextLocation(location)
+    }
+
+    fun setLocationName(locationName: String) {
+        userRepository.setLocationName(locationName)
+    }
+
+    fun setLocationDirect(location: Location) {
+        userRepository.setLocationDirect(location)
+    }
+
+
     /**
      * Sets this User's location to the device's most recent coarse location. Asks for coarse location permissions if needed.
      * @param activity The Activity context that should be responsible for the location permission and request.
      */
-    fun update(activity: Activity) {
-        userRepository.update(activity)
+    fun updateLocation(activity: Activity) {
+        userRepository.updateLocation(activity)
+    }
+
+    fun setLocationByText(location: TextLocation)
+    {
+        userRepository
     }
 
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

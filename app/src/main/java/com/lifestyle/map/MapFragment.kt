@@ -20,6 +20,7 @@ import com.lifestyle.R
 import com.lifestyle.main.LifestyleApplication
 import com.lifestyle.user.UserData
 import com.lifestyle.user.UserViewModel
+import com.lifestyle.weather.WeatherFragment
 
 /**
  * Fragment used to set location data, and also go to the maps to search for hikes
@@ -31,11 +32,12 @@ class MapFragment : Fragment() {
 
     private val liveDataObserver: Observer<UserData> =
         Observer { userData ->
-
+            onLocationUpdated(mUserViewModel.data.value?.textLocation)
         }
 
-    //variables used to get user info
-    private var location : TextLocation? = null
+    //variables used to temp store info before sending it to the UserViewModel
+    private var textLocationLocal : TextLocation? = null
+    private var locationLocal : Location? = null
     //UI element variables
     private var countryEditText : EditText? = null
     private var cityEditText : EditText? = null
@@ -50,14 +52,13 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mUserViewModel.data.observe(viewLifecycleOwner, liveDataObserver)
+        //Set up view model observer
+        mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
+            onLocationUpdated(userData.textLocation)
+        }
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_map, container, false)
-
-
-        val user = mUserViewModel.data.value!!
-        location = user.textLocation
 
         countryEditText = view.findViewById<View>(R.id.CountryEditText) as EditText
         stateEditText = view.findViewById<View>(R.id.StateEditText) as EditText
@@ -68,38 +69,37 @@ class MapFragment : Fragment() {
         useGPSLocationButton = view.findViewById<Button>(R.id.useGPSLocationButton)
         submitLocationButton = view.findViewById<View>(R.id.submitNewLocationButton) as Button
 
-        onLocationUpdated()
+        onLocationUpdated(mUserViewModel.data.value?.textLocation)
 
         //Set up handlers for text changes
         countryEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation!!.country = text?.toString()
+                textLocationLocal?.country = text?.toString()
             }
         }
         stateEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation!!.state = text?.toString()
+                textLocationLocal?.state = text?.toString()
             }
         }
         cityEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation!!.city = text?.toString()
+                textLocationLocal?.city = text?.toString()
             }
         }
         streetEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation!!.streetAddress = text?.toString()
+                textLocationLocal?.streetAddress = text?.toString()
             }
         }
         zipcodeEditText?.doOnTextChanged { text, _, _, _ ->
             run {
-                user.textLocation!!.zipCode = text?.toString()
+                textLocationLocal?.zipCode = text?.toString()
             }
         }
 
         //Set go to map button handler
         gotoMapButton?.setOnClickListener { _ ->
-            //The button press should open a camera
             var addressText = parseStringLocation()
             val geocoder: Geocoder = Geocoder(requireContext())
             val addresses = geocoder.getFromLocationName(addressText, 1)!!
@@ -124,7 +124,7 @@ class MapFragment : Fragment() {
         //Set use gps location button handler
         useGPSLocationButton?.setOnClickListener { view ->
             activity?.let {
-                mUserViewModel.update(it)
+                mUserViewModel.updateLocation(it)
             }
         }
         //Set the click handler for the submit button
@@ -135,15 +135,14 @@ class MapFragment : Fragment() {
                 val addresses = geocoder.getFromLocationName(stringLocation, 1)!!
                 if(addresses.size != 0)
                 {
-                    user.location?.latitude = addresses[0].latitude
-                    user.location?.longitude = addresses[0].longitude
-                    user.textLocation!!.state = addresses[0].adminArea
-                    user.textLocation!!.city = addresses[0].locality
-                    user.textLocation!!.state = addresses[0].adminArea
-                    user.textLocation!!.country = addresses[0].countryName
-                    user.textLocation!!.zipCode = addresses[0].postalCode
-                    user.textLocation!!.streetAddress = addresses[0].thoroughfare
-                    onLocationUpdated()
+                    locationLocal?.latitude = addresses[0].latitude
+                    locationLocal?.longitude = addresses[0].longitude
+                    textLocationLocal?.state = addresses[0].adminArea
+                    textLocationLocal?.city = addresses[0].locality
+                    textLocationLocal?.state = addresses[0].adminArea
+                    textLocationLocal?.country = addresses[0].countryName
+                    textLocationLocal?.zipCode = addresses[0].postalCode
+                    textLocationLocal?.streetAddress = addresses[0].thoroughfare
                     setUserLocationFromTextLocation()
                 }
             }
@@ -153,53 +152,47 @@ class MapFragment : Fragment() {
             }
         }
 
-        // Set up viewmodel observers.
-        mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
-            onLocationUpdated()
-        }
-
         return view
     }
 
-
-    private fun onLocationUpdated() {
+    private fun onLocationUpdated(location: TextLocation?) {
         if(location?.country != null) {
-            countryEditText!!.setText(location?.country.toString())
+            countryEditText?.setText(location?.country.toString())
         }
         if(location?.state != null) {
-            stateEditText!!.setText(location?.state.toString())
+            stateEditText?.setText(location?.state.toString())
         }
         if(location?.city != null) {
-            cityEditText!!.setText(location?.city.toString())
+            cityEditText?.setText(location?.city.toString())
         }
         if(location?.streetAddress != null) {
-            streetEditText!!.setText(location?.streetAddress.toString())
+            streetEditText?.setText(location?.streetAddress.toString())
         }
         if(location?.zipCode != null) {
-            zipcodeEditText!!.setText(location?.zipCode.toString())
+            zipcodeEditText?.setText(location?.zipCode.toString())
         }
     }
 
     private fun parseStringLocation() : String {
         var retval = ""
-        if(!location?.streetAddress.isNullOrBlank()) {
-            val streetAddress = location?.streetAddress.toString()
+        if(!textLocationLocal?.streetAddress.isNullOrBlank()) {
+            val streetAddress = textLocationLocal?.streetAddress.toString()
             retval = "$retval $streetAddress"
         }
-        if(!location?.city.isNullOrBlank()) {
-            val city = location?.city.toString()
+        if(!textLocationLocal?.city.isNullOrBlank()) {
+            val city = textLocationLocal?.city.toString()
             retval = "$retval $city"
         }
-        if(!location?.state.isNullOrBlank()) {
-            val state = location?.state.toString()
+        if(!textLocationLocal?.state.isNullOrBlank()) {
+            val state = textLocationLocal?.state.toString()
             retval = "$retval $state"
         }
-        if(!location?.zipCode.isNullOrBlank()) {
-            val zipCode = location?.zipCode.toString()
+        if(!textLocationLocal?.zipCode.isNullOrBlank()) {
+            val zipCode = textLocationLocal?.zipCode.toString()
             retval = "$retval $zipCode"
         }
-        if(!location?.country.isNullOrBlank()) {
-            val country = location?.country.toString()
+        if(!textLocationLocal?.country.isNullOrBlank()) {
+            val country = textLocationLocal?.country.toString()
             retval = "$retval $country"
         }
         return retval
@@ -207,20 +200,20 @@ class MapFragment : Fragment() {
 
     private fun parseShortStringLocation() : String {
         var retval = ""
-        if(!location?.city.isNullOrBlank()) {
-            val city = location?.city.toString()
+        if(!textLocationLocal?.city.isNullOrBlank()) {
+            val city = textLocationLocal?.city.toString()
             retval = "$city"
         }
-        if(!location?.state.isNullOrBlank()) {
-            val state = location?.state.toString()
+        if(!textLocationLocal?.state.isNullOrBlank()) {
+            val state = textLocationLocal?.state.toString()
             retval = if(retval != "") {
                 "$retval, $state"
             } else {
                 "$state"
             }
         }
-        if(!location?.country.isNullOrBlank()) {
-            val country = location?.country.toString()
+        if(!textLocationLocal?.country.isNullOrBlank()) {
+            val country = textLocationLocal?.country.toString()
             retval = if(retval != "") {
                 "$retval, $country"
             } else {
@@ -230,10 +223,11 @@ class MapFragment : Fragment() {
         return retval
     }
 
+    //Interacts with the user view model
     private fun setUserLocationFromTextLocation(){
-        val user = mUserViewModel.data.value!!
-        user.locationName = parseShortStringLocation()
-        user.location = Location(parseShortStringLocation()) //Not sure if this works
+        textLocationLocal?.let { mUserViewModel.setTextLocation(it) }
+        mUserViewModel.setLocationName(parseShortStringLocation())
+        mUserViewModel.setLocationDirect(Location(parseShortStringLocation()))
     }
 
 }
