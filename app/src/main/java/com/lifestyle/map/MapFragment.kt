@@ -94,13 +94,11 @@ class MapFragment : Fragment() {
         //Set go to map button handler
         gotoMapButton?.setOnClickListener { _ ->
             var addressText = parseStringLocation()
-            val geocoder: Geocoder = Geocoder(requireContext())
-            val addresses = geocoder.getFromLocationName(addressText, 1)!!
-            var searchUri : Uri? = null
-            if(addresses.size != 0)
+            var searchUri : Uri
+            if(mUserViewModel.data.value?.location != null)
             {
-                val lat = addresses[0].latitude
-                val long = addresses[0].longitude
+                val lat = mUserViewModel.data.value?.location!!.latitude
+                val long = mUserViewModel.data.value?.location!!.longitude
                 searchUri = Uri.parse("geo:$lat,$long?q=hikes")
             }
             else
