@@ -32,8 +32,8 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
     fun calculateBMR() : Float {
         return if(data.value?.age != 0 && data.value?.height != 0.0f && data.value?.weight != 0.0f && data.value?.sex != Sex.UNASSIGNED) {
             when (data.value?.sex) {
-                Sex.MALE -> 88.362f + (29.535f * data.value?.weight!!) + (1.889f*data.value?.height!!)-(5.677f*data.value?.age!!)
-                Sex.FEMALE -> (447.593f + (20.386f * data.value?.weight!!) + (1.220f * data.value?.height!!)-(4.330f * data.value?.age!!))
+                Sex.MALE -> 88.362f + (6.077f * data.value?.weight!!) + (12.189f * data.value?.height!!)-(5.677f*data.value?.age!!)
+                Sex.FEMALE -> (447.593f + (4.194f * data.value?.weight!!) + (7.869f * data.value?.height!!)-(4.330f * data.value?.age!!))
                 Sex.UNASSIGNED -> 0f
                 null -> 0f
             }
@@ -44,7 +44,8 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
 
     fun calculateSedentaryCalNeed() : Float {
         val averageSedentaryCalBurn = 250/7
-        return calculateBMR() + averageSedentaryCalBurn
+        val b = calculateBMR();
+        return b + averageSedentaryCalBurn
     }
 
     fun calculateLightlyActiveCalNeed() : Float {

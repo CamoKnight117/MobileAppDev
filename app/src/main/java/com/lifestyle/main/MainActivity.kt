@@ -36,26 +36,27 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
         UserViewModel.UserViewModelFactory((application as LifestyleApplication).userRepository)
     }
 
-    private var isFirstTime = false
+    private var isFirstTime = true
 
     //create an observer that watches the LiveData<UserData> object
     private val liveDataObserver: Observer<UserData> =
         Observer { userData -> // Update the UI if this data variable changes
             Helpers.updateNavBar(this, mUserViewModel)
-            if (!isFirstTime && userData.lastUsedModule != null) {
-                isFirstTime = true
-                when (userData.lastUsedModule!!) {
-                    LastUsedModule.MAIN -> startMainFrag()
+            if (isFirstTime) {
+                isFirstTime = false
+                when (userData.lastUsedModule) {
                     LastUsedModule.PROFILE -> startProfileFrag()
                     LastUsedModule.BMR -> startBMRFrag()
                     LastUsedModule.WEATHER -> startWeatherFrag()
                     LastUsedModule.HIKES -> startHikesFrag()
+                    else -> startMainFrag()
                 }
             }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         mUserViewModel.data.observe(this, liveDataObserver)
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity(), fragmentStarterInterface {
         findViewById<View>(R.id.weather_main_button).setOnClickListener {
             startWeatherFrag()
         }
-        
+
         findViewById<Button>(R.id.hikes_main_button).setOnClickListener {
             startHikesFrag()
         }
