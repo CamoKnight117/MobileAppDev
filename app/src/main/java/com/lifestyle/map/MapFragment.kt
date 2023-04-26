@@ -49,7 +49,7 @@ class MapFragment : Fragment() {
     ): View? {
         //Set up view model observer
         mUserViewModel.data.observe(this.viewLifecycleOwner) { userData ->
-            onLocationUpdated(userData.textLocation, userData.locationName)
+            onLocationUpdated(userData.textLocation)
         }
 
         // Inflate the layout for this fragment
@@ -130,10 +130,7 @@ class MapFragment : Fragment() {
         return view
     }
 
-    private fun onLocationUpdated(location: TextLocation?, locationName: String?) {
-        if(locationName != null) {
-            countryEditText?.setText(locationName)
-        }
+    private fun onLocationUpdated(location: TextLocation?) {
         if(location?.country != null) {
             countryEditText?.setText(location?.country.toString())
         }

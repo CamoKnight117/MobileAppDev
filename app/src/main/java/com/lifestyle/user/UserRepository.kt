@@ -161,6 +161,7 @@ class UserRepository(userDao: UserDao) {
                         val geocoder: Geocoder = Geocoder(activity)
                         val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)!!
                         if(addresses.size >= 1) {
+                            textLocation = TextLocation()
                             locationName = addresses[0].let {
                                 it.locality + ", " + it.adminArea + ", " + it.countryName
                             }
