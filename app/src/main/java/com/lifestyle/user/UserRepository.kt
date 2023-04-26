@@ -4,15 +4,12 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.annotation.WorkerThread
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.os.HandlerCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
@@ -22,7 +19,6 @@ import com.lifestyle.map.TextLocation
 import com.lifestyle.user.UserData.Companion.convertToJson
 import com.lifestyle.user.UserData.Companion.convertToUserObject
 import kotlinx.coroutines.*
-import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -30,6 +26,7 @@ class UserRepository(userDao: UserDao) {
     // Live data object notified when we've gotten the location
     val data : MutableLiveData<UserData> = MutableLiveData<UserData>()
     val userDao = userDao
+    var addresses: List<Address>? = null
 
     fun setName(name : String) {
         data.value?.let {
@@ -111,6 +108,46 @@ class UserRepository(userDao: UserDao) {
         updateUserData(data.value)
     }
 
+    /*fun updateLocation(activity: Activity) {
+        mScope.launch(Dispatchers.IO) {
+            if(trySecureLocationPermission(activity)) {
+                val newLocation = fetchLocation(activity)
+
+                if(newLocation != null) {
+                    data.value?.let {
+                        it.location = newLocation
+
+                        val geocoder: Geocoder = Geocoder(activity)
+                        val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)!!
+                        if(addresses.size >= 1) {
+                            it.locationName = addresses[0].let {
+                                it.locality + ", " + it.adminArea + ", " + it.countryName
+                            }
+                            it.textLocation?.city = addresses[0].let {
+                                it.locality
+                            }
+                            it.textLocation?.state = addresses[0].let {
+                                it.adminArea
+                            }
+                            it.textLocation?.country = addresses[0].let {
+                                it.countryName
+                            }
+                            it.textLocation?.zipCode = addresses[0].let {
+                                it.postalCode
+                            }
+                            it.textLocation?.streetAddress = addresses[0].let {
+                                it.thoroughfare
+                            }
+                        }
+                        data.postValue(it)
+                    }
+                } else
+                    Toast.makeText(activity, "Couldn't find your location!", Toast.LENGTH_LONG).show()
+            }
+        }
+        updateUserData(data.value)
+    }*/
+
     fun updateLocation(activity: Activity) {
         mScope.launch(Dispatchers.IO) {
             if(trySecureLocationPermission(activity)) {
@@ -152,48 +189,51 @@ class UserRepository(userDao: UserDao) {
         }
     }
 
-    fun setLocationFromText(activity: Activity, stringLocation: String, shortStringLocation: String)
-    {
-        mScope.launch(Dispatchers.IO) {
+    private fun getLocationFromGeocoder(activity: Activity, stringLocation: String) = runBlocking {
+        launch {
             try {
-                val geocoder: Geocoder = Geocoder(activity)
-                val addresses = geocoder.getFromLocationName(stringLocation, 1)!!
-                if(addresses.size != 0)
-                {
-                    var newUserData = data.value
-                    newUserData?.apply {
-                        if (addresses.size >= 1) {
-                            locationName = addresses[0].let {
-                                it.locality + ", " + it.adminArea + ", " + it.countryName
-                            }
-                            textLocation?.city = addresses[0].let {
-                                it.locality
-                            }
-                            textLocation?.state = addresses[0].let {
-                                it.adminArea
-                            }
-                            textLocation?.country = addresses[0].let {
-                                it.countryName
-                            }
-                            textLocation?.zipCode = addresses[0].let {
-                                it.postalCode
-                            }
-                            textLocation?.streetAddress = addresses[0].let {
-                                it.thoroughfare
-                            }
-                            location = Location(locationName) //Attempt to set location this way
-                            location?.latitude = addresses[0].latitude
-                            location?.longitude = addresses[0].longitude
-                            locationName = shortStringLocation
-                        }
-                        data.postValue(this)
-                    }
-                }
+                val geocoder = Geocoder(activity)
+                addresses = geocoder.getFromLocationName(stringLocation, 1)!!
             }
             catch (e: java.io.IOException)
             {
                 //This occurs if there are no text inputs. Just do nothing in this case and carry on
             }
+        }
+    }
+
+    fun setLocationFromText(activity: Activity, stringLocation: String) {
+        getLocationFromGeocoder(activity, stringLocation)
+        if(addresses != null && addresses!!.size != 0)
+        {
+            data.value?.let {
+                if (addresses!!.size >= 1) {
+                    it.locationName = addresses!![0].let {
+                        it.locality + ", " + it.adminArea + ", " + it.countryName
+                    }
+                    it.textLocation = TextLocation()
+                    it.textLocation?.city = addresses!![0].let {
+                        it.locality
+                    }
+                    it.textLocation?.state = addresses!![0].let {
+                        it.adminArea
+                    }
+                    it.textLocation?.country = addresses!![0].let {
+                        it.countryName
+                    }
+                    it.textLocation?.zipCode = addresses!![0].let {
+                        it.postalCode
+                    }
+                    it.textLocation?.streetAddress = addresses!![0].let {
+                        it.thoroughfare
+                    }
+                    it.location = Location(it.locationName) //Attempt to set location this way
+                    it.location?.latitude = addresses!![0].latitude
+                    it.location?.longitude = addresses!![0].longitude
+                }
+                data.postValue(it)
+            }
+            updateUserData(data.value)
         }
     }
 

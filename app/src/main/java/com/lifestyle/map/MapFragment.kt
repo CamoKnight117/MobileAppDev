@@ -61,8 +61,10 @@ class MapFragment : Fragment() {
         streetEditText = view.findViewById<View>(R.id.StreetEditText) as EditText
         zipcodeEditText = view.findViewById<View>(R.id.ZipCodeEditText) as EditText
         gotoMapButton = view.findViewById<View>(R.id.gotoMapButton) as Button
-        useGPSLocationButton = view.findViewById<Button>(R.id.useGPSLocationButton)
+        useGPSLocationButton = view.findViewById(R.id.useGPSLocationButton)
         submitLocationButton = view.findViewById<View>(R.id.submitNewLocationButton) as Button
+
+        textLocationLocal = TextLocation()
 
         //Set up handlers for text changes
         countryEditText?.doOnTextChanged { text, _, _, _ ->
@@ -121,7 +123,7 @@ class MapFragment : Fragment() {
         //Set the click handler for the submit button
         submitLocationButton?.setOnClickListener { _ ->
             activity?.let {
-                mUserViewModel.setLocationFromText(it, parseStringLocation(), parseShortStringLocation())
+                mUserViewModel.setLocationFromText(it, parseStringLocation())
             }
         }
 

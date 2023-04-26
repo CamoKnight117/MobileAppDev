@@ -111,9 +111,9 @@ class UserViewModel(repository: UserRepository) : ViewModel() {
         userRepository.setLocationDirect(location)
     }
 
-    fun setLocationFromText(activity: Activity, stringLocation: String, shortStringLocation: String)
+    fun setLocationFromText(activity: Activity, stringLocation: String)
     {
-        userRepository.setLocationFromText(activity, stringLocation, shortStringLocation)
+        userRepository.setLocationFromText(activity, stringLocation)
     }
 
 

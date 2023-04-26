@@ -13,8 +13,6 @@ data class UserTable(
     var id : String,
     @field:ColumnInfo(name = "userJson")
     var userJson: String,
-    @field:ColumnInfo(name = "textLocationJson")
-    var textLocationJson: String,
     @field:ColumnInfo(name = "profilePic", typeAffinity = ColumnInfo.BLOB)
     var profilePic: ByteArray?
 )

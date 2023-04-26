@@ -49,7 +49,6 @@ class UserData (
                 return null
             }
             val userJson = table.userJson
-            val textLocationJson = table.textLocationJson
             val profilePic: ByteArray? = table.profilePic
             var result: UserData? = null
             try {
@@ -57,18 +56,9 @@ class UserData (
                     ignoreUnknownKeys = true
                 }.decodeFromString<UserData>(userJson)
             } catch (ignore: Exception) {}
-            var textLoc: TextLocation? = null
-            try {
-                textLoc = Json {
-                    ignoreUnknownKeys = true
-                }.decodeFromString<TextLocation>(textLocationJson)
-            } catch (ignore: Exception) {}
             if (profilePic != null && result != null) {
                 val bitmap = BitmapFactory.decodeByteArray(profilePic, 0, profilePic.size)
                 result.profilePictureThumbnail = bitmap
-            }
-            if (textLoc != null && result != null) {
-                result.textLocation = textLoc
             }
 
             return result
@@ -79,7 +69,6 @@ class UserData (
             val tempProfileThumbnail = userData.profilePictureThumbnail
             userData.profilePictureThumbnail = null;
             val userJson = Json.encodeToString(userData)
-            val textLocationJson = Json.encodeToString(userData.textLocation)
             val blob = ByteArrayOutputStream()
             var bitmapdata: ByteArray? = null
             if (tempProfileThumbnail != null) {
@@ -89,7 +78,7 @@ class UserData (
 
             userData.profilePictureThumbnail = tempProfileThumbnail
 
-            return UserTable(userData.id!!, userJson, textLocationJson, bitmapdata)
+            return UserTable(userData.id!!, userJson, bitmapdata)
         }
     }
 }
