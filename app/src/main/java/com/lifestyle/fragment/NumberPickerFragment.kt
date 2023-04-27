@@ -78,7 +78,7 @@ class NumberPickerFragment : DialogFragment() {
 
             val numbers = mutableListOf<String>()
 
-            for (i in minNumber until maxNumber step step) {
+            for (i in minNumber..maxNumber step step) {
                 numbers.add(i.toString())
             }
 
