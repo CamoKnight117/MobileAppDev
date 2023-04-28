@@ -5,19 +5,21 @@ The Lifestyle App is a fully functional Android app. The app is an all-in-one pl
 
 This was a semester long project where we implemented features as detailed by the client, and which details are described below in the "App Details" and "Design Features" sections.
 
+Additionally, the second phase of the project involved a major refactoring, which is detailed in the section titled "Project Phase 2: Refactoring."
+
 Development Info
 ------------------
 
 The app is written in Kotlin, and Android Studio was the primary developer environment utilized in the apps creation. The app was co-developed by a team of four, namely:
 
-- Cameron Knight - Design Lead
-- Preston Hales - Team Lead
-- Silas Barber - Test Lead
-- Jacob Bullard - Java Wizard
+- Cameron Knight - Design Lead (Phase 1) and "That Other Guy" (Phase 2)
+- Preston Hales - Team Lead (Phase 1) and Test Lead (Phase 2)
+- Silas Barber - Test Lead (Phase 1) and Team Lead (Phase 2)
+- Jacob Bullard - "Java Wizard" (Phase 1) and Design Lead (Phase 2)
 
 We utilized GitHub's Kanban for planning out and assigning tasks for the app throughout development, so all tasks and plans (and bugs) are documented there.
 
-We also created designs for some of the pages of the app before development began in addition to a class diagram and test diagram, each of which is contained in the "reference" folder in this repo.
+We did some designing before development of the project in each phase. See the references folder in this project for module designs, class diagrams, and test diagrams for each phase of the project.
 
 App Details
 -----------------------
@@ -77,3 +79,11 @@ There are a set of 11 design features detailed by the client (and 2 optional fea
 13. (optional) The app should be optimized for both portrait and landscape modes on both phones and tablets.
   - Implemented: Yes
   - Details: As mentioned above, there are specific layouts for just the tablet, and also as mentioned above, the app is usable in both portrait and landscape modes. Additionally, since we tested the app on the Pixel 6 and Nexus 10 (each using API 33), the app is especially optimized on these devices specifically.
+
+Project Phase 2: Refactoring
+-----------------------
+As part of phase 2 of the project, a major refactoring was done to utilize Kotlin view models, repositories, and room databases. All of these were implemented into the project, and the app works just as it did before but utilizing these features.
+
+The app was thoroughly tested after implementation, and many bugs were fixed as a result, even to the point that we got all of the bugs we found fixed. However, due to issues with gradle builds not allowing use of JUnit and time contraints, we weren't able to finish all the unit tests for this phase that we had planned for the project (in addition to fixing the ones from phase 1).
+
+Additionally, a project presentation was made explaining and showcasing the app, a copy of which can be found in the "reference" folder of this project.
