@@ -108,46 +108,6 @@ class UserRepository(userDao: UserDao) {
         updateUserData(data.value)
     }
 
-    /*fun updateLocation(activity: Activity) {
-        mScope.launch(Dispatchers.IO) {
-            if(trySecureLocationPermission(activity)) {
-                val newLocation = fetchLocation(activity)
-
-                if(newLocation != null) {
-                    data.value?.let {
-                        it.location = newLocation
-
-                        val geocoder: Geocoder = Geocoder(activity)
-                        val addresses = geocoder.getFromLocation(newLocation.latitude, newLocation.longitude, 1)!!
-                        if(addresses.size >= 1) {
-                            it.locationName = addresses[0].let {
-                                it.locality + ", " + it.adminArea + ", " + it.countryName
-                            }
-                            it.textLocation?.city = addresses[0].let {
-                                it.locality
-                            }
-                            it.textLocation?.state = addresses[0].let {
-                                it.adminArea
-                            }
-                            it.textLocation?.country = addresses[0].let {
-                                it.countryName
-                            }
-                            it.textLocation?.zipCode = addresses[0].let {
-                                it.postalCode
-                            }
-                            it.textLocation?.streetAddress = addresses[0].let {
-                                it.thoroughfare
-                            }
-                        }
-                        data.postValue(it)
-                    }
-                } else
-                    Toast.makeText(activity, "Couldn't find your location!", Toast.LENGTH_LONG).show()
-            }
-        }
-        updateUserData(data.value)
-    }*/
-
     fun updateLocation(activity: Activity) {
         mScope.launch(Dispatchers.IO) {
             if(trySecureLocationPermission(activity)) {

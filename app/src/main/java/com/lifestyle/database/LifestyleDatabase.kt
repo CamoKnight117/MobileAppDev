@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.lifestyle.bmr.ActivityLevel
+import com.lifestyle.main.LifestyleApplication
 import com.lifestyle.user.LastUsedModule
 import com.lifestyle.user.Sex
 import com.lifestyle.user.UserData
@@ -34,7 +35,7 @@ abstract class LifestyleDatabase : RoomDatabase(){
                     context.applicationContext,
                     LifestyleDatabase::class.java, "LifestyleDatabase.db"
                 )
-                    .addCallback(RoomDatabaseCallback(scope))
+                    .addCallback(RoomDatabaseCallback(scope, context as LifestyleApplication))
                     .fallbackToDestructiveMigration()
                     .build()
                 mInstance = instance
@@ -43,19 +44,20 @@ abstract class LifestyleDatabase : RoomDatabase(){
         }
 
         private class RoomDatabaseCallback(
-            private val scope: CoroutineScope
+            private val scope: CoroutineScope,
+            private val application: LifestyleApplication
         ) : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 mInstance?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateDbTask(database.userDao())
+                        populateDbTask(database.userDao(), application)
                     }
                 }
             }
         }
 
-        suspend fun populateDbTask (userDao: UserDao) {
+        suspend fun populateDbTask (userDao: UserDao, application: LifestyleApplication) {
             val user = UserData()
             user.id = "0"
             user.name = "Bob Ross"
@@ -70,6 +72,7 @@ abstract class LifestyleDatabase : RoomDatabase(){
             user.lastUsedModule = LastUsedModule.MAIN
             val table = convertToJson(user)
             userDao.insert(table)
+            application.userRepository.fetchUserData(user.id!!)
         }
     }
 }
