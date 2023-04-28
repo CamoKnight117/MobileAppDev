@@ -86,4 +86,4 @@ As part of phase 2 of the project, a major refactoring was done to utilize Kotli
 
 The app was thoroughly tested after implementation, and many bugs were fixed as a result, even to the point that we got all of the bugs we found fixed. However, due to issues with gradle builds not allowing use of JUnit and time contraints, we weren't able to finish all the unit tests for this phase that we had planned for the project (in addition to fixing the ones from phase 1).
 
-Additionally, a project presentation was made explaining and showcasing the app, a copy of which can be found in the "reference" folder of this project.
+Additionally, a project presentation was made explaining and showcasing the app, which can be found at https://www.youtube.com/watch?v=FXlMVY1PkMU
