@@ -7,6 +7,13 @@ This was a semester long project where we implemented features as detailed by th
 
 Additionally, the second phase of the project involved a major refactoring, which is detailed in the section titled "Project Phase 2: Refactoring."
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=FXlMVY1PkMU">
+    <img src="https://img.youtube.com/vi/FXlMVY1PkMU/hqdefault.jpg" alt="Lifestyle App project presentation video" width="480">
+  </a><br>
+  <sub><i>▶ <a href="https://www.youtube.com/watch?v=FXlMVY1PkMU">Watch the project presentation</a></i></sub>
+</p>
+
 Development Info
 ------------------
 
@@ -21,6 +28,19 @@ We utilized GitHub's Kanban for planning out and assigning tasks for the app thr
 
 We did some designing before development of the project in each phase. See the references folder in this project for module designs, class diagrams, and test diagrams for each phase of the project.
 
+<details>
+<summary><b>Phase 1 class and test diagrams</b></summary>
+<br>
+<p align="center">
+  <img src="reference/project1/Class_Diagram.png" alt="Phase 1 class diagram" width="720"><br>
+  <sub><i>Phase 1 class diagram</i></sub>
+</p>
+<p align="center">
+  <img src="reference/project1/Test_Diagram.png" alt="Phase 1 test diagram" width="720"><br>
+  <sub><i>Phase 1 test diagram</i></sub>
+</p>
+</details>
+
 App Details
 -----------------------
 There are four primary modules (i.e. pages) in this app, namely the:
@@ -34,6 +54,20 @@ Additionally, there are a couple other main features:
 - Main page - A main page that you start at with buttons to help navigate to each part of the app. 
 - Bottom navbar - A bottom navbar with buttons to each part of the app that is shown at all times to allow for quick navigation while using different modules.
 - Top navbar - Displays at all times a basic summary of the user's information, including their daily calories needs and their profile picture.
+
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="reference/project1/Main_Page_Design.png" alt="Main page design mockup" width="100%"></td>
+    <td align="center" width="33%"><img src="reference/project1/Profile_Page_Design.png" alt="Profile page design mockup" width="100%"></td>
+    <td align="center" width="33%"><img src="reference/project1/BMR_Page_Design.png" alt="BMR page design mockup" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub><i>Main page</i></sub></td>
+    <td align="center"><sub><i>Profile</i></sub></td>
+    <td align="center"><sub><i>BMR calculator</i></sub></td>
+  </tr>
+</table>
+<p align="center"><sub><i>Phase 1 design mockups for the main, profile, and BMR pages</i></sub></p>
 
 The app was tested using a emulators for the Pixel 6 (for phones) and Nexus 10 (for tablets) with API 33, so the app should look good and function well on both phones and tablets, especially for these devices specifically.
 
@@ -83,6 +117,19 @@ There are a set of 11 design features detailed by the client (and 2 optional fea
 Project Phase 2: Refactoring
 -----------------------
 As part of phase 2 of the project, a major refactoring was done to utilize Kotlin view models, repositories, and room databases. All of these were implemented into the project, and the app works just as it did before but utilizing these features.
+
+<details>
+<summary><b>Phase 2 class and test diagrams</b></summary>
+<br>
+<p align="center">
+  <img src="reference/project2/Class_Diagram.png" alt="Phase 2 class diagram showing view models, repositories, and Room database" width="720"><br>
+  <sub><i>Phase 2 class diagram: view models, repositories, and the Room database</i></sub>
+</p>
+<p align="center">
+  <img src="reference/project2/Test_Diagram.png" alt="Phase 2 test diagram" width="720"><br>
+  <sub><i>Phase 2 test diagram</i></sub>
+</p>
+</details>
 
 The app was thoroughly tested after implementation, and many bugs were fixed as a result, even to the point that we got all of the bugs we found fixed. However, due to issues with gradle builds not allowing use of JUnit and time contraints, we weren't able to finish all the unit tests for this phase that we had planned for the project (in addition to fixing the ones from phase 1).
 
