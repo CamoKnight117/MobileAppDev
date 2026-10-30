@@ -28,9 +28,6 @@ We utilized GitHub's Kanban for planning out and assigning tasks for the app thr
 
 We did some designing before development of the project in each phase. See the references folder in this project for module designs, class diagrams, and test diagrams for each phase of the project.
 
-<details>
-<summary><b>Phase 1 class and test diagrams</b></summary>
-<br>
 <p align="center">
   <img src="reference/project1/Class_Diagram.png" alt="Phase 1 class diagram" width="720"><br>
   <sub><i>Phase 1 class diagram</i></sub>
@@ -39,7 +36,6 @@ We did some designing before development of the project in each phase. See the r
   <img src="reference/project1/Test_Diagram.png" alt="Phase 1 test diagram" width="720"><br>
   <sub><i>Phase 1 test diagram</i></sub>
 </p>
-</details>
 
 App Details
 -----------------------
@@ -118,9 +114,6 @@ Project Phase 2: Refactoring
 -----------------------
 As part of phase 2 of the project, a major refactoring was done to utilize Kotlin view models, repositories, and room databases. All of these were implemented into the project, and the app works just as it did before but utilizing these features.
 
-<details>
-<summary><b>Phase 2 class and test diagrams</b></summary>
-<br>
 <p align="center">
   <img src="reference/project2/Class_Diagram.png" alt="Phase 2 class diagram showing view models, repositories, and Room database" width="720"><br>
   <sub><i>Phase 2 class diagram: view models, repositories, and the Room database</i></sub>
@@ -129,7 +122,6 @@ As part of phase 2 of the project, a major refactoring was done to utilize Kotli
   <img src="reference/project2/Test_Diagram.png" alt="Phase 2 test diagram" width="720"><br>
   <sub><i>Phase 2 test diagram</i></sub>
 </p>
-</details>
 
 The app was thoroughly tested after implementation, and many bugs were fixed as a result, even to the point that we got all of the bugs we found fixed. However, due to issues with gradle builds not allowing use of JUnit and time contraints, we weren't able to finish all the unit tests for this phase that we had planned for the project (in addition to fixing the ones from phase 1).
 
